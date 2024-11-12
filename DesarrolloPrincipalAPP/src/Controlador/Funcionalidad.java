@@ -11,18 +11,24 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 
 import Vista.Interfaz;
+import Modelo.Comanda;
 import Modelo.Empleado;
+import Modelo.Mesa;
 import Modelo.Producto;
 
 public class Funcionalidad implements ActionListener, MouseListener{
@@ -30,19 +36,22 @@ public class Funcionalidad implements ActionListener, MouseListener{
 	Interfaz puntero=new Interfaz();
 	//VARIABLES
 	ArrayList<Empleado>empleados=new ArrayList<Empleado>();
+	ArrayList<Mesa>mesas=new ArrayList<Mesa>();
 	ArrayList<Producto>listaProductos=new ArrayList<Producto>();
+	ArrayList<Comanda>comandas=new ArrayList<Comanda>();
+	HashMap<String, Integer>items=new HashMap<String, Integer>();
 	DefaultListModel modeloComida=new DefaultListModel();
 	DefaultListModel modeloBebida=new DefaultListModel();
-	int hora, minutos, dineroCaja=50, dineroTotal;
+	DefaultListModel modeloItems=new DefaultListModel();
+	int hora, minutos, dineroCaja=50, dineroTotal, horaMesa, minutoMesa, fechaMesa, mesa, mesaAux, cantidad=1,  cambioStock;
+	double precioTotal=0, precioProductos=0;
+	boolean cambios=false, pagar=false;;
 	ImageIcon imagenBoton;
 	Icon icono;
 	JLabel label1, label2;
-	String minutoSet;
 	String texto="Bienvenidos a CoffeKie, en esta pagina os mostraremos informacion especifica sobre nosotros, tambien hemos incluido informacion de uso de la intefaz y informacion especifica de la politica de privacidad, esperamos que la intefaz se adapte a vuestras necesidades.";
-	String empleado;
-	String fotoContraseña;
-	String tipoComida;
-	String producto;
+	String empleado, minutoSet, fotoContraseña, tipoComida, producto, solicitud, item;
+	String[]divisionEntrada;
 	//
 	public Funcionalidad(Interfaz frame){
 		puntero=frame;
@@ -57,6 +66,16 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		puntero.btnverBebida.addActionListener(this);
 		puntero.btnverComida.addActionListener(this);
 		puntero.btnSetearStock.addActionListener(this);
+		puntero.btnProducto1.addActionListener(this);
+		puntero.btnProducto2.addActionListener(this);
+		puntero.btnProducto3.addActionListener(this);
+		puntero.btnProducto4.addActionListener(this);
+		puntero.btnProducto5.addActionListener(this);
+		puntero.btnProducto6.addActionListener(this);
+		puntero.btnProducto7.addActionListener(this);
+		puntero.btnProducto8.addActionListener(this);
+		puntero.btnProducto9.addActionListener(this);
+		puntero.btnrestarComida.addActionListener(this);
 		//MOUSE LISTENER
 		puntero.lbcerrarSesion.addMouseListener(this);
 		puntero.lbPaginaInformativa.addMouseListener(this);
@@ -75,23 +94,34 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		puntero.mesa6.addMouseListener(this);
 		puntero.lbfotoLlevar.addMouseListener(this);
 		puntero.lbcerrarSesionComandaLlevar.addMouseListener(this);
+		puntero.lbPagar.addMouseListener(this);
+		puntero.btnrestarComida.addActionListener(this);
 		//EMPLEADOS POR DEFECTO
 		empleados.add(new Empleado("Tobias", "Tobi123", "8:00", " 16:00", 1250, "assets/perfil.png"));
 		empleados.add(new Empleado("Margarita", "marge35", "16:00", " 24:00", 1450, "assets/perfil2.png"));
 		empleados.add(new Empleado("Sebastian", "seBas54", "12:00", " 20:00", 1550, "assets/perfil.png"));
 		//PRODUCTOS COMIDA
-		listaProductos.add(new Producto("1", "Magdalena", "assets/magdalena.png", "1,50 €", "20", "Mercadona", "Comida"));
-		listaProductos.add(new Producto("2", "Croisant", "assets/croisant.png", "1,25 €", "25", "Caseras" , "Comida"));
-		listaProductos.add(new Producto("3", "Donut", "assets/donut.png", "1,00 €", "50", "Pasteleria Alton", "Comida" ));
-		listaProductos.add(new Producto("5", "Galletas", "assets/galletas.png", "2,00 €", "60", "Caseras", "Comida" ));
+		listaProductos.add(new Producto("1", "Magdalena", "assets/magdalena.png", 1.50, "20", "Mercadona", "Comida"));
+		listaProductos.add(new Producto("2", "Croisant", "assets/croisant.png", 1.25, "25", "Caseras" , "Comida"));
+		listaProductos.add(new Producto("3", "Donut", "assets/donut.png", 1.00, "50", "Pasteleria Alton", "Comida" ));
+		listaProductos.add(new Producto("5", "Galletas", "assets/galletas.png", 2.00, "60", "Caseras", "Comida" ));
 		//PRODUCTOS BEBIDA
-		listaProductos.add(new Producto("6", "Agua", "assets/agua.png", "0.80 €", "50", "Mercadona", "Bebida" ));
-		listaProductos.add(new Producto("7", "Cafe con leche", "assets/cafeLeche.png", "1,25 €", "25", "Caseras", "Bebida" ));
-		listaProductos.add(new Producto("8", "Cafe solo", "assets/cafeSolo.png", "1,00 €", "50", "Caseros", "Bebida" ));
-		listaProductos.add(new Producto("9", "Capuccino", "assets/capuccino.png", "1,30 €", "15", "Caseros" , "Bebida"));
-		listaProductos.add(new Producto("10", "Zumo Naranja", "assets/zumoNaranja.png", "1,75 €", "30", "Caseras", "Bebida" ));
+		listaProductos.add(new Producto("6", "Agua", "assets/agua.png", 0.80, "50", "Mercadona", "Bebida" ));
+		listaProductos.add(new Producto("7", "Cafe con leche", "assets/cafeLeche.png", 1.25, "25", "Caseras", "Bebida" ));
+		listaProductos.add(new Producto("8", "Cafe solo", "assets/cafeSolo.png", 1.00, "50", "Caseros", "Bebida" ));
+		listaProductos.add(new Producto("9", "Capuccino", "assets/capuccino.png", 1.30, "15", "Caseros" , "Bebida"));
+		listaProductos.add(new Producto("10", "Zumo Naranja", "assets/zumoNaranja.png", 1.75, "30", "Caseras", "Bebida" ));
 		//FECHA HORA
 		establecerFechaHora();
+		//MESAS
+		mesas.add(new Mesa(1, String.valueOf(puntero.lbmostrarFecha.getText()), String.valueOf(puntero.lbmostrarHoraPrincipal.getText())));
+		mesas.add(new Mesa(2, String.valueOf(puntero.lbmostrarFecha.getText()), String.valueOf(puntero.lbmostrarHoraPrincipal.getText())));
+		mesas.add(new Mesa(3, String.valueOf(puntero.lbmostrarFecha.getText()), String.valueOf(puntero.lbmostrarHoraPrincipal.getText())));
+		mesas.add(new Mesa(4, String.valueOf(puntero.lbmostrarFecha.getText()), String.valueOf(puntero.lbmostrarHoraPrincipal.getText())));
+		mesas.add(new Mesa(5, String.valueOf(puntero.lbmostrarFecha.getText()), String.valueOf(puntero.lbmostrarHoraPrincipal.getText())));
+		mesas.add(new Mesa(6, String.valueOf(puntero.lbmostrarFecha.getText()), String.valueOf(puntero.lbmostrarHoraPrincipal.getText())));
+		//COMANDAS
+		comandas.add(new Comanda(mesas));
 		//ESTABLECER APERTURA
 		cambiarHorario();
 		//ESTABLECER DINEROCAJA
@@ -157,15 +187,73 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			visualizarProducto(tipoComida, modeloComida);
 		}//if
 		if(e.getSource()==puntero.btnSetearStock) {
-			if(puntero.textFieldEditarStock!=null) {
+			puntero.lbmensajeStock.setVisible(false);
+			if(puntero.textFieldEditarStock!=null && Integer.parseInt(puntero.textFieldEditarStock.getText())>-1 && Integer.parseInt(puntero.textFieldEditarStock.getText())<=75) {
 				for(int i=0; i<listaProductos.size(); i++) {
 					if(listaProductos.get(i).getNombre().equalsIgnoreCase(producto)) {
 						listaProductos.get(i).setStock(puntero.textFieldEditarStock.getText());
+						//
+						puntero.lbmensajeStock.setForeground(Color.WHITE);
+						puntero.lbmensajeStock.setText(listaProductos.get(i).getNombre() + " ha sido modificado");
+						puntero.lbmensajeStock.setVisible(true);
 					}//if
 				}//for
-				controlStock();
-			}//if
-		}//
+				visualizarDatosMenu();
+			}else {
+				puntero.lbmensajeStock.setVisible(true);
+				puntero.lbmensajeStock.setForeground(Color.RED);
+				puntero.lbmensajeStock.setText("STOCK NO PERMITIDO");
+			}//else
+		}//if
+		
+		if(e.getSource()==puntero.btnProducto1) {
+			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
+			solicitud=listaProductos.get(0).getNombre();
+			pedido(mesaAux, solicitud, precioTotal);
+		}//if
+		if(e.getSource()==puntero.btnProducto2) {
+			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
+			solicitud=listaProductos.get(1).getNombre();
+			pedido(mesaAux, solicitud, precioTotal);
+		}
+		if(e.getSource()==puntero.btnProducto3) {
+			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
+			solicitud=listaProductos.get(2).getNombre();
+			pedido(mesaAux, solicitud, precioTotal);
+		}
+		if(e.getSource()==puntero.btnProducto4) {
+			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
+			solicitud=listaProductos.get(3).getNombre();
+			pedido(mesaAux, solicitud, precioTotal);
+		}
+		if(e.getSource()==puntero.btnProducto5) {
+			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
+			solicitud=listaProductos.get(4).getNombre();
+			pedido(mesaAux, solicitud, precioTotal);
+		}
+		if(e.getSource()==puntero.btnProducto6) {
+			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
+			solicitud=listaProductos.get(5).getNombre();
+			pedido(mesaAux, solicitud, precioTotal);
+		}
+		if(e.getSource()==puntero.btnProducto7) {
+			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
+			solicitud=listaProductos.get(6).getNombre();
+			pedido(mesaAux, solicitud, precioTotal);
+		}
+		if(e.getSource()==puntero.btnProducto8) {
+			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
+			solicitud=listaProductos.get(7).getNombre();
+			pedido(mesaAux, solicitud, precioTotal);
+		}
+		if(e.getSource()==puntero.btnProducto9) {
+			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
+			solicitud=listaProductos.get(8).getNombre();
+			pedido(mesaAux, solicitud, precioTotal);
+		}//if
+		if(e.getSource()==puntero.btnrestarComida) {
+			restarElementosMenu();
+		}//if
 		
 	}//actionPerformed
 	
@@ -242,13 +330,23 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		if(e.getSource()==puntero.lbcerrarSesionConfiguracion) {
 			if(e.getClickCount()==2) {
 				//CAMBIAMOS DE PANEL
-				this.puntero.Documentacion_1.setVisible(false);
-				this.puntero.Configuracion.setVisible(false);
-				this.puntero.Principal.setVisible(false);
-				this.puntero.Inventario.setVisible(false);
-				this.puntero.Comanda.setVisible(false);
-				this.puntero.ComandaParaLlevar.setVisible(false);
-				this.puntero.inicioSesion.setVisible(true);
+				if(cambios) {
+					this.puntero.Documentacion_1.setVisible(false);
+					this.puntero.Configuracion.setVisible(false);
+					this.puntero.Principal.setVisible(false);
+					this.puntero.Inventario.setVisible(false);
+					this.puntero.Comanda.setVisible(false);
+					this.puntero.ComandaParaLlevar.setVisible(false);
+					this.puntero.inicioSesion.setVisible(true);
+				}else {
+					this.puntero.Documentacion_1.setVisible(false);
+					this.puntero.Configuracion.setVisible(false);
+					this.puntero.Inventario.setVisible(false);
+					this.puntero.Comanda.setVisible(false);
+					this.puntero.ComandaParaLlevar.setVisible(false);
+					this.puntero.inicioSesion.setVisible(false);
+					this.puntero.Principal.setVisible(true);
+				}//else
 				//
 				puntero.textPassConf.setText("");
 				puntero.textJIConf.setText("");
@@ -285,6 +383,20 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			this.puntero.ComandaParaLlevar.setVisible(false);
 			this.puntero.Principal.setVisible(true);
 			//
+			puntero.lbtextoComida.setText("COMIDAS");
+			puntero.textFieldID.setText("");
+			puntero.textFieldNombre.setText("");
+			puntero.textFieldProveedor.setText("");
+			puntero.textFieldPrecio.setText("");
+			puntero.textFieldTipo.setText("");
+			puntero.textFieldEditarStock.setText("");
+			fotoEscalarLabel(puntero.lbImagenInventario, "assets/productoDefecto.png");
+			puntero.progressBarStock.setValue(0);
+			modeloComida.removeAllElements();
+			puntero.textFieldNumStock.setText("");
+			puntero.lbmensajeStock.setVisible(false);
+			puntero.btnSetearStock.setEnabled(false);
+			puntero.btnVisualizarDatosProducto.setEnabled(false);
 		}//if
 		if(e.getSource()==puntero.lbcerrarSesionComanda) {
 			if(e.getClickCount()==2) {
@@ -296,6 +408,9 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.inicioSesion.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
 				this.puntero.Principal.setVisible(true);
+				//
+				precioTotal=Double.parseDouble(puntero.textFieldTotal.getText());
+				controlarStock();//404
 			}//if
 		}//if
 		if(e.getSource()==puntero.mesa1 || e.getSource()==puntero.mesa2 || e.getSource()==puntero.mesa3 || e.getSource()==puntero.mesa4 || e.getSource()==puntero.mesa5 || e.getSource()==puntero.mesa6) {
@@ -305,12 +420,55 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Configuracion.setVisible(false);
 				this.puntero.Documentacion_1.setVisible(false);
 				this.puntero.inicioSesion.setVisible(false);
-				this.puntero.Principal.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
+				this.puntero.Principal.setVisible(false);
 				this.puntero.Comanda.setVisible(true);
-				//PREPARACION MENU
+				//
+				if(pagar) {
+					modeloItems.removeAllElements();
+				}
+			}//if
+		}//if
+		if(e.getSource()==puntero.mesa1) {
+			if(e.getClickCount()==2) {
+				puntero.lbmensajePedido.setVisible(false);
+				mostrarObjetoMesa(puntero.lbNumeroMesa);
 				establecerImagenesBotonMenu();
-				//AAAAAAAAAAAAAAAAAAAAAAEEEEEEEEEEEEEEEEEEEEEEEEEEEIIIIIIIIIIIIIIIIIIOOOOOOOOOOOOOOOOOOOOO
+			}//if
+		}//if
+		if(e.getSource()==puntero.mesa2) {
+			if(e.getClickCount()==2) {
+				puntero.lbmensajePedido.setVisible(false);
+				mostrarObjetoMesa(puntero.lbNumeroMesa_2);
+				establecerImagenesBotonMenu();
+			}//if
+		}//if
+		if(e.getSource()==puntero.mesa3) {
+			if(e.getClickCount()==2) {
+				puntero.lbmensajePedido.setVisible(false);
+				mostrarObjetoMesa(puntero.lbNumeroMesa_3);
+				establecerImagenesBotonMenu();
+			}//if
+		}//if
+		if(e.getSource()==puntero.mesa4) {
+			if(e.getClickCount()==2) {
+				puntero.lbmensajePedido.setVisible(false);
+				mostrarObjetoMesa(puntero.lbNumeroMesa_4);
+				establecerImagenesBotonMenu();
+			}//if
+		}//if
+		if(e.getSource()==puntero.mesa5) {
+			if(e.getClickCount()==2) {
+				puntero.lbmensajePedido.setVisible(false);
+				mostrarObjetoMesa(puntero.lbNumeroMesa_5);
+				establecerImagenesBotonMenu();
+			}//if
+		}//if
+		if(e.getSource()==puntero.mesa6) {
+			if(e.getClickCount()==2) {
+				puntero.lbmensajePedido.setVisible(false);
+				mostrarObjetoMesa(puntero.lbNumeroMesa_6);
+				establecerImagenesBotonMenu();
 			}//if
 		}//if
 		if(e.getSource()==puntero.lbfotoLlevar) {
@@ -339,6 +497,11 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Principal.setVisible(true);
 			}//if
 		}//if
+		if(e.getSource()==puntero.lbPagar) {
+			if(e.getClickCount()==2) {
+				pagar=true;
+			}//if
+		}//if
 		
 	}//mouseClicked
 
@@ -358,12 +521,9 @@ public class Funcionalidad implements ActionListener, MouseListener{
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
 		if(e.getSource()==puntero.lbfotoSesion){
 			fotoEscalarLabel(puntero.lbfotoSesion, "assets/configuracion.png" );
 		}//if
-		
-		
 	}//mouseEntered
 
 	@Override
@@ -618,7 +778,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		}else {
 			puntero.mensajeInformativoConfiguracion.setText("!Debe rellenar todos los campos");			
 		}//else
-
+		cambios=true;
 	}//modificarUsuario
 	
 	public void eliminarUsuario() {
@@ -700,6 +860,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			}//for
 			//
 			puntero.listProductos.setModel(modelo);
+			puntero.btnVisualizarDatosProducto.setEnabled(true);
 		
 	}//visualizarDatosProducto
 	
@@ -711,7 +872,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				puntero.textFieldID.setText(listaProductos.get(i).getId());
 				puntero.textFieldNombre.setText(listaProductos.get(i).getNombre());
 				puntero.textFieldProveedor.setText(listaProductos.get(i).getProveedor());
-				puntero.textFieldPrecio.setText(listaProductos.get(i).getPrecio());
+				puntero.textFieldPrecio.setText(listaProductos.get(i).getPrecio() + " €");
 				puntero.textFieldTipo.setText(listaProductos.get(i).getTipo());
 				fotoEscalarLabel(puntero.lbImagenInventario, listaProductos.get(i).getFoto());
 				puntero.progressBarStock.setValue(Integer.parseInt(listaProductos.get(i).getStock()));
@@ -777,7 +938,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			puntero.progressBarStock.setForeground(Color.RED);
 			puntero.btnSetearStock.setEnabled(true);
 			puntero.textFieldEditarStock.setEditable(true);
-			
 		}else {
 			puntero.progressBarStock.setForeground(Color.GREEN);
 			puntero.btnSetearStock.setEnabled(false);
@@ -785,5 +945,144 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		}//else
 		
 	}//controlStock
+	
+	public void pedido(int mesaAux, String solicitud, double precioTotal) {
+
+		HashMap<String, Integer>aux=new HashMap<String, Integer>();
+		for(int i=0; i<comandas.size(); i++) {
+			for(int j=0; j<comandas.get(i).getMesas().size(); j++) {
+				if(mesaAux==comandas.get(i).getMesas().get(j).getId()) {
+					aux=producirPedido(solicitud, comandas.get(i).getMesas().get(j).getItems());
+					comandas.get(i).getMesas().get(j).getItems().putAll(aux);
+					comandas.get(i).getMesas().get(j).setTotal(controlarTotalMesa(comandas.get(i).getMesas().get(j).getItems()));
+					comandas.get(i).getMesas().get(j).setTotal(Math.round(comandas.get(i).getMesas().get(j).getTotal() *100.00)/100.00);
+					puntero.textFieldTotal.setText(String.valueOf(comandas.get(i).getMesas().get(j).getTotal()));
+					actualizarJlist(comandas.get(i).getMesas().get(j).getItems());
+					puntero.btnrestarComida.setVisible(true);
+				}//if1
+			}//for2
+		}//for1
+	}//pedido
+	
+	public HashMap<String, Integer> producirPedido(String solicitud, HashMap<String, Integer>lista) {
 		
+		puntero.lbmensajePedido.setVisible(true);
+		
+		for(int i=0; i<listaProductos.size(); i++) {
+			if(listaProductos.get(i).getNombre().equalsIgnoreCase(solicitud)) {
+				if(lista.containsKey(solicitud)) {
+					for(Entry<String, Integer> entrada: lista.entrySet()) {
+						if(entrada.getKey().equalsIgnoreCase(solicitud)) {
+							if(Integer.parseInt(listaProductos.get(i).getStock())<=0) {
+								puntero.lbmensajePedido.setForeground(Color.RED);
+								puntero.lbmensajePedido.setText(solicitud + " no tiene mas stock");
+							}else {
+								entrada.setValue(entrada.getValue() + 1);
+								listaProductos.get(i).setStock(String.valueOf(Integer.parseInt(listaProductos.get(i).getStock()) - 1));
+							}//else
+						}//if
+					}//for
+				}else {
+					lista.put(solicitud, 1);
+					listaProductos.get(i).setStock(String.valueOf(Integer.parseInt(listaProductos.get(i).getStock()) - 1));
+				}//else
+			}//if
+		}//for
+		return lista;
+	}//producirPedido
+		
+	public void controlarStock() {
+
+		for(int i=0; i<listaProductos.size(); i++) {
+			for(Entry<String, Integer> entrada: items.entrySet()) {
+				if(entrada.getKey().equalsIgnoreCase(listaProductos.get(i).getNombre())) {
+					cambioStock=Integer.parseInt(listaProductos.get(i).getStock()) - entrada.getValue();
+					listaProductos.get(i).setStock(String.valueOf(cambioStock));
+				}//if
+			}//for
+		}//for
+	
+	}//controlarStock
+	
+	public void mostrarObjetoMesa(JLabel label){
+		
+		for(int i=0; i<comandas.size(); i++) {
+			for(int j=0; j<comandas.get(i).getMesas().size(); j++) {
+				if(comandas.get(i).getMesas().get(j).getId()==Integer.parseInt(label.getText())) {
+					puntero.textFieldNumMesa.setText(String.valueOf(comandas.get(i).getMesas().get(j).getId()));
+					if(comandas.get(i).getMesas().get(j).getComandaNum()==0) {
+						comandas.get(i).getMesas().get(j).setComandaNum(1);
+					}//if
+					if(comandas.get(i).getMesas().get(j).getComandaNum()!=0 && pagar==true) {
+						comandas.get(i).getMesas().get(j).setComandaNum(comandas.get(i).getMesas().get(j).getComandaNum() + 1);
+						comandas.get(i).getMesas().get(j).getItems().clear();
+						comandas.get(i).getMesas().get(i).setTotal(0.0);
+					}//else
+					puntero.textFieldNumComanda.setText(String.valueOf(comandas.get(i).getMesas().get(j).getComandaNum()));
+					puntero.textFieldFecha.setText(String.valueOf(comandas.get(i).getMesas().get(j).getFecha()));
+					puntero.textFieldHora.setText(String.valueOf(comandas.get(i).getMesas().get(j).getHora()));
+					puntero.textFieldTotal.setText(String.valueOf(comandas.get(i).getMesas().get(j).getTotal()));
+					actualizarJlist(comandas.get(i).getMesas().get(j).getItems());
+					pagar=false;
+				}//if				
+			}//for2
+		}//for
+		
+	}//mostrarObjetoMesa
+	
+	public void restarElementosMenu() {
+		
+		item=String.valueOf(puntero.listPedido.getSelectedValue());
+		divisionEntrada=item.split(" | ");
+			for(int j=0; j<comandas.size(); j++) {
+				for(int k=0; k<comandas.get(j).getMesas().size(); k++) {
+						for(Entry<String, Integer> entrada: comandas.get(j).getMesas().get(k).getItems().entrySet()){
+							for(int l=0; l<divisionEntrada.length; l++) {
+								System.out.println(divisionEntrada[l]);
+								if(divisionEntrada[l].equalsIgnoreCase(entrada.getKey())) {
+									if(entrada.getValue()<1) {
+										comandas.get(j).getMesas().get(k).getItems().remove(entrada.getKey());
+									}else if(entrada.getValue()>0) {
+										entrada.setValue(entrada.getValue() - 1);
+									}//
+								}//if
+							}//for4
+							actualizarJlist(comandas.get(j).getMesas().get(k).getItems());
+							comandas.get(j).getMesas().get(k).setTotal(controlarTotalMesa(comandas.get(j).getMesas().get(k).getItems()));
+							puntero.textFieldTotal.setText(String.valueOf(comandas.get(j).getMesas().get(k).getTotal()));
+						}//for3
+				}//for2
+			}//for1
+	}//restarElementosMenu
+	
+	
+	public void actualizarJlist(HashMap<String, Integer>lista) {
+		modeloItems.removeAllElements();
+		for(Entry<String, Integer> entrada: lista.entrySet()){
+			modeloItems.addElement(entrada.getKey() + " | " + entrada.getValue());
+		}//for
+		puntero.listPedido.setModel(modeloItems);
+	}//actualizarJlist
+	
+	public double controlarTotalMesa(HashMap<String, Integer>lista) {
+		
+		double totalPedido=0;
+		for(int i=0; i<listaProductos.size(); i++) {
+			for(Entry<String, Integer> entrada: lista.entrySet()){
+				if(listaProductos.get(i).getNombre().equalsIgnoreCase(entrada.getKey())) {
+					totalPedido=totalPedido + entrada.getValue()* listaProductos.get(i).getPrecio();
+				}//if
+			}//for
+		}//for
+		return totalPedido;
+	}//controlarTotalMesa
+
+	public void controlarReduccionPedido() {
+		
+		
+		
+		
+		
+	}//controlarReduccionPedido
+	
 }//Funcionalidad
