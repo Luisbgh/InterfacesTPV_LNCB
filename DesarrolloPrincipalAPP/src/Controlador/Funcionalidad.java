@@ -43,8 +43,8 @@ public class Funcionalidad implements ActionListener, MouseListener{
 	DefaultListModel modeloComida=new DefaultListModel();
 	DefaultListModel modeloBebida=new DefaultListModel();
 	DefaultListModel modeloItems=new DefaultListModel();
-	int hora, minutos, dineroCaja=50, dineroTotal, horaMesa, minutoMesa, fechaMesa, mesa, mesaAux, cantidad=1,  cambioStock;
-	double precioTotal=0, precioProductos=0;
+	int hora, minutos, dineroTotal, horaMesa, minutoMesa, fechaMesa, mesa, mesaAux, cantidad=1,  cambioStock;
+	double precioTotal=0, precioProductos=0, precioPagar=0, dineroCaja=50;
 	boolean cambios=false, pagar=false;;
 	ImageIcon imagenBoton;
 	Icon icono;
@@ -76,6 +76,8 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		puntero.btnProducto8.addActionListener(this);
 		puntero.btnProducto9.addActionListener(this);
 		puntero.btnrestarComida.addActionListener(this);
+		puntero.btnguardarPago.addActionListener(this);
+		puntero.btnDarCambio.addActionListener(this);
 		//MOUSE LISTENER
 		puntero.lbcerrarSesion.addMouseListener(this);
 		puntero.lbPaginaInformativa.addMouseListener(this);
@@ -95,7 +97,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		puntero.lbfotoLlevar.addMouseListener(this);
 		puntero.lbcerrarSesionComandaLlevar.addMouseListener(this);
 		puntero.lbPagar.addMouseListener(this);
-		puntero.btnrestarComida.addActionListener(this);
+		puntero.lbcerrarSesionPago.addMouseListener(this);
 		//EMPLEADOS POR DEFECTO
 		empleados.add(new Empleado("Tobias", "Tobi123", "8:00", " 16:00", 1250, "assets/perfil.png"));
 		empleados.add(new Empleado("Margarita", "marge35", "16:00", " 24:00", 1450, "assets/perfil2.png"));
@@ -125,12 +127,13 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		//ESTABLECER APERTURA
 		cambiarHorario();
 		//ESTABLECER DINEROCAJA
-		int dineroCaja=50;
+		double dineroCaja=50;
 		//BOTON ICONO VISUALIZAR DATOS INVENTARIO
 		escalarFotoBoton("assets/lupa.png", puntero.btnVisualizarDatosProducto);
 		escalarFotoBoton("assets/bebidas.png", puntero.btnverBebida);
 		escalarFotoBoton("assets/comidas.png", puntero.btnverComida);
 		escalarFotoBoton("assets/editarStock.png", puntero.btnSetearStock);
+		escalarFotoBoton("assets/cambioCliente.png", puntero.btnDarCambio);
 	}//Funcionalidad
 	
 	@Override
@@ -254,7 +257,12 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		if(e.getSource()==puntero.btnrestarComida) {
 			restarElementosMenu();
 		}//if
-		
+		if(e.getSource()==puntero.btnguardarPago) {
+			controlarPago(precioPagar);
+		}//if
+		if(e.getSource()==puntero.btnDarCambio) {
+			generarCambio();
+		}//if
 	}//actionPerformed
 	
 	@Override
@@ -269,6 +277,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Documentacion_1.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
+				this.puntero.Pagos.setVisible(false);
 				this.puntero.inicioSesion.setVisible(true);
 				//SETEAMOS VALORES DE LA PANTALLA PRINCIPAL
 				this.puntero.lbnombreEmpleado.setText("");
@@ -285,6 +294,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Configuracion.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
+				this.puntero.Pagos.setVisible(false);
 				this.puntero.Documentacion_1.setVisible(true);
 				//SETEAMOS VALORES DE LA PANTALLA PRINCIPAL
 				this.puntero.lbnombreEmpleado.setText("");
@@ -308,6 +318,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Inventario.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
+				this.puntero.Pagos.setVisible(false);
 				this.puntero.inicioSesion.setVisible(true);
 			}//if
 		}//if
@@ -324,6 +335,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Inventario.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
+				this.puntero.Pagos.setVisible(false);
 				this.puntero.Configuracion.setVisible(true);
 			}//if
 		}//if
@@ -337,6 +349,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					this.puntero.Inventario.setVisible(false);
 					this.puntero.Comanda.setVisible(false);
 					this.puntero.ComandaParaLlevar.setVisible(false);
+					this.puntero.Pagos.setVisible(false);
 					this.puntero.inicioSesion.setVisible(true);
 				}else {
 					this.puntero.Documentacion_1.setVisible(false);
@@ -345,6 +358,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					this.puntero.Comanda.setVisible(false);
 					this.puntero.ComandaParaLlevar.setVisible(false);
 					this.puntero.inicioSesion.setVisible(false);
+					this.puntero.Pagos.setVisible(false);
 					this.puntero.Principal.setVisible(true);
 				}//else
 				//
@@ -381,6 +395,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			this.puntero.inicioSesion.setVisible(false);
 			this.puntero.Comanda.setVisible(false);
 			this.puntero.ComandaParaLlevar.setVisible(false);
+			this.puntero.Pagos.setVisible(false);
 			this.puntero.Principal.setVisible(true);
 			//
 			puntero.lbtextoComida.setText("COMIDAS");
@@ -407,10 +422,10 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Comanda.setVisible(false);
 				this.puntero.inicioSesion.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
+				this.puntero.Pagos.setVisible(false);
 				this.puntero.Principal.setVisible(true);
 				//
 				precioTotal=Double.parseDouble(puntero.textFieldTotal.getText());
-				controlarStock();//404
 			}//if
 		}//if
 		if(e.getSource()==puntero.mesa1 || e.getSource()==puntero.mesa2 || e.getSource()==puntero.mesa3 || e.getSource()==puntero.mesa4 || e.getSource()==puntero.mesa5 || e.getSource()==puntero.mesa6) {
@@ -422,6 +437,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.inicioSesion.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
 				this.puntero.Principal.setVisible(false);
+				this.puntero.Pagos.setVisible(false);
 				this.puntero.Comanda.setVisible(true);
 				//
 				if(pagar) {
@@ -480,6 +496,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Comanda.setVisible(false);
 				this.puntero.inicioSesion.setVisible(false);
 				this.puntero.Principal.setVisible(false);
+				this.puntero.Pagos.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(true);
 				//
 				 establecerImagenesBotonMenu();
@@ -494,12 +511,42 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Comanda.setVisible(false);
 				this.puntero.inicioSesion.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
+				this.puntero.Pagos.setVisible(false);
 				this.puntero.Principal.setVisible(true);
 			}//if
 		}//if
 		if(e.getSource()==puntero.lbPagar) {
+			puntero.lbmensajePedido.setVisible(false);
 			if(e.getClickCount()==2) {
-				pagar=true;
+				if(Double.parseDouble(puntero.textFieldTotal.getText())>0.0) {
+					//
+					this.puntero.Inventario.setVisible(false);
+					this.puntero.Configuracion.setVisible(false);
+					this.puntero.Documentacion_1.setVisible(false);
+					this.puntero.Comanda.setVisible(false);
+					this.puntero.inicioSesion.setVisible(false);
+					this.puntero.ComandaParaLlevar.setVisible(false);
+					this.puntero.Principal.setVisible(false);
+					this.puntero.Pagos.setVisible(true);
+					//
+					precioPagar=controlarDatosPago(Double.parseDouble(puntero.textFieldTotal.getText()));
+				}else {
+					puntero.lbmensajePedido.setVisible(true);
+					puntero.lbmensajePedido.setText("AÑADE ALGUN PRODUCTO");
+				}//else
+			}//if
+		}//if
+		if(e.getSource()==puntero.lbcerrarSesionPago) {
+			if(e.getClickCount()==2) {
+				//CAMBIAMOS DE PANEL
+				this.puntero.Inventario.setVisible(false);
+				this.puntero.Configuracion.setVisible(false);
+				this.puntero.Documentacion_1.setVisible(false);
+				this.puntero.Comanda.setVisible(false);
+				this.puntero.inicioSesion.setVisible(false);
+				this.puntero.ComandaParaLlevar.setVisible(false);
+				this.puntero.Pagos.setVisible(false);
+				this.puntero.Principal.setVisible(true);
 			}//if
 		}//if
 		
@@ -681,6 +728,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				puntero.lbmostrarHoraInventario.setText(String.valueOf((hora)) + " : " + minutoSet);
 				puntero.lbmostrarHoraComanda.setText(String.valueOf((hora)) +  " : " + minutoSet);
 				puntero.lbmostrarHoraComandaLlevar.setText(String.valueOf((hora)) +  " : " + minutoSet);
+				puntero.lbmostrarHoraPago.setText(String.valueOf((hora)) +  " : " + minutoSet);
 			}else {
 				puntero.lbmostrarHora.setText(String.valueOf((hora)) + " : " + String.valueOf((minutos)));
 				puntero.lbmostrarHoraPrincipal.setText(String.valueOf((hora)) + " : " + String.valueOf((minutos)));
@@ -689,6 +737,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				puntero.lbmostrarHoraComanda.setText(String.valueOf((hora)) + " : " + String.valueOf((minutos)));
 				puntero.lbmostrarHoraInventario.setText(String.valueOf((hora)) + " : " + String.valueOf((minutos)));
 				puntero.lbmostrarHoraComandaLlevar.setText(String.valueOf((hora)) + " : " + String.valueOf((minutos)));
+				puntero.lbmostrarHoraPago.setText(String.valueOf((hora)) + " : " + String.valueOf((minutos)));
 			}//else
 	}//establecerFechaHora
 
@@ -824,9 +873,9 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		
 	}//cambiarHorario
 	
-	public int mostrarDineroCaja(int dinero) {
+	public double mostrarDineroCaja(double dinero) {
 		
-		int dineroAux=dinero;
+		double dineroAux=dinero;
 		
 		if(dineroAux>=0) {
 			puntero.lbDinero.setForeground(Color.WHITE);
@@ -990,30 +1039,21 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		}//for
 		return lista;
 	}//producirPedido
-		
-	public void controlarStock() {
 
-		for(int i=0; i<listaProductos.size(); i++) {
-			for(Entry<String, Integer> entrada: items.entrySet()) {
-				if(entrada.getKey().equalsIgnoreCase(listaProductos.get(i).getNombre())) {
-					cambioStock=Integer.parseInt(listaProductos.get(i).getStock()) - entrada.getValue();
-					listaProductos.get(i).setStock(String.valueOf(cambioStock));
-				}//if
-			}//for
-		}//for
-	
-	}//controlarStock
-	
 	public void mostrarObjetoMesa(JLabel label){
 		
 		for(int i=0; i<comandas.size(); i++) {
 			for(int j=0; j<comandas.get(i).getMesas().size(); j++) {
 				if(comandas.get(i).getMesas().get(j).getId()==Integer.parseInt(label.getText())) {
+					while(!pagar) {
+						label.setForeground(Color.RED);
+					}//while
 					puntero.textFieldNumMesa.setText(String.valueOf(comandas.get(i).getMesas().get(j).getId()));
 					if(comandas.get(i).getMesas().get(j).getComandaNum()==0) {
 						comandas.get(i).getMesas().get(j).setComandaNum(1);
 					}//if
 					if(comandas.get(i).getMesas().get(j).getComandaNum()!=0 && pagar==true) {
+						label.setForeground(Color.WHITE);
 						comandas.get(i).getMesas().get(j).setComandaNum(comandas.get(i).getMesas().get(j).getComandaNum() + 1);
 						comandas.get(i).getMesas().get(j).getItems().clear();
 						comandas.get(i).getMesas().get(i).setTotal(0.0);
@@ -1033,24 +1073,27 @@ public class Funcionalidad implements ActionListener, MouseListener{
 	public void restarElementosMenu() {
 		
 		item=String.valueOf(puntero.listPedido.getSelectedValue());
-		divisionEntrada=item.split(" | ");
+		divisionEntrada=item.split(" | ", 2);//PREGUNTAR DAVID
 			for(int j=0; j<comandas.size(); j++) {
 				for(int k=0; k<comandas.get(j).getMesas().size(); k++) {
-						for(Entry<String, Integer> entrada: comandas.get(j).getMesas().get(k).getItems().entrySet()){
-							for(int l=0; l<divisionEntrada.length; l++) {
-								System.out.println(divisionEntrada[l]);
-								if(divisionEntrada[l].equalsIgnoreCase(entrada.getKey())) {
-									if(entrada.getValue()<1) {
-										comandas.get(j).getMesas().get(k).getItems().remove(entrada.getKey());
-									}else if(entrada.getValue()>0) {
-										entrada.setValue(entrada.getValue() - 1);
-									}//
-								}//if
-							}//for4
-							actualizarJlist(comandas.get(j).getMesas().get(k).getItems());
-							comandas.get(j).getMesas().get(k).setTotal(controlarTotalMesa(comandas.get(j).getMesas().get(k).getItems()));
-							puntero.textFieldTotal.setText(String.valueOf(comandas.get(j).getMesas().get(k).getTotal()));
-						}//for3
+						if(comandas.get(j).getMesas().get(k).getId()==Integer.parseInt(puntero.textFieldNumMesa.getText())) {
+							for(Entry<String, Integer> entrada: comandas.get(j).getMesas().get(k).getItems().entrySet()){
+								for(int l=0; l<divisionEntrada.length; l++) {
+									System.out.println(divisionEntrada[l]);
+									if(divisionEntrada[l].equalsIgnoreCase(entrada.getKey())) {
+										if(entrada.getValue()==0) {
+											comandas.get(j).getMesas().get(k).getItems().remove(entrada.getKey());
+										}else if(entrada.getValue()>0) {
+											entrada.setValue(entrada.getValue() - 1);
+											controlarReduccionPedido(entrada.getKey());
+										}//
+									}//if
+								}//for4
+								actualizarJlist(comandas.get(j).getMesas().get(k).getItems());
+								comandas.get(j).getMesas().get(k).setTotal(controlarTotalMesa(comandas.get(j).getMesas().get(k).getItems()));
+								puntero.textFieldTotal.setText(String.valueOf(comandas.get(j).getMesas().get(k).getTotal()));
+							}//for3
+						}//if
 				}//for2
 			}//for1
 	}//restarElementosMenu
@@ -1077,12 +1120,72 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		return totalPedido;
 	}//controlarTotalMesa
 
-	public void controlarReduccionPedido() {
+	public void controlarReduccionPedido(String entrada) {
 		
-		
-		
-		
+		for(int i=0; i<listaProductos.size(); i++) {
+			if(entrada.equalsIgnoreCase(listaProductos.get(i).getNombre())) {
+				listaProductos.get(i).setStock(String.valueOf(Integer.parseInt(listaProductos.get(i).getStock()) + 1));
+			}//if
+		}//for
 		
 	}//controlarReduccionPedido
+	
+	//A MEDIAS
+	public double controlarDatosPago(double deber) {
+		
+		puntero.lbmensajeDeber.setText("El importe a abonar por el cliente es de: ");
+		puntero.textFieldDineroDeber.setText(String.valueOf(deber) + " €");
+		puntero.lbmensajeAbonarCliente.setText("El cliente abona la cantidad de: ");
+		//
+		return deber;
+		
+	}//controlarDatosPago
+	
+	public void controlarPago(double precioPagar) {
+		
+		if(Double.parseDouble(puntero.textFieldAbonoCliente.getText())>=precioPagar) {
+			puntero.textFieldAbonoCliente.setEditable(false);
+			puntero.lbmensajeCambioCliente.setVisible(true);
+			puntero.lbmensajeCambioCliente.setText("Cambio a devolver:");
+			puntero.textFieldcambioTotal.setVisible(true);
+			puntero.textFieldcambioTotal.setText(String.valueOf(Double.parseDouble(puntero.textFieldAbonoCliente.getText()) - precioPagar));
+			puntero.textFieldcambioTotal.setText(String.valueOf(Math.round(Double.parseDouble(puntero.textFieldcambioTotal.getText())*100.0)/100.0));
+			puntero.btnDarCambio.setVisible(true);
+			puntero.lbcerrarSesionPago.setEnabled(false);
+		}else {
+			puntero.lbmensajeDenegar.setVisible(true);
+			puntero.lbmensajeDenegar.setForeground(Color.RED);
+			puntero.lbmensajeDenegar.setText("CANTIDAD INSUFICIENTE");
+		}//else
+		
+	}//controlarPago
+	
+	public void generarCambio() {
+		
+		double diferencia;
+		diferencia=Double.parseDouble(puntero.textFieldAbonoCliente.getText()) - Double.parseDouble(puntero.textFieldcambioTotal.getText());
+		dineroCaja=dineroCaja + diferencia;
+		pagar=true;
+		//
+		this.puntero.Inventario.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.inicioSesion.setVisible(false);
+		this.puntero.ComandaParaLlevar.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.Principal.setVisible(true);
+		//
+		puntero.lbmensajeDenegar.setVisible(false);
+		puntero.lbmensajeCambioCliente.setVisible(false);
+		puntero.textFieldcambioTotal.setVisible(false);
+		puntero.btnDarCambio.setVisible(false);
+		puntero.textFieldAbonoCliente.setText("");
+		puntero.textFieldAbonoCliente.setEditable(true);
+		puntero.lbcerrarSesionPago.setEnabled(true);
+		//
+		mostrarDineroCaja(dineroCaja);
+		
+	}//generarCambio
 	
 }//Funcionalidad

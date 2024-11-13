@@ -260,8 +260,10 @@ public class Interfaz extends JFrame {
 	public JLabel lbmensajeAbonarCliente;
 	public JTextField textFieldAbonoCliente;
 	public JLabel lbmensajeCambioCliente;
-	public JTextField textField;
+	public JTextField textFieldcambioTotal;
 	public JButton btnDarCambio;
+	public JLabel lbmensajeDenegar;
+	public JButton btnguardarPago;
 	
 
 	/**
@@ -301,50 +303,83 @@ public class Interfaz extends JFrame {
 		Pagos.setLayout(null);
 		Pagos.setVisible(false);
 		
+		lbmensajeDenegar = new JLabel("");
+		lbmensajeDenegar.setHorizontalAlignment(SwingConstants.CENTER);
+		lbmensajeDenegar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbmensajeDenegar.setForeground(new Color(255, 0, 0));
+		lbmensajeDenegar.setBounds(111, 339, 329, 27);
+		lbmensajeDenegar.setVisible(false);
+		
+		btnguardarPago = new JButton("$");
+		btnguardarPago.setBackground(new Color(128, 255, 128));
+		btnguardarPago.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
+		btnguardarPago.setBounds(300, 288, 42, 30);
+		Pagos.add(btnguardarPago);
+		Pagos.add(lbmensajeDenegar);
+		
+		btnDarCambio = new JButton("");
+		btnDarCambio.setBounds(247, 418, 53, 42);
+		btnDarCambio.setVisible(false);
+		Pagos.add(btnDarCambio);
+		
 		textFieldDineroDeber = new JTextField();
+		textFieldDineroDeber.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldDineroDeber.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		textFieldDineroDeber.setForeground(new Color(0, 0, 0));
 		textFieldDineroDeber.setEditable(false);
-		textFieldDineroDeber.setBounds(426, 174, 86, 20);
+		textFieldDineroDeber.setBounds(231, 192, 86, 30);
 		Pagos.add(textFieldDineroDeber);
 		textFieldDineroDeber.setColumns(10);
 		
 		lbmensajeAbonarCliente = new JLabel("");
+		lbmensajeAbonarCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lbmensajeAbonarCliente.setForeground(Color.WHITE);
-		lbmensajeAbonarCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbmensajeAbonarCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
 		lbmensajeAbonarCliente.setBounds(34, 233, 478, 36);
 		Pagos.add(lbmensajeAbonarCliente);
 		
 		textFieldAbonoCliente = new JTextField();
+		textFieldAbonoCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldAbonoCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
 		textFieldAbonoCliente.setColumns(10);
-		textFieldAbonoCliente.setBounds(426, 268, 86, 20);
+		textFieldAbonoCliente.setBounds(208, 289, 86, 30);
 		Pagos.add(textFieldAbonoCliente);
 		
 		lbmensajeCambioCliente = new JLabel("");
+		lbmensajeCambioCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lbmensajeCambioCliente.setForeground(Color.WHITE);
-		lbmensajeCambioCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbmensajeCambioCliente.setBounds(34, 333, 140, 36);
+		lbmensajeCambioCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbmensajeCambioCliente.setVisible(false);
+		lbmensajeCambioCliente.setBounds(34, 330, 478, 36);
 		Pagos.add(lbmensajeCambioCliente);
 		
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setColumns(10);
-		textField.setBounds(172, 351, 86, 20);
-		Pagos.add(textField);
+		textFieldcambioTotal = new JTextField();
+		textFieldcambioTotal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		textFieldcambioTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldcambioTotal.setEditable(false);
+		textFieldcambioTotal.setColumns(10);
+		textFieldcambioTotal.setVisible(false);
+		textFieldcambioTotal.setBounds(231, 377, 86, 30);
+		Pagos.add(textFieldcambioTotal);
 		
 		lbmensajeDeber = new JLabel("");
+		lbmensajeDeber.setHorizontalAlignment(SwingConstants.CENTER);
 		lbmensajeDeber.setForeground(new Color(255, 255, 255));
-		lbmensajeDeber.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbmensajeDeber.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
 		lbmensajeDeber.setBounds(34, 137, 478, 36);
 		Pagos.add(lbmensajeDeber);
 		
 		lbcerrarSesionPago = new JLabel("");
 		lbcerrarSesionPago.setForeground(Color.WHITE);
-		lbcerrarSesionPago.setBounds(432, 37, 31, 30);
+		lbcerrarSesionPago.setBounds(426, 41, 31, 30);
+		//
+		fotoEscalarLabel(lbcerrarSesionPago, "assets/finSesion.png");
 		Pagos.add(lbcerrarSesionPago);
 		
 		lbmostrarHoraPago = new JLabel("16 : 42");
 		lbmostrarHoraPago.setForeground(Color.WHITE);
 		lbmostrarHoraPago.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
-		lbmostrarHoraPago.setBounds(81, 41, 83, 23);
+		lbmostrarHoraPago.setBounds(82, 48, 83, 23);
 		Pagos.add(lbmostrarHoraPago);
 		
 		lbtituloPago = new JLabel("Coffekie");
@@ -365,10 +400,6 @@ public class Interfaz extends JFrame {
 		//
 		fotoEscalarLabel(lbfondoPagos, "assets/fondo2.jpg");
 		Pagos.add(lbfondoPagos);
-		
-		btnDarCambio = new JButton("");
-		btnDarCambio.setBounds(231, 382, 70, 48);
-		Pagos.add(btnDarCambio);
 		//
 		
 		Comanda = new JPanel();
