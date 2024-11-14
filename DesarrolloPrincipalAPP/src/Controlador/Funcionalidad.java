@@ -43,7 +43,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 	DefaultListModel modeloComida=new DefaultListModel();
 	DefaultListModel modeloBebida=new DefaultListModel();
 	DefaultListModel modeloItems=new DefaultListModel();
-	int hora, minutos, dineroTotal, horaMesa, minutoMesa, fechaMesa, mesa, mesaAux, cantidad=1,  cambioStock;
+	int hora, minutos, dineroTotal, horaMesa, minutoMesa, fechaMesa, mesa, mesaAux, cantidad=1,  cambioStock, numMesa=0, numComanda=0;
 	double precioTotal=0, precioProductos=0, precioPagar=0, dineroCaja=50;
 	boolean cambios=false, pagar=false;;
 	ImageIcon imagenBoton;
@@ -61,11 +61,11 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		puntero.comboBoxOpciones.addActionListener(this);
 		puntero.btnGuardarInfo.addActionListener(this);
 		puntero.btnEliminarUser.addActionListener(this);
-		puntero.btnInventario.addActionListener(this);
+		puntero.btnProductos.addActionListener(this);
 		puntero.btnVisualizarDatosProducto.addActionListener(this);
 		puntero.btnverBebida.addActionListener(this);
 		puntero.btnverComida.addActionListener(this);
-		puntero.btnSetearStock.addActionListener(this);
+		//puntero.btnSetearStock.addActionListener(this);
 		puntero.btnProducto1.addActionListener(this);
 		puntero.btnProducto2.addActionListener(this);
 		puntero.btnProducto3.addActionListener(this);
@@ -132,7 +132,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		escalarFotoBoton("assets/lupa.png", puntero.btnVisualizarDatosProducto);
 		escalarFotoBoton("assets/bebidas.png", puntero.btnverBebida);
 		escalarFotoBoton("assets/comidas.png", puntero.btnverComida);
-		escalarFotoBoton("assets/editarStock.png", puntero.btnSetearStock);
+		//escalarFotoBoton("assets/editarStock.png", puntero.btnSetearStock);
 		escalarFotoBoton("assets/cambioCliente.png", puntero.btnDarCambio);
 	}//Funcionalidad
 	
@@ -155,20 +155,15 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		if(e.getSource()==puntero.btnEliminarUser) {
 			eliminarUsuario();
 		}//if
-		if(e.getSource()==puntero.btnInventario) {
+		if(e.getSource()==puntero.btnProductos) {
 			gestionInventario();
 		}//if
 		if(e.getSource()==puntero.btnVisualizarDatosProducto) {
 			visualizarDatosMenu();
 		}//if
 		if(e.getSource()==puntero.btnverBebida) {
-			puntero.lbtextoComida.setText("BEBIDAS");
-			puntero.textFieldID.setText("");
-			puntero.textFieldNombre.setText("");
-			puntero.textFieldProveedor.setText("");
-			puntero.textFieldPrecio.setText("");
-			puntero.textFieldTipo.setText("");
-			puntero.textFieldEditarStock.setText("");
+			seteosLabelInventario();
+			//puntero.textFieldEditarStock.setText("");
 			fotoEscalarLabel(puntero.lbImagenInventario, "assets/productoDefecto.png");
 			puntero.progressBarStock.setValue(0);
 			modeloBebida.removeAllElements();
@@ -176,83 +171,59 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			visualizarProducto(tipoComida, modeloBebida);
 		}//if
 		if(e.getSource()==puntero.btnverComida) {
-			puntero.lbtextoComida.setText("COMIDAS");
-			puntero.textFieldID.setText("");
-			puntero.textFieldNombre.setText("");
-			puntero.textFieldProveedor.setText("");
-			puntero.textFieldPrecio.setText("");
-			puntero.textFieldTipo.setText("");
-			puntero.textFieldEditarStock.setText("");
+			seteosLabelInventario();
+			//puntero.textFieldEditarStock.setText("");
 			fotoEscalarLabel(puntero.lbImagenInventario, "assets/productoDefecto.png");
 			puntero.progressBarStock.setValue(0);
 			modeloComida.removeAllElements();
 			tipoComida="Comida";
 			visualizarProducto(tipoComida, modeloComida);
 		}//if
-		if(e.getSource()==puntero.btnSetearStock) {
-			puntero.lbmensajeStock.setVisible(false);
-			if(puntero.textFieldEditarStock!=null && Integer.parseInt(puntero.textFieldEditarStock.getText())>-1 && Integer.parseInt(puntero.textFieldEditarStock.getText())<=75) {
-				for(int i=0; i<listaProductos.size(); i++) {
-					if(listaProductos.get(i).getNombre().equalsIgnoreCase(producto)) {
-						listaProductos.get(i).setStock(puntero.textFieldEditarStock.getText());
-						//
-						puntero.lbmensajeStock.setForeground(Color.WHITE);
-						puntero.lbmensajeStock.setText(listaProductos.get(i).getNombre() + " ha sido modificado");
-						puntero.lbmensajeStock.setVisible(true);
-					}//if
-				}//for
-				visualizarDatosMenu();
-			}else {
-				puntero.lbmensajeStock.setVisible(true);
-				puntero.lbmensajeStock.setForeground(Color.RED);
-				puntero.lbmensajeStock.setText("STOCK NO PERMITIDO");
-			}//else
-		}//if
 		
 		if(e.getSource()==puntero.btnProducto1) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(0).getNombre();
-			pedido(mesaAux, solicitud, precioTotal);
+			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
 		}//if
 		if(e.getSource()==puntero.btnProducto2) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(1).getNombre();
-			pedido(mesaAux, solicitud, precioTotal);
+			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
 		}
 		if(e.getSource()==puntero.btnProducto3) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(2).getNombre();
-			pedido(mesaAux, solicitud, precioTotal);
+			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
 		}
 		if(e.getSource()==puntero.btnProducto4) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(3).getNombre();
-			pedido(mesaAux, solicitud, precioTotal);
+			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
 		}
 		if(e.getSource()==puntero.btnProducto5) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(4).getNombre();
-			pedido(mesaAux, solicitud, precioTotal);
+			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
 		}
 		if(e.getSource()==puntero.btnProducto6) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(5).getNombre();
-			pedido(mesaAux, solicitud, precioTotal);
+			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
 		}
 		if(e.getSource()==puntero.btnProducto7) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(6).getNombre();
-			pedido(mesaAux, solicitud, precioTotal);
+			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
 		}
 		if(e.getSource()==puntero.btnProducto8) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(7).getNombre();
-			pedido(mesaAux, solicitud, precioTotal);
+			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
 		}
 		if(e.getSource()==puntero.btnProducto9) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(8).getNombre();
-			pedido(mesaAux, solicitud, precioTotal);
+			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
 		}//if
 		if(e.getSource()==puntero.btnrestarComida) {
 			restarElementosMenu();
@@ -262,6 +233,12 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		}//if
 		if(e.getSource()==puntero.btnDarCambio) {
 			generarCambio();
+			puntero.textFieldAbonoCliente.setText("");
+			puntero.textFieldAbonoCliente.setEditable(true);
+			puntero.lbmensajeCambioCliente.setVisible(false);
+			puntero.lbmensajeCambioCliente.setVisible(false);
+			puntero.textFieldcambioTotal.setVisible(false);
+			puntero.btnDarCambio.setVisible(false);
 		}//if
 	}//actionPerformed
 	
@@ -272,7 +249,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			if(e.getClickCount()==2) {
 				//CAMBIAMOS DE PANEL
 				this.puntero.Principal.setVisible(false);
-				this.puntero.Inventario.setVisible(false);
+				this.puntero.Productos.setVisible(false);
 				this.puntero.Configuracion.setVisible(false);
 				this.puntero.Documentacion_1.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
@@ -290,7 +267,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				//CAMBIAMOS DE PANEL
 				this.puntero.Principal.setVisible(false);
 				this.puntero.inicioSesion.setVisible(false);
-				this.puntero.Inventario.setVisible(false);
+				this.puntero.Productos.setVisible(false);
 				this.puntero.Configuracion.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
@@ -315,7 +292,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Documentacion_1.setVisible(false);
 				this.puntero.Principal.setVisible(false);
 				this.puntero.Configuracion.setVisible(false);
-				this.puntero.Inventario.setVisible(false);
+				this.puntero.Productos.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
 				this.puntero.Pagos.setVisible(false);
@@ -332,7 +309,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Documentacion_1.setVisible(false);
 				this.puntero.Principal.setVisible(false);
 				this.puntero.inicioSesion.setVisible(false);
-				this.puntero.Inventario.setVisible(false);
+				this.puntero.Productos.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
 				this.puntero.ComandaParaLlevar.setVisible(false);
 				this.puntero.Pagos.setVisible(false);
@@ -346,7 +323,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					this.puntero.Documentacion_1.setVisible(false);
 					this.puntero.Configuracion.setVisible(false);
 					this.puntero.Principal.setVisible(false);
-					this.puntero.Inventario.setVisible(false);
+					this.puntero.Productos.setVisible(false);
 					this.puntero.Comanda.setVisible(false);
 					this.puntero.ComandaParaLlevar.setVisible(false);
 					this.puntero.Pagos.setVisible(false);
@@ -354,7 +331,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				}else {
 					this.puntero.Documentacion_1.setVisible(false);
 					this.puntero.Configuracion.setVisible(false);
-					this.puntero.Inventario.setVisible(false);
+					this.puntero.Productos.setVisible(false);
 					this.puntero.Comanda.setVisible(false);
 					this.puntero.ComandaParaLlevar.setVisible(false);
 					this.puntero.inicioSesion.setVisible(false);
@@ -388,35 +365,42 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			}//
 		}//
 		if(e.getSource()==puntero.lbcerrarSesionInventario) {
-			//CAMBIAMOS DE PANEL
-			this.puntero.Documentacion_1.setVisible(false);
-			this.puntero.Configuracion.setVisible(false);
-			this.puntero.Inventario.setVisible(false);
-			this.puntero.inicioSesion.setVisible(false);
-			this.puntero.Comanda.setVisible(false);
-			this.puntero.ComandaParaLlevar.setVisible(false);
-			this.puntero.Pagos.setVisible(false);
-			this.puntero.Principal.setVisible(true);
-			//
-			puntero.lbtextoComida.setText("COMIDAS");
-			puntero.textFieldID.setText("");
-			puntero.textFieldNombre.setText("");
-			puntero.textFieldProveedor.setText("");
-			puntero.textFieldPrecio.setText("");
-			puntero.textFieldTipo.setText("");
-			puntero.textFieldEditarStock.setText("");
-			fotoEscalarLabel(puntero.lbImagenInventario, "assets/productoDefecto.png");
-			puntero.progressBarStock.setValue(0);
-			modeloComida.removeAllElements();
-			puntero.textFieldNumStock.setText("");
-			puntero.lbmensajeStock.setVisible(false);
-			puntero.btnSetearStock.setEnabled(false);
-			puntero.btnVisualizarDatosProducto.setEnabled(false);
+			if(e.getClickCount()==2) {
+				//CAMBIAMOS DE PANEL
+				this.puntero.Documentacion_1.setVisible(false);
+				this.puntero.Configuracion.setVisible(false);
+				this.puntero.Productos.setVisible(false);
+				this.puntero.inicioSesion.setVisible(false);
+				this.puntero.Comanda.setVisible(false);
+				this.puntero.ComandaParaLlevar.setVisible(false);
+				this.puntero.Pagos.setVisible(false);
+				this.puntero.Principal.setVisible(true);
+				//
+				puntero.lbtextoComida.setText("PRODUCTOS");
+				puntero.lbFieldID.setText("");
+				puntero.lbFieldNombre.setText("");
+				puntero.lbFieldProveedor.setText("");
+				puntero.lbFieldPrecio.setText("");
+				fotoEscalarLabel(puntero.lbImagenInventario, "assets/productoDefecto.png");
+				puntero.lbImagenInventario.setText("");
+				
+				//puntero.textFieldEditarStock.setText("");
+				puntero.progressBarStock.setValue(0);
+				modeloComida.removeAllElements();
+				puntero.lbFieldNumStock.setText("");
+				puntero.lbFieldTipo.setText("");
+				puntero.lbmensajeStock.setVisible(false);
+				//puntero.btnSetearStock.setEnabled(false);
+				puntero.btnVisualizarDatosProducto.setEnabled(false);
+				//
+				modeloComida.clear();
+				modeloBebida.clear();
+			}//if
 		}//if
 		if(e.getSource()==puntero.lbcerrarSesionComanda) {
 			if(e.getClickCount()==2) {
 				//CAMBIAMOS DE PANEL
-				this.puntero.Inventario.setVisible(false);
+				this.puntero.Productos.setVisible(false);
 				this.puntero.Configuracion.setVisible(false);
 				this.puntero.Documentacion_1.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
@@ -425,13 +409,15 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Pagos.setVisible(false);
 				this.puntero.Principal.setVisible(true);
 				//
+				mesaOcupada();
+				//
 				precioTotal=Double.parseDouble(puntero.textFieldTotal.getText());
 			}//if
 		}//if
 		if(e.getSource()==puntero.mesa1 || e.getSource()==puntero.mesa2 || e.getSource()==puntero.mesa3 || e.getSource()==puntero.mesa4 || e.getSource()==puntero.mesa5 || e.getSource()==puntero.mesa6) {
 			if(e.getClickCount()==2) {
 				//CAMBIAMOS DE PANEL
-				this.puntero.Inventario.setVisible(false);
+				this.puntero.Productos.setVisible(false);
 				this.puntero.Configuracion.setVisible(false);
 				this.puntero.Documentacion_1.setVisible(false);
 				this.puntero.inicioSesion.setVisible(false);
@@ -490,7 +476,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		if(e.getSource()==puntero.lbfotoLlevar) {
 			if(e.getClickCount()==2) {
 				//CAMBIAMOS DE PANEL
-				this.puntero.Inventario.setVisible(false);
+				this.puntero.Productos.setVisible(false);
 				this.puntero.Configuracion.setVisible(false);
 				this.puntero.Documentacion_1.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
@@ -505,7 +491,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		if(e.getSource()==puntero.lbcerrarSesionComandaLlevar) {
 			if(e.getClickCount()==2) {
 				//CAMBIAMOS DE PANEL
-				this.puntero.Inventario.setVisible(false);
+				this.puntero.Productos.setVisible(false);
 				this.puntero.Configuracion.setVisible(false);
 				this.puntero.Documentacion_1.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
@@ -513,6 +499,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.ComandaParaLlevar.setVisible(false);
 				this.puntero.Pagos.setVisible(false);
 				this.puntero.Principal.setVisible(true);
+				//
 			}//if
 		}//if
 		if(e.getSource()==puntero.lbPagar) {
@@ -520,7 +507,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			if(e.getClickCount()==2) {
 				if(Double.parseDouble(puntero.textFieldTotal.getText())>0.0) {
 					//
-					this.puntero.Inventario.setVisible(false);
+					this.puntero.Productos.setVisible(false);
 					this.puntero.Configuracion.setVisible(false);
 					this.puntero.Documentacion_1.setVisible(false);
 					this.puntero.Comanda.setVisible(false);
@@ -539,7 +526,9 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		if(e.getSource()==puntero.lbcerrarSesionPago) {
 			if(e.getClickCount()==2) {
 				//CAMBIAMOS DE PANEL
-				this.puntero.Inventario.setVisible(false);
+				//
+				mesaOcupada();
+				this.puntero.Productos.setVisible(false);
 				this.puntero.Configuracion.setVisible(false);
 				this.puntero.Documentacion_1.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
@@ -547,6 +536,13 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.ComandaParaLlevar.setVisible(false);
 				this.puntero.Pagos.setVisible(false);
 				this.puntero.Principal.setVisible(true);
+				//
+				puntero.lbmensajeDenegar.setVisible(false);
+				puntero.lbmensajeCambioCliente.setVisible(false);
+				puntero.textFieldcambioTotal.setVisible(false);
+				puntero.btnDarCambio.setVisible(false);
+				puntero.textFieldAbonoCliente.setText("");
+				puntero.textFieldAbonoCliente.setEditable(true);
 			}//if
 		}//if
 		
@@ -841,7 +837,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.Documentacion_1.setVisible(false);
 				this.puntero.Configuracion.setVisible(false);
 				this.puntero.Principal.setVisible(false);
-				this.puntero.Inventario.setVisible(false);
+				this.puntero.Productos.setVisible(false);
 				this.puntero.Comanda.setVisible(false);
 				this.puntero.inicioSesion.setVisible(true);
 			}//if
@@ -857,7 +853,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		this.puntero.Documentacion_1.setVisible(false);
 		this.puntero.Configuracion.setVisible(false);
 		this.puntero.Comanda.setVisible(false);
-		this.puntero.Inventario.setVisible(true);
+		this.puntero.Productos.setVisible(true);
 		
 	}//gestionInventario
 	
@@ -918,14 +914,16 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		producto=String.valueOf(puntero.listProductos.getSelectedValue());
 		for(int i=0; i<listaProductos.size(); i++) {
 			if(String.valueOf(producto)!=null && listaProductos.get(i).getNombre()==producto) {
-				puntero.textFieldID.setText(listaProductos.get(i).getId());
-				puntero.textFieldNombre.setText(listaProductos.get(i).getNombre());
-				puntero.textFieldProveedor.setText(listaProductos.get(i).getProveedor());
-				puntero.textFieldPrecio.setText(listaProductos.get(i).getPrecio() + " €");
-				puntero.textFieldTipo.setText(listaProductos.get(i).getTipo());
+				puntero.lbFieldID.setText(listaProductos.get(i).getId());
+				puntero.lbFieldNombre.setText(listaProductos.get(i).getNombre());
+				puntero.lbFieldProveedor.setText(listaProductos.get(i).getProveedor());
+				puntero.lbFieldPrecio.setText(listaProductos.get(i).getPrecio() + " €");
+				puntero.lbFieldTipo.setText(listaProductos.get(i).getTipo());
 				fotoEscalarLabel(puntero.lbImagenInventario, listaProductos.get(i).getFoto());
 				puntero.progressBarStock.setValue(Integer.parseInt(listaProductos.get(i).getStock()));
-				puntero.textFieldNumStock.setText(String.valueOf(puntero.progressBarStock.getValue()));
+				puntero.lbFieldNumStock.setText(String.valueOf(puntero.progressBarStock.getValue()));
+				puntero.lbmensajeStock.setVisible(true);
+				puntero.lbmensajeStock.setText("PRODUCTO - " + listaProductos.get(i).getNombre());
 			}//if
 		}//for
 		controlStock();
@@ -937,39 +935,39 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		for(int i=0; i<listaProductos.size(); i++) {
 			if(i==0) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto1);
-				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProductoLlevar1);
+				fotoEscalarLabel(puntero.lbProductoLlevar1, listaProductos.get(i).getFoto());
 			}
 			if(i==1) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto2);
-				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProductoLlevar2);
+				fotoEscalarLabel(puntero.lbProductoLlevar2, listaProductos.get(i).getFoto());
 			}
 			if(i==2) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto3);
-				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProductoLlevar3);
+				fotoEscalarLabel(puntero.lbProductoLlevar3, listaProductos.get(i).getFoto());
 			}
 			if(i==3) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto4);
-				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProductoLlevar4);
+				fotoEscalarLabel(puntero.lbProductoLlevar4, listaProductos.get(i).getFoto());
 			}
 			if(i==4) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto5);
-				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProductoLlevar5);
+				fotoEscalarLabel(puntero.lbProductoLlevar5, listaProductos.get(i).getFoto());
 			}
 			if(i==5) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto6);
-				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProductoLlevar6);
+				fotoEscalarLabel(puntero.lbProductoLlevar6, listaProductos.get(i).getFoto());
 			}
 			if(i==6) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto7);
-				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProductoLlevar7);
+				fotoEscalarLabel(puntero.lbProductoLlevar7, listaProductos.get(i).getFoto());
 			}
 			if(i==7) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto8);
-				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProductoLlevar8);
+				fotoEscalarLabel(puntero.lbProductoLlevar8, listaProductos.get(i).getFoto());
 			}
 			if(i==8) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto9);
-				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProductoLlevar9);
+				fotoEscalarLabel(puntero.lbProductoLlevar9, listaProductos.get(i).getFoto());
 			}
 		}//for
 		
@@ -985,17 +983,17 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		
 		if(puntero.progressBarStock.getValue()<=25) {
 			puntero.progressBarStock.setForeground(Color.RED);
-			puntero.btnSetearStock.setEnabled(true);
-			puntero.textFieldEditarStock.setEditable(true);
+			//puntero.btnSetearStock.setEnabled(true);
+			//puntero.textFieldEditarStock.setEditable(true);
 		}else {
 			puntero.progressBarStock.setForeground(Color.GREEN);
-			puntero.btnSetearStock.setEnabled(false);
-			puntero.textFieldEditarStock.setEditable(false);
+			//puntero.btnSetearStock.setEnabled(false);
+			//puntero.textFieldEditarStock.setEditable(false);
 		}//else
 		
 	}//controlStock
 	
-	public void pedido(int mesaAux, String solicitud, double precioTotal) {
+	public void pedido(int mesaAux, String solicitud, double precioTotal, JLabel label) {
 
 		HashMap<String, Integer>aux=new HashMap<String, Integer>();
 		for(int i=0; i<comandas.size(); i++) {
@@ -1007,6 +1005,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					comandas.get(i).getMesas().get(j).setTotal(Math.round(comandas.get(i).getMesas().get(j).getTotal() *100.00)/100.00);
 					puntero.textFieldTotal.setText(String.valueOf(comandas.get(i).getMesas().get(j).getTotal()));
 					actualizarJlist(comandas.get(i).getMesas().get(j).getItems());
+					System.out.println(label.getText());
 					puntero.btnrestarComida.setVisible(true);
 				}//if1
 			}//for2
@@ -1045,18 +1044,15 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		for(int i=0; i<comandas.size(); i++) {
 			for(int j=0; j<comandas.get(i).getMesas().size(); j++) {
 				if(comandas.get(i).getMesas().get(j).getId()==Integer.parseInt(label.getText())) {
-					while(!pagar) {
-						label.setForeground(Color.RED);
-					}//while
 					puntero.textFieldNumMesa.setText(String.valueOf(comandas.get(i).getMesas().get(j).getId()));
 					if(comandas.get(i).getMesas().get(j).getComandaNum()==0) {
 						comandas.get(i).getMesas().get(j).setComandaNum(1);
 					}//if
 					if(comandas.get(i).getMesas().get(j).getComandaNum()!=0 && pagar==true) {
-						label.setForeground(Color.WHITE);
 						comandas.get(i).getMesas().get(j).setComandaNum(comandas.get(i).getMesas().get(j).getComandaNum() + 1);
 						comandas.get(i).getMesas().get(j).getItems().clear();
-						comandas.get(i).getMesas().get(i).setTotal(0.0);
+						comandas.get(i).getMesas().get(j).setTotal(0.0);
+						mesaOcupada();
 					}//else
 					puntero.textFieldNumComanda.setText(String.valueOf(comandas.get(i).getMesas().get(j).getComandaNum()));
 					puntero.textFieldFecha.setText(String.valueOf(comandas.get(i).getMesas().get(j).getFecha()));
@@ -1064,38 +1060,32 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					puntero.textFieldTotal.setText(String.valueOf(comandas.get(i).getMesas().get(j).getTotal()));
 					actualizarJlist(comandas.get(i).getMesas().get(j).getItems());
 					pagar=false;
-				}//if				
+				}//if
 			}//for2
 		}//for
+		
 		
 	}//mostrarObjetoMesa
 	
 	public void restarElementosMenu() {
 		
 		item=String.valueOf(puntero.listPedido.getSelectedValue());
-		divisionEntrada=item.split(" | ", 2);//PREGUNTAR DAVID
-			for(int j=0; j<comandas.size(); j++) {
-				for(int k=0; k<comandas.get(j).getMesas().size(); k++) {
-						if(comandas.get(j).getMesas().get(k).getId()==Integer.parseInt(puntero.textFieldNumMesa.getText())) {
-							for(Entry<String, Integer> entrada: comandas.get(j).getMesas().get(k).getItems().entrySet()){
-								for(int l=0; l<divisionEntrada.length; l++) {
-									System.out.println(divisionEntrada[l]);
-									if(divisionEntrada[l].equalsIgnoreCase(entrada.getKey())) {
-										if(entrada.getValue()==0) {
-											comandas.get(j).getMesas().get(k).getItems().remove(entrada.getKey());
-										}else if(entrada.getValue()>0) {
-											entrada.setValue(entrada.getValue() - 1);
-											controlarReduccionPedido(entrada.getKey());
-										}//
-									}//if
-								}//for4
-								actualizarJlist(comandas.get(j).getMesas().get(k).getItems());
-								comandas.get(j).getMesas().get(k).setTotal(controlarTotalMesa(comandas.get(j).getMesas().get(k).getItems()));
-								puntero.textFieldTotal.setText(String.valueOf(comandas.get(j).getMesas().get(k).getTotal()));
-							}//for3
-						}//if
-				}//for2
-			}//for1
+		String producto="";
+		//System.out.println(item);
+		divisionEntrada=item.split("\\W+");
+		
+		producto=divisionEntrada[0];
+		for(int i=1; i<=divisionEntrada.length-2; i++) {
+			producto = producto + " " + divisionEntrada[i];
+		}
+		System.out.println(producto);
+		numMesa=Integer.parseInt(puntero.textFieldNumMesa.getText());
+		numComanda=Integer.parseInt(puntero.textFieldNumComanda.getText());
+		System.out.println(numMesa);
+		System.out.println(numComanda);
+		//
+		reduccionElemento(producto);
+		
 	}//restarElementosMenu
 	
 	
@@ -1130,7 +1120,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		
 	}//controlarReduccionPedido
 	
-	//A MEDIAS
 	public double controlarDatosPago(double deber) {
 		
 		puntero.lbmensajeDeber.setText("El importe a abonar por el cliente es de: ");
@@ -1143,19 +1132,27 @@ public class Funcionalidad implements ActionListener, MouseListener{
 	
 	public void controlarPago(double precioPagar) {
 		
-		if(Double.parseDouble(puntero.textFieldAbonoCliente.getText())>=precioPagar) {
-			puntero.textFieldAbonoCliente.setEditable(false);
-			puntero.lbmensajeCambioCliente.setVisible(true);
-			puntero.lbmensajeCambioCliente.setText("Cambio a devolver:");
-			puntero.textFieldcambioTotal.setVisible(true);
-			puntero.textFieldcambioTotal.setText(String.valueOf(Double.parseDouble(puntero.textFieldAbonoCliente.getText()) - precioPagar));
-			puntero.textFieldcambioTotal.setText(String.valueOf(Math.round(Double.parseDouble(puntero.textFieldcambioTotal.getText())*100.0)/100.0));
-			puntero.btnDarCambio.setVisible(true);
-			puntero.lbcerrarSesionPago.setEnabled(false);
+		puntero.lbmensajeDenegar.setVisible(false);
+		if(!puntero.textFieldAbonoCliente.getText().isBlank()) {
+			if(Double.parseDouble(puntero.textFieldAbonoCliente.getText())>=precioPagar) {
+				puntero.textFieldAbonoCliente.setEditable(false);
+				puntero.lbmensajeCambioCliente.setVisible(true);
+				puntero.lbmensajeCambioCliente.setText("Cambio a devolver:");
+				puntero.textFieldcambioTotal.setVisible(true);
+				puntero.textFieldcambioTotal.setText(String.valueOf(Double.parseDouble(puntero.textFieldAbonoCliente.getText()) - precioPagar));
+				puntero.textFieldcambioTotal.setText(String.valueOf(Math.round(Double.parseDouble(puntero.textFieldcambioTotal.getText())*100.0)/100.0));
+				puntero.btnDarCambio.setVisible(true);
+			}else if(Double.parseDouble(puntero.textFieldAbonoCliente.getText())==precioPagar) {
+				puntero.btnDarCambio.setVisible(true);
+			}else if(Double.parseDouble(puntero.textFieldAbonoCliente.getText())<=precioPagar) {
+				puntero.lbmensajeDenegar.setVisible(true);
+				puntero.lbmensajeDenegar.setForeground(Color.RED);
+				puntero.lbmensajeDenegar.setText("CANTIDAD INSUFICIENTE");
+			}//else if
 		}else {
 			puntero.lbmensajeDenegar.setVisible(true);
 			puntero.lbmensajeDenegar.setForeground(Color.RED);
-			puntero.lbmensajeDenegar.setText("CANTIDAD INSUFICIENTE");
+			puntero.lbmensajeDenegar.setText("CAMPO VACIO, RELLENELO");
 		}//else
 		
 	}//controlarPago
@@ -1165,9 +1162,8 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		double diferencia;
 		diferencia=Double.parseDouble(puntero.textFieldAbonoCliente.getText()) - Double.parseDouble(puntero.textFieldcambioTotal.getText());
 		dineroCaja=dineroCaja + diferencia;
-		pagar=true;
 		//
-		this.puntero.Inventario.setVisible(false);
+		this.puntero.Productos.setVisible(false);
 		this.puntero.Configuracion.setVisible(false);
 		this.puntero.Documentacion_1.setVisible(false);
 		this.puntero.Comanda.setVisible(false);
@@ -1176,16 +1172,74 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		this.puntero.Pagos.setVisible(false);
 		this.puntero.Principal.setVisible(true);
 		//
-		puntero.lbmensajeDenegar.setVisible(false);
-		puntero.lbmensajeCambioCliente.setVisible(false);
-		puntero.textFieldcambioTotal.setVisible(false);
-		puntero.btnDarCambio.setVisible(false);
-		puntero.textFieldAbonoCliente.setText("");
-		puntero.textFieldAbonoCliente.setEditable(true);
-		puntero.lbcerrarSesionPago.setEnabled(true);
-		//
+		pagar=true;
 		mostrarDineroCaja(dineroCaja);
+		//
+		
 		
 	}//generarCambio
 	
-}//Funcionalidad
+	public void mesaOcupada() {
+		puntero.lbNumeroMesa.setForeground(Color.white);
+		puntero.lbNumeroMesa_2.setForeground(Color.white);
+		puntero.lbNumeroMesa_3.setForeground(Color.white);
+		puntero.lbNumeroMesa_4.setForeground(Color.white);
+		puntero.lbNumeroMesa_5.setForeground(Color.white);
+		puntero.lbNumeroMesa_6.setForeground(Color.white);
+		//
+		for(int i=0; i<comandas.size(); i++) {
+			for(int j=0; j<comandas.get(i).getMesas().size(); j++) {
+				if(comandas.get(i).getMesas().get(j).getTotal()>0.0) {
+					if(comandas.get(i).getMesas().get(j).getId()==Integer.parseInt(puntero.lbNumeroMesa.getText())) {
+						puntero.lbNumeroMesa.setForeground(Color.red);
+					}//if
+					if(comandas.get(i).getMesas().get(j).getId()==Integer.parseInt(puntero.lbNumeroMesa_2.getText())) {
+						puntero.lbNumeroMesa_2.setForeground(Color.red);			
+					}//if
+					if(comandas.get(i).getMesas().get(j).getId()==Integer.parseInt(puntero.lbNumeroMesa_3.getText())) {
+						puntero.lbNumeroMesa_3.setForeground(Color.red);
+					}//if
+					if(comandas.get(i).getMesas().get(j).getId()==Integer.parseInt(puntero.lbNumeroMesa_4.getText())) {
+						puntero.lbNumeroMesa_4.setForeground(Color.red);
+					}//if
+					if(comandas.get(i).getMesas().get(j).getId()==Integer.parseInt(puntero.lbNumeroMesa_5.getText())) {
+						puntero.lbNumeroMesa_5.setForeground(Color.red);
+					}//if
+					if(comandas.get(i).getMesas().get(j).getId()==Integer.parseInt(puntero.lbNumeroMesa_6.getText())) {
+						puntero.lbNumeroMesa_6.setForeground(Color.red);
+					}//if
+				}//if
+			}//for2
+		}//for
+	}//mesaOcupada
+	
+	public void reduccionElemento(String ejemplo) {
+		
+		for(Entry<String, Integer> entrada: comandas.get(0).getMesas().get(numMesa - 1).getItems().entrySet()){
+			if(ejemplo.equalsIgnoreCase(entrada.getKey())) {
+				if(entrada.getValue()>0) {
+					entrada.setValue(entrada.getValue() - 1);
+					controlarReduccionPedido(entrada.getKey());
+				}//if
+			}//if
+			if(entrada.getValue()<1) {
+				comandas.get(0).getMesas().get(numMesa - 1).getItems().remove(entrada.getKey());
+			}//if				
+			actualizarJlist(comandas.get(0).getMesas().get(numMesa -1).getItems());
+			comandas.get(0).getMesas().get(numMesa - 1).setTotal(controlarTotalMesa(comandas.get(0).getMesas().get(numMesa-1).getItems()));
+			puntero.textFieldTotal.setText(String.valueOf(comandas.get(0).getMesas().get(numMesa - 1).getTotal()));		
+			}//for1
+		
+	}//reduccionElemento
+	
+	public void seteosLabelInventario() {
+		puntero.lbtextoComida.setText("BEBIDAS");
+		puntero.lbFieldID.setText("");
+		puntero.lbFieldNombre.setText("");
+		puntero.lbFieldProveedor.setText("");
+		puntero.lbFieldPrecio.setText("");
+		puntero.lbFieldTipo.setText("");
+		puntero.lbFieldNumStock.setText("");
+	}//seteosLabelInventario
+	
+}//Funcionalidadaa

@@ -94,7 +94,7 @@ public class Interfaz extends JFrame {
 	public JTextArea textAreaPrivacidad;
 	public JScrollPane scrollPane;
 	public JLabel mensajeInformativoConfiguracion;
-	public JButton btnInventario;
+	public JButton btnProductos;
 	public JButton btnContabilidad;
 	public JSeparator separator_3;
 	public JSeparator separator_4;
@@ -107,7 +107,7 @@ public class Interfaz extends JFrame {
 	public JLabel mesa5;
 	public JLabel mesa6;
 	public JLabel lbfotoLlevar;
-	public JPanel Inventario;
+	public JPanel Productos;
 	public JLabel lbfondoInventario;
 	public JSeparator separator_5;
 	public JLabel lbtituloPInventario;
@@ -144,16 +144,16 @@ public class Interfaz extends JFrame {
 	public JSeparator separator_8;
 	public JLabel lbtextoID;
 	public JLabel lbtextoNombre;
-	public JTextField textFieldID;
-	public JTextField textFieldNombre;
+	public JLabel lbFieldID;
+	public JLabel lbFieldNombre;
 	public JSeparator separator_9;
 	public JButton btnVisualizarDatosProducto;
 	public JLabel lbtextoProveedor;
-	public JTextField textFieldProveedor;
+	public JLabel lbFieldProveedor;
 	public JLabel lbtextoImagen;
 	public JLabel lbtextoPrecio;
 	public JLabel lbtextoStock;
-	public JTextField textFieldPrecio;
+	public JLabel lbFieldPrecio;
 	public JLabel lbImagenInventario;
 	public JPanel Comanda;
 	public JLabel lbfondoComanda;
@@ -210,15 +210,15 @@ public class Interfaz extends JFrame {
 	public JTextField textFieldFechaPedidoLlevar;
 	public JTextField textFieldHoraPedidoLlevar;
 	public JSeparator separator_19;
-	public JButton btnProductoLlevar1;
-	public JButton btnProductoLlevar2;
-	public JButton btnProductoLlevar3;
-	public JButton btnProductoLlevar4;
-	public JButton btnProductoLlevar5;
-	public JButton btnProductoLlevar6;
-	public JButton btnProductoLlevar7;
-	public JButton btnProductoLlevar8;
-	public JButton btnProductoLlevar9;
+	public JLabel lbProductoLlevar1;
+	public JLabel lbProductoLlevar2;
+	public JLabel lbProductoLlevar3;
+	public JLabel lbProductoLlevar4;
+	public JLabel lbProductoLlevar5;
+	public JLabel lbProductoLlevar6;
+	public JLabel lbProductoLlevar7;
+	public JLabel lbProductoLlevar8;
+	public JLabel lbProductoLlevar9;
 	public JSpinner spinnerP1;
 	public JSpinner spinnerP2;
 	public JSpinner spinnerP3;
@@ -234,17 +234,13 @@ public class Interfaz extends JFrame {
 	public JSeparator separator_21;
 	public JLabel lblPedidoLevarTotal;
 	public JTextField textFieldTotalLlevar;
-	public JButton btnNewButton;
-	public JButton btnNewButton_3;
+	public JButton btnreducirProductosLlevar;
 	public JLabel lbtextoTipo;
-	public JTextField textFieldTipo;
+	public JLabel lbFieldTipo;
 	public JProgressBar progressBarStock;
 	public JButton btnverComida;
 	public JButton btnverBebida;
-	public JLabel lbEdiccionStock;
-	public JTextField textFieldEditarStock;
-	public JButton btnSetearStock;
-	public JTextField textFieldNumStock;
+	public JLabel lbFieldNumStock;
 	public JLabel lbmensajeStock;
 	public JLabel lbmensajePedido;
 	public JButton btnrestarComida;
@@ -264,6 +260,7 @@ public class Interfaz extends JFrame {
 	public JButton btnDarCambio;
 	public JLabel lbmensajeDenegar;
 	public JButton btnguardarPago;
+	public JLabel lbPagarParaLlevar;
 	
 
 	/**
@@ -297,109 +294,656 @@ public class Interfaz extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		Pagos = new JPanel();
-		Pagos.setBounds(0, 0, 548, 502);
-		contentPane.add(Pagos);
-		Pagos.setLayout(null);
-		Pagos.setVisible(false);
+		ComandaParaLlevar = new JPanel();
+		ComandaParaLlevar.setBounds(0, 0, 548, 502);
+		contentPane.add(ComandaParaLlevar);
+		ComandaParaLlevar.setVisible(false);
+		ComandaParaLlevar.setLayout(null);
 		
-		lbmensajeDenegar = new JLabel("");
-		lbmensajeDenegar.setHorizontalAlignment(SwingConstants.CENTER);
-		lbmensajeDenegar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbmensajeDenegar.setForeground(new Color(255, 0, 0));
-		lbmensajeDenegar.setBounds(111, 339, 329, 27);
-		lbmensajeDenegar.setVisible(false);
+		separator_21 = new JSeparator();
+		separator_21.setForeground(Color.WHITE);
+		separator_21.setBackground(Color.WHITE);
+		separator_21.setBounds(277, 340, 236, 14);
+		ComandaParaLlevar.add(separator_21);
 		
-		btnguardarPago = new JButton("$");
-		btnguardarPago.setBackground(new Color(128, 255, 128));
-		btnguardarPago.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
-		btnguardarPago.setBounds(300, 288, 42, 30);
-		Pagos.add(btnguardarPago);
-		Pagos.add(lbmensajeDenegar);
+		lbcomandaLlevarHora = new JLabel("HORA");
+		lbcomandaLlevarHora.setForeground(Color.WHITE);
+		lbcomandaLlevarHora.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbcomandaLlevarHora.setBounds(292, 182, 79, 14);
+		ComandaParaLlevar.add(lbcomandaLlevarHora);
 		
-		btnDarCambio = new JButton("");
-		btnDarCambio.setBounds(247, 418, 53, 42);
-		btnDarCambio.setVisible(false);
-		Pagos.add(btnDarCambio);
+		btnreducirProductosLlevar = new JButton("- ");
+		btnreducirProductosLlevar.setBackground(new Color(255, 0, 51));
+		btnreducirProductosLlevar.setFont(new Font("Tempus Sans ITC", Font.BOLD, 23));
+		btnreducirProductosLlevar.setBounds(127, 455, 55, 30);
+		ComandaParaLlevar.add(btnreducirProductosLlevar);
 		
-		textFieldDineroDeber = new JTextField();
-		textFieldDineroDeber.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldDineroDeber.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		textFieldDineroDeber.setForeground(new Color(0, 0, 0));
-		textFieldDineroDeber.setEditable(false);
-		textFieldDineroDeber.setBounds(231, 192, 86, 30);
-		Pagos.add(textFieldDineroDeber);
-		textFieldDineroDeber.setColumns(10);
+		textFieldTotalLlevar = new JTextField();
+		textFieldTotalLlevar.setBounds(381, 308, 86, 20);
+		ComandaParaLlevar.add(textFieldTotalLlevar);
+		textFieldTotalLlevar.setColumns(10);
 		
-		lbmensajeAbonarCliente = new JLabel("");
-		lbmensajeAbonarCliente.setHorizontalAlignment(SwingConstants.CENTER);
-		lbmensajeAbonarCliente.setForeground(Color.WHITE);
-		lbmensajeAbonarCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbmensajeAbonarCliente.setBounds(34, 233, 478, 36);
-		Pagos.add(lbmensajeAbonarCliente);
+		lblPedidoLevarTotal = new JLabel("TOTAL");
+		lblPedidoLevarTotal.setForeground(Color.WHITE);
+		lblPedidoLevarTotal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lblPedidoLevarTotal.setBounds(316, 310, 55, 14);
+		ComandaParaLlevar.add(lblPedidoLevarTotal);
 		
-		textFieldAbonoCliente = new JTextField();
-		textFieldAbonoCliente.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldAbonoCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		textFieldAbonoCliente.setColumns(10);
-		textFieldAbonoCliente.setBounds(208, 289, 86, 30);
-		Pagos.add(textFieldAbonoCliente);
+		listProductosLlevar = new JList();
+		listProductosLlevar.setBounds(47, 321, 209, 123);
+		ComandaParaLlevar.add(listProductosLlevar);
 		
-		lbmensajeCambioCliente = new JLabel("");
-		lbmensajeCambioCliente.setHorizontalAlignment(SwingConstants.CENTER);
-		lbmensajeCambioCliente.setForeground(Color.WHITE);
-		lbmensajeCambioCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbmensajeCambioCliente.setVisible(false);
-		lbmensajeCambioCliente.setBounds(34, 330, 478, 36);
-		Pagos.add(lbmensajeCambioCliente);
+		lblPedidoProductos = new JLabel("PEDIDO");
+		lblPedidoProductos.setForeground(Color.WHITE);
+		lblPedidoProductos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lblPedidoProductos.setBounds(116, 301, 66, 14);
+		ComandaParaLlevar.add(lblPedidoProductos);
 		
-		textFieldcambioTotal = new JTextField();
-		textFieldcambioTotal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		textFieldcambioTotal.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldcambioTotal.setEditable(false);
-		textFieldcambioTotal.setColumns(10);
-		textFieldcambioTotal.setVisible(false);
-		textFieldcambioTotal.setBounds(231, 377, 86, 30);
-		Pagos.add(textFieldcambioTotal);
+		separator_20 = new JSeparator();
+		separator_20.setOrientation(SwingConstants.VERTICAL);
+		separator_20.setForeground(Color.WHITE);
+		separator_20.setBackground(Color.WHITE);
+		separator_20.setBounds(278, 291, 19, 158);
+		ComandaParaLlevar.add(separator_20);
 		
-		lbmensajeDeber = new JLabel("");
-		lbmensajeDeber.setHorizontalAlignment(SwingConstants.CENTER);
-		lbmensajeDeber.setForeground(new Color(255, 255, 255));
-		lbmensajeDeber.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbmensajeDeber.setBounds(34, 137, 478, 36);
-		Pagos.add(lbmensajeDeber);
+		spinnerP9 = new JSpinner();
+		spinnerP9.setBounds(483, 260, 30, 20);
+		ComandaParaLlevar.add(spinnerP9);
 		
-		lbcerrarSesionPago = new JLabel("");
-		lbcerrarSesionPago.setForeground(Color.WHITE);
-		lbcerrarSesionPago.setBounds(426, 41, 31, 30);
+		spinnerP6 = new JSpinner();
+		spinnerP6.setBounds(313, 260, 30, 20);
+		ComandaParaLlevar.add(spinnerP6);
+		
+		spinnerP3 = new JSpinner();
+		spinnerP3.setBounds(145, 260, 30, 20);
+		ComandaParaLlevar.add(spinnerP3);
+		
+		spinnerP7 = new JSpinner();
+		spinnerP7.setBounds(368, 260, 30, 20);
+		ComandaParaLlevar.add(spinnerP7);
+		
+		spinnerP5 = new JSpinner();
+		spinnerP5.setBounds(258, 260, 30, 20);
+		ComandaParaLlevar.add(spinnerP5);
+		
+		spinnerP4 = new JSpinner();
+		spinnerP4.setBounds(201, 260, 30, 20);
+		ComandaParaLlevar.add(spinnerP4);
+		
+		spinnerP2 = new JSpinner();
+		spinnerP2.setBounds(90, 260, 30, 20);
+		ComandaParaLlevar.add(spinnerP2);
+		
+		spinnerP8 = new JSpinner();
+		spinnerP8.setBounds(422, 260, 30, 20);
+		ComandaParaLlevar.add(spinnerP8);
+		
+		spinnerP1 = new JSpinner();
+		spinnerP1.setBounds(35, 260, 30, 20);
+		ComandaParaLlevar.add(spinnerP1);
+		
+		separator_19 = new JSeparator();
+		separator_19.setForeground(Color.WHITE);
+		separator_19.setBackground(Color.WHITE);
+		separator_19.setBounds(25, 291, 488, 14);
+		ComandaParaLlevar.add(separator_19);
+		
+		textFieldHoraPedidoLlevar = new JTextField();
+		textFieldHoraPedidoLlevar.setEditable(false);
+		textFieldHoraPedidoLlevar.setColumns(10);
+		textFieldHoraPedidoLlevar.setBounds(381, 179, 119, 20);
+		ComandaParaLlevar.add(textFieldHoraPedidoLlevar);
+		
+		textFieldFechaPedidoLlevar = new JTextField();
+		textFieldFechaPedidoLlevar.setEditable(false);
+		textFieldFechaPedidoLlevar.setColumns(10);
+		textFieldFechaPedidoLlevar.setBounds(381, 152, 119, 20);
+		ComandaParaLlevar.add(textFieldFechaPedidoLlevar);
+		
+		textFieldIdPedido = new JTextField();
+		textFieldIdPedido.setEditable(false);
+		textFieldIdPedido.setColumns(10);
+		textFieldIdPedido.setBounds(381, 126, 119, 20);
+		ComandaParaLlevar.add(textFieldIdPedido);
+		
+		lbProductoLlevar9 = new JLabel("");
+		lbProductoLlevar9.setBounds(467, 214, 55, 46);
+		ComandaParaLlevar.add(lbProductoLlevar9);
+		
+		lbProductoLlevar8 = new JLabel("");
+		lbProductoLlevar8.setBounds(358, 214, 55, 46);
+		ComandaParaLlevar.add(lbProductoLlevar8);
+		
+		lbProductoLlevar7 = new JLabel("");
+		lbProductoLlevar7.setBounds(412, 214, 55, 46);
+		ComandaParaLlevar.add(lbProductoLlevar7);
+		
+		lbProductoLlevar6 = new JLabel("");
+		lbProductoLlevar6.setBounds(303, 214, 55, 46);
+		ComandaParaLlevar.add(lbProductoLlevar6);
+		
+		lbProductoLlevar4 = new JLabel("");
+		lbProductoLlevar4.setBounds(191, 214, 55, 46);
+		ComandaParaLlevar.add(lbProductoLlevar4);
+		
+		lbProductoLlevar3 = new JLabel("");
+		lbProductoLlevar3.setBounds(135, 214, 55, 46);
+		ComandaParaLlevar.add(lbProductoLlevar3);
+		
+		lbProductoLlevar2 = new JLabel("");
+		lbProductoLlevar2.setBounds(80, 214, 55, 46);
+		ComandaParaLlevar.add(lbProductoLlevar2);
+		
+		lbProductoLlevar5 = new JLabel("");
+		lbProductoLlevar5.setBounds(248, 214, 55, 46);
+		ComandaParaLlevar.add(lbProductoLlevar5);
+		
+		lbProductoLlevar1 = new JLabel("");
+		lbProductoLlevar1.setBounds(25, 214, 55, 46);
+		ComandaParaLlevar.add(lbProductoLlevar1);
+		
+		lbcomandaLlevarFecha = new JLabel("FECHA");
+		lbcomandaLlevarFecha.setForeground(Color.WHITE);
+		lbcomandaLlevarFecha.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbcomandaLlevarFecha.setBounds(292, 155, 79, 14);
+		ComandaParaLlevar.add(lbcomandaLlevarFecha);
+		
+		lbcomandaLlevarId = new JLabel("ID PEDIDO");
+		lbcomandaLlevarId.setForeground(Color.WHITE);
+		lbcomandaLlevarId.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbcomandaLlevarId.setBounds(292, 126, 79, 14);
+		ComandaParaLlevar.add(lbcomandaLlevarId);
+		
+		lbclienteDireccion = new JLabel("DIRECCION");
+		lbclienteDireccion.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbclienteDireccion.setForeground(new Color(255, 255, 255));
+		lbclienteDireccion.setBounds(39, 179, 79, 14);
+		ComandaParaLlevar.add(lbclienteDireccion);
+		
+		lbclienteTelefono = new JLabel("TELEFONO");
+		lbclienteTelefono.setForeground(new Color(255, 255, 255));
+		lbclienteTelefono.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbclienteTelefono.setBounds(39, 152, 79, 14);
+		ComandaParaLlevar.add(lbclienteTelefono);
+		
+		lbclienteNombre = new JLabel("NOMBRE");
+		lbclienteNombre.setForeground(new Color(255, 255, 255));
+		lbclienteNombre.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbclienteNombre.setBounds(39, 126, 66, 14);
+		ComandaParaLlevar.add(lbclienteNombre);
+		
+		textFieldclienteDireccion = new JTextField();
+		textFieldclienteDireccion.setEditable(false);
+		textFieldclienteDireccion.setColumns(10);
+		textFieldclienteDireccion.setBounds(137, 179, 119, 20);
+		ComandaParaLlevar.add(textFieldclienteDireccion);
+		
+		textFieldclienteTelefono = new JTextField();
+		textFieldclienteTelefono.setEditable(false);
+		textFieldclienteTelefono.setColumns(10);
+		textFieldclienteTelefono.setBounds(137, 152, 119, 20);
+		ComandaParaLlevar.add(textFieldclienteTelefono);
+		
+		textFieldclienteNombre = new JTextField();
+		textFieldclienteNombre.setEditable(false);
+		textFieldclienteNombre.setBounds(137, 126, 119, 20);
+		ComandaParaLlevar.add(textFieldclienteNombre);
+		textFieldclienteNombre.setColumns(10);
+		
+		lbReferencias = new JLabel("REFERENCIAS");
+		lbReferencias.setForeground(Color.WHITE);
+		lbReferencias.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbReferencias.setBounds(360, 101, 119, 14);
+		ComandaParaLlevar.add(lbReferencias);
+		
+		separator_18 = new JSeparator();
+		separator_18.setOrientation(SwingConstants.VERTICAL);
+		separator_18.setForeground(Color.WHITE);
+		separator_18.setBackground(Color.WHITE);
+		separator_18.setBounds(278, 90, 19, 116);
+		ComandaParaLlevar.add(separator_18);
+		
+		separator_17 = new JSeparator();
+		separator_17.setForeground(Color.WHITE);
+		separator_17.setBackground(Color.WHITE);
+		separator_17.setBounds(30, 204, 488, 14);
+		ComandaParaLlevar.add(separator_17);
+		
+		lbdatosCliente = new JLabel("DATOS CLIENTE");
+		lbdatosCliente.setForeground(new Color(255, 255, 255));
+		lbdatosCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbdatosCliente.setBounds(81, 101, 119, 14);
+		ComandaParaLlevar.add(lbdatosCliente);
+		
+		separator_16 = new JSeparator();
+		separator_16.setForeground(Color.WHITE);
+		separator_16.setBackground(Color.WHITE);
+		separator_16.setBounds(30, 90, 488, 14);
+		ComandaParaLlevar.add(separator_16);
+		
+		lbcerrarSesionComandaLlevar = new JLabel("");
+		lbcerrarSesionComandaLlevar.setForeground(Color.WHITE);
+		lbcerrarSesionComandaLlevar.setBounds(435, 44, 31, 30);
+		ComandaParaLlevar.add(lbcerrarSesionComandaLlevar);
 		//
-		fotoEscalarLabel(lbcerrarSesionPago, "assets/finSesion.png");
-		Pagos.add(lbcerrarSesionPago);
+		fotoEscalarLabel(lbcerrarSesionComandaLlevar, "assets/finSesion.png");
 		
-		lbmostrarHoraPago = new JLabel("16 : 42");
-		lbmostrarHoraPago.setForeground(Color.WHITE);
-		lbmostrarHoraPago.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
-		lbmostrarHoraPago.setBounds(82, 48, 83, 23);
-		Pagos.add(lbmostrarHoraPago);
+		lbtituloComandaLlevar = new JLabel("Coffekie");
+		lbtituloComandaLlevar.setForeground(Color.WHITE);
+		lbtituloComandaLlevar.setFont(new Font("Segoe Script", Font.BOLD, 24));
+		lbtituloComandaLlevar.setBackground(Color.WHITE);
+		lbtituloComandaLlevar.setBounds(222, 37, 119, 42);
+		ComandaParaLlevar.add(lbtituloComandaLlevar);
 		
-		lbtituloPago = new JLabel("Coffekie");
-		lbtituloPago.setForeground(Color.WHITE);
-		lbtituloPago.setFont(new Font("Segoe Script", Font.BOLD, 24));
-		lbtituloPago.setBackground(Color.WHITE);
-		lbtituloPago.setBounds(231, 37, 114, 42);
-		Pagos.add(lbtituloPago);
+		lbmostrarHoraComandaLlevar = new JLabel("16 : 42");
+		lbmostrarHoraComandaLlevar.setForeground(Color.WHITE);
+		lbmostrarHoraComandaLlevar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
+		lbmostrarHoraComandaLlevar.setBounds(67, 44, 79, 23);
+		ComandaParaLlevar.add(lbmostrarHoraComandaLlevar);
 		
-		separator_22 = new JSeparator();
-		separator_22.setForeground(Color.WHITE);
-		separator_22.setBackground(Color.WHITE);
-		separator_22.setBounds(30, 90, 488, 25);
-		Pagos.add(separator_22);
-		
-		lbfondoPagos = new JLabel("");
-		lbfondoPagos.setBounds(0, 0, 548, 502);
+		lbfondoComandaLlevar = new JLabel("");
+		lbfondoComandaLlevar.setBounds(0, 0, 548, 502);
+		ComandaParaLlevar.add(lbfondoComandaLlevar);
 		//
-		fotoEscalarLabel(lbfondoPagos, "assets/fondo2.jpg");
-		Pagos.add(lbfondoPagos);
+		fotoEscalarLabel(lbfondoComandaLlevar, "assets/fondo2.jpg");
+		
+		lbPagarParaLlevar = new JLabel("");
+		lbPagarParaLlevar.setBounds(363, 379, 89, 42);
+		//
+		fotoEscalarLabel(lbPagarParaLlevar, "assets/pagar.png");
+		ComandaParaLlevar.add(lbPagarParaLlevar);
+		
+		Productos = new JPanel();
+		Productos.setBounds(0, 0, 548, 502);
+		contentPane.add(Productos);
+		Productos.setVisible(false);
+		Productos.setLayout(null);
+		
+		lbFieldNumStock = new JLabel();
+		lbFieldNumStock.setForeground(new Color(30, 144, 255));
+		lbFieldNumStock.setBackground(new Color(255, 255, 255));
+		lbFieldNumStock.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbFieldNumStock.setHorizontalAlignment(SwingConstants.CENTER);
+		lbFieldNumStock.setBounds(104, 267, 60, 20);
+		Productos.add(lbFieldNumStock);
+		
+		lbmensajeStock = new JLabel("");
+		lbmensajeStock.setHorizontalAlignment(SwingConstants.CENTER);
+		lbmensajeStock.setForeground(new Color(255, 255, 255));
+		lbmensajeStock.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 14));
+		lbmensajeStock.setBounds(40, 416, 202, 20);
+		Productos.add(lbmensajeStock);
+		lbmensajeStock.setVisible(false);
+		
+		btnverBebida = new JButton("");
+		btnverBebida.setBounds(463, 106, 48, 42);
+		Productos.add(btnverBebida);
+		//
+		
+		btnverComida = new JButton("");
+		btnverComida.setBounds(387, 107, 48, 42);
+		Productos.add(btnverComida);
+		//
+		
+		progressBarStock = new JProgressBar();
+		progressBarStock.setBounds(30, 298, 134, 14);
+		Productos.add(progressBarStock);
+		
+		lbFieldTipo = new JLabel();
+		lbFieldTipo.setForeground(new Color(30, 144, 255));
+		lbFieldTipo.setBackground(new Color(255, 255, 255));
+		lbFieldTipo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbFieldTipo.setHorizontalAlignment(SwingConstants.CENTER);
+		lbFieldTipo.setBounds(30, 363, 72, 20);
+		Productos.add(lbFieldTipo);
+		
+		lbtextoTipo = new JLabel("TIPO:");
+		lbtextoTipo.setHorizontalAlignment(SwingConstants.LEFT);
+		lbtextoTipo.setForeground(Color.WHITE);
+		lbtextoTipo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtextoTipo.setBounds(30, 329, 88, 23);
+		Productos.add(lbtextoTipo);
+		
+		lbImagenInventario = new JLabel("");
+		lbImagenInventario.setBounds(217, 233, 103, 109);
+		Productos.add(lbImagenInventario);
+		//
+		fotoEscalarLabel(lbImagenInventario, "assets/productoDefecto.png");
+		
+		lbtextoStock = new JLabel("STOCK:");
+		lbtextoStock.setHorizontalAlignment(SwingConstants.LEFT);
+		lbtextoStock.setForeground(Color.WHITE);
+		lbtextoStock.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtextoStock.setBounds(30, 264, 88, 23);
+		Productos.add(lbtextoStock);
+		
+		lbFieldPrecio = new JLabel();
+		lbFieldPrecio.setForeground(new Color(30, 144, 255));
+		lbFieldPrecio.setBackground(new Color(255, 255, 255));
+		lbFieldPrecio.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbFieldPrecio.setHorizontalAlignment(SwingConstants.CENTER);
+		lbFieldPrecio.setBounds(30, 233, 72, 20);
+		Productos.add(lbFieldPrecio);
+		
+		lbtextoPrecio = new JLabel("PRECIO:");
+		lbtextoPrecio.setHorizontalAlignment(SwingConstants.LEFT);
+		lbtextoPrecio.setForeground(Color.WHITE);
+		lbtextoPrecio.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtextoPrecio.setBounds(30, 196, 88, 23);
+		Productos.add(lbtextoPrecio);
+		
+		lbtextoImagen = new JLabel("IMAGEN:");
+		lbtextoImagen.setHorizontalAlignment(SwingConstants.LEFT);
+		lbtextoImagen.setForeground(Color.WHITE);
+		lbtextoImagen.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtextoImagen.setBounds(232, 196, 88, 23);
+		Productos.add(lbtextoImagen);
+		
+		lbFieldProveedor = new JLabel();
+		lbFieldProveedor.setForeground(new Color(30, 144, 255));
+		lbFieldProveedor.setBackground(new Color(255, 255, 255));
+		lbFieldProveedor.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbFieldProveedor.setHorizontalAlignment(SwingConstants.CENTER);
+		lbFieldProveedor.setBounds(156, 165, 190, 20);
+		Productos.add(lbFieldProveedor);
+		
+		lbtextoProveedor = new JLabel("PROVEEDOR:");
+		lbtextoProveedor.setHorizontalAlignment(SwingConstants.LEFT);
+		lbtextoProveedor.setForeground(Color.WHITE);
+		lbtextoProveedor.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtextoProveedor.setBounds(30, 162, 134, 23);
+		Productos.add(lbtextoProveedor);
+		
+		btnVisualizarDatosProducto = new JButton("");
+		btnVisualizarDatosProducto.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
+		btnVisualizarDatosProducto.setBackground(new Color(153, 204, 255));
+		btnVisualizarDatosProducto.setBounds(265, 401, 55, 49);
+		btnVisualizarDatosProducto.setEnabled(false);
+		Productos.add(btnVisualizarDatosProducto);
+		
+		separator_9 = new JSeparator();
+		separator_9.setForeground(Color.WHITE);
+		separator_9.setBackground(Color.WHITE);
+		separator_9.setBounds(30, 386, 339, 25);
+		Productos.add(separator_9);
+		
+		listProductos = new JList();
+		listProductos.setBounds(391, 191, 120, 192);
+		Productos.add(listProductos);
+		
+		lbtextoComida = new JLabel("PRODUCTOS");
+		lbtextoComida.setForeground(new Color(255, 255, 255));
+		lbtextoComida.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtextoComida.setHorizontalAlignment(SwingConstants.CENTER);
+		lbtextoComida.setBounds(391, 159, 120, 23);
+		Productos.add(lbtextoComida);
+		
+		separator_8 = new JSeparator();
+		separator_8.setOrientation(SwingConstants.VERTICAL);
+		separator_8.setForeground(Color.WHITE);
+		separator_8.setBackground(Color.WHITE);
+		separator_8.setBounds(367, 90, 22, 401);
+		Productos.add(separator_8);
+		
+		lbtextoID = new JLabel("ID:");
+		lbtextoID.setHorizontalAlignment(SwingConstants.LEFT);
+		lbtextoID.setForeground(Color.WHITE);
+		lbtextoID.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtextoID.setBounds(30, 112, 31, 23);
+		Productos.add(lbtextoID);
+		
+		lbtextoNombre = new JLabel("NOMBRE:");
+		lbtextoNombre.setHorizontalAlignment(SwingConstants.LEFT);
+		lbtextoNombre.setForeground(Color.WHITE);
+		lbtextoNombre.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtextoNombre.setBounds(138, 112, 94, 23);
+		Productos.add(lbtextoNombre);
+		
+		lbFieldID = new JLabel();
+		lbFieldID.setForeground(new Color(30, 144, 255));
+		lbFieldID.setBackground(new Color(255, 255, 255));
+		lbFieldID.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbFieldID.setHorizontalAlignment(SwingConstants.CENTER);
+		lbFieldID.setBounds(62, 115, 66, 20);
+		Productos.add(lbFieldID);
+		
+		lbFieldNombre = new JLabel();
+		lbFieldNombre.setForeground(new Color(30, 144, 255));
+		lbFieldNombre.setBackground(new Color(255, 255, 255));
+		lbFieldNombre.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbFieldNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		lbFieldNombre.setBounds(232, 115, 114, 20);
+		Productos.add(lbFieldNombre);
+		
+		lbcerrarSesionInventario = new JLabel("");
+		lbcerrarSesionInventario.setForeground(Color.WHITE);
+		lbcerrarSesionInventario.setBounds(437, 36, 31, 30);
+		Productos.add(lbcerrarSesionInventario);
+		//SETEO TEXTO A FOTO REGISTRO
+				fotoEscalarLabel(lbcerrarSesionInventario, "assets/finSesion.png");
+				
+				lbmostrarHoraInventario = new JLabel("16 : 42");
+				lbmostrarHoraInventario.setForeground(Color.WHITE);
+				lbmostrarHoraInventario.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
+				lbmostrarHoraInventario.setBounds(81, 44, 83, 23);
+				Productos.add(lbmostrarHoraInventario);
+				
+				lbtituloPInventario = new JLabel("Coffekie");
+				lbtituloPInventario.setForeground(Color.WHITE);
+				lbtituloPInventario.setFont(new Font("Segoe Script", Font.BOLD, 24));
+				lbtituloPInventario.setBackground(Color.WHITE);
+				lbtituloPInventario.setBounds(239, 37, 114, 42);
+				Productos.add(lbtituloPInventario);
+				
+				separator_5 = new JSeparator();
+				separator_5.setBounds(30, 90, 488, 25);
+				Productos.add(separator_5);
+				separator_5.setForeground(Color.WHITE);
+				separator_5.setBackground(Color.WHITE);
+				
+				lbfondoInventario = new JLabel("");
+				lbfondoInventario.setBounds(0, 0, 548, 502);
+				//
+				fotoEscalarLabel(lbfondoInventario, "assets/fondo2.jpg");
+				Productos.add(lbfondoInventario);
+		//
+		
+		Principal = new JPanel();
+		Principal.setBounds(0, 0, 548, 502);
+		contentPane.add(Principal);
+		Principal.setLayout(null);
+		Principal.setVisible(false);
+		
+		lbParaLlevar = new JLabel("Para llevar");
+		lbParaLlevar.setForeground(new Color(255, 255, 255));
+		lbParaLlevar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 25));
+		lbParaLlevar.setBounds(170, 447, 139, 27);
+		Principal.add(lbParaLlevar);
+		
+		separator_6 = new JSeparator();
+		separator_6.setForeground(Color.WHITE);
+		separator_6.setBackground(Color.WHITE);
+		separator_6.setBounds(30, 429, 488, 25);
+		Principal.add(separator_6);
+		
+		lbCajaRegistradora = new JLabel("");
+		lbCajaRegistradora.setBounds(40, 161, 63, 47);
+		Principal.add(lbCajaRegistradora);
+		//
+		fotoEscalarLabel(lbCajaRegistradora, "assets/cajaRegistradora.png");
+		
+		lbDinero = new JLabel("");
+		lbDinero.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
+		lbDinero.setBounds(126, 171, 88, 38);
+		Principal.add(lbDinero);
+		
+		lbHorario = new JLabel("");
+		lbHorario.setFont(new Font("Yu Gothic UI Light", Font.BOLD | Font.ITALIC, 24));
+		lbHorario.setBounds(113, 110, 101, 38);
+		Principal.add(lbHorario);
+		
+		lbCartel = new JLabel("");
+		lbCartel.setBounds(40, 101, 63, 47);
+		//
+		fotoEscalarLabel(lbCartel, "assets/cartelCafeteria4.png");
+		Principal.add(lbCartel);
+		
+		lbNumeroMesa_6 = new JLabel("6");
+		lbNumeroMesa_6.setForeground(Color.WHITE);
+		lbNumeroMesa_6.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		lbNumeroMesa_6.setBounds(397, 370, 20, 30);
+		Principal.add(lbNumeroMesa_6);
+		
+		lbNumeroMesa_5 = new JLabel("5");
+		lbNumeroMesa_5.setForeground(Color.WHITE);
+		lbNumeroMesa_5.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		lbNumeroMesa_5.setBounds(224, 370, 20, 30);
+		Principal.add(lbNumeroMesa_5);
+		
+		lbNumeroMesa_4 = new JLabel("4");
+		lbNumeroMesa_4.setForeground(Color.WHITE);
+		lbNumeroMesa_4.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		lbNumeroMesa_4.setBounds(40, 370, 20, 30);
+		Principal.add(lbNumeroMesa_4);
+		
+		lbNumeroMesa_3 = new JLabel("3");
+		lbNumeroMesa_3.setForeground(Color.WHITE);
+		lbNumeroMesa_3.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		lbNumeroMesa_3.setBounds(397, 264, 20, 30);
+		Principal.add(lbNumeroMesa_3);
+		
+		lbNumeroMesa_2 = new JLabel("2");
+		lbNumeroMesa_2.setForeground(Color.WHITE);
+		lbNumeroMesa_2.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		lbNumeroMesa_2.setBounds(224, 264, 20, 30);
+		Principal.add(lbNumeroMesa_2);
+		
+		lbNumeroMesa = new JLabel("1");
+		lbNumeroMesa.setForeground(new Color(255, 255, 255));
+		lbNumeroMesa.setBounds(40, 264, 20, 30);
+		Principal.add(lbNumeroMesa);
+		lbNumeroMesa.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		
+		lbfotoLlevar = new JLabel("");
+		lbfotoLlevar.setBounds(320, 438, 46, 42);
+		Principal.add(lbfotoLlevar);
+		//
+		fotoEscalarLabel(lbfotoLlevar, "assets/paraLlevar.png");
+		
+		mesa6 = new JLabel("");
+		mesa6.setBounds(417, 342, 79, 71);
+		Principal.add(mesa6);
+		fotoEscalarLabel(mesa6, "assets/mesas.png");
+		
+		mesa5 = new JLabel("");
+		mesa5.setBounds(243, 345, 79, 68);
+		Principal.add(mesa5);
+		fotoEscalarLabel(mesa5, "assets/mesas.png");
+		
+		mesa4 = new JLabel("");
+		mesa4.setBounds(62, 345, 79, 71);
+		Principal.add(mesa4);
+		fotoEscalarLabel(mesa4, "assets/mesas.png");
+		
+		mesa3 = new JLabel("");
+		mesa3.setBounds(417, 240, 79, 71);
+		Principal.add(mesa3);
+		fotoEscalarLabel(mesa3, "assets/mesas.png");
+		
+		mesa2 = new JLabel("");
+		mesa2.setBounds(243, 240, 79, 71);
+		Principal.add(mesa2);
+		fotoEscalarLabel(mesa2, "assets/mesas.png");
+		
+		mesa1 = new JLabel("");
+		mesa1.setBounds(62, 240, 79, 71);
+		Principal.add(mesa1);
+		//SETEAR FOTO DE TODAS LAS MESAS 1-6
+		fotoEscalarLabel(mesa1, "assets/mesas.png");
+		
+		lbfotoContabilidad = new JLabel("");
+		lbfotoContabilidad.setBounds(477, 161, 46, 40);
+		Principal.add(lbfotoContabilidad);
+		//
+		fotoEscalarLabel(lbfotoContabilidad, "assets/contabilidad.png");
+		
+		lbfotoInventario = new JLabel("");
+		lbfotoInventario.setBounds(472, 110, 46, 38);
+		//
+		//SETEO TEXTO A FOTO REGISTRO
+		fotoEscalarLabel(lbfotoInventario, "assets/stock.png");
+		//
+		Principal.add(lbfotoInventario);
+		
+		separator_4 = new JSeparator();
+		separator_4.setOrientation(SwingConstants.VERTICAL);
+		separator_4.setForeground(Color.WHITE);
+		separator_4.setBackground(Color.WHITE);
+		separator_4.setBounds(335, 91, 31, 126);
+		Principal.add(separator_4);
+		
+		separator_3 = new JSeparator();
+		separator_3.setForeground(Color.WHITE);
+		separator_3.setBackground(Color.WHITE);
+		separator_3.setBounds(30, 214, 488, 25);
+		Principal.add(separator_3);
+		
+		btnContabilidad = new JButton("Contabilidad");
+		btnContabilidad.setBackground(new Color(255, 255, 255));
+		btnContabilidad.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
+		btnContabilidad.setBounds(348, 161, 114, 42);
+		Principal.add(btnContabilidad);
+		
+		btnProductos = new JButton("Productos");
+		btnProductos.setBackground(new Color(255, 255, 255));
+		btnProductos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
+		btnProductos.setBounds(348, 110, 114, 42);
+		Principal.add(btnProductos);
+		
+		separator = new JSeparator();
+		separator.setForeground(new Color(255, 255, 255));
+		separator.setBackground(new Color(255, 255, 255));
+		separator.setBounds(30, 90, 488, 25);
+		Principal.add(separator);
+		
+		lbfotoSesion = new JLabel("");
+		lbfotoSesion.setBounds(410, 26, 53, 42);
+		Principal.add(lbfotoSesion);
+		
+		lbnombreEmpleado = new JLabel("");
+		lbnombreEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
+		lbnombreEmpleado.setBounds(393, 73, 88, 18);
+		Principal.add(lbnombreEmpleado);
+		lbnombreEmpleado.setForeground(Color.WHITE);
+		lbnombreEmpleado.setFont(new Font("Yu Gothic Light", Font.BOLD, 13));
+		
+		lbcerrarSesion = new JLabel("");
+		lbcerrarSesion.setForeground(Color.WHITE);
+		lbcerrarSesion.setBounds(487, 49, 31, 30);
+		Principal.add(lbcerrarSesion);
+		//FOTO CERRAR SESION
+		fotoEscalarLabel(lbcerrarSesion, "assets/finSesion.png");
+		//
+		
+		lbmostrarHoraPrincipal = new JLabel("16 : 42");
+		lbmostrarHoraPrincipal.setForeground(Color.WHITE);
+		lbmostrarHoraPrincipal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
+		lbmostrarHoraPrincipal.setBounds(80, 44, 79, 23);
+		Principal.add(lbmostrarHoraPrincipal);
+		
+		lbtituloPrincipal = new JLabel("Coffekie");
+		lbtituloPrincipal.setForeground(Color.WHITE);
+		//lbtituloP.setFont(new Font(Font.UNDERLINE));
+		lbtituloPrincipal.setFont(new Font("Segoe Script", Font.BOLD, 24));
+		lbtituloPrincipal.setBackground(Color.WHITE);
+		lbtituloPrincipal.setBounds(221, 38, 119, 42);
+		Principal.add(lbtituloPrincipal);
+		
+			JLabel lbPrincipalFondo = new JLabel("");
+			lbPrincipalFondo.setBounds(0, 0, 548, 502);
+			Principal.add(lbPrincipalFondo);
+			//Fondo interfaz
+			fotoEscalarLabel(lbPrincipalFondo, "assets/fondo2.jpg");
 		//
 		
 		Comanda = new JPanel();
@@ -608,663 +1152,110 @@ public class Interfaz extends JFrame {
 		Comanda.add(lbfondoComanda);
 		//
 		fotoEscalarLabel(lbfondoComanda, "assets/fondo2.jpg");
+		
+		Pagos = new JPanel();
+		Pagos.setBounds(0, 0, 548, 502);
+		contentPane.add(Pagos);
+		Pagos.setLayout(null);
+		Pagos.setVisible(false);
+		
+		lbmensajeDenegar = new JLabel("");
+		lbmensajeDenegar.setHorizontalAlignment(SwingConstants.CENTER);
+		lbmensajeDenegar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbmensajeDenegar.setForeground(new Color(255, 0, 0));
+		lbmensajeDenegar.setBounds(111, 339, 329, 27);
+		lbmensajeDenegar.setVisible(false);
+		
+		btnguardarPago = new JButton("$");
+		btnguardarPago.setBackground(new Color(128, 255, 128));
+		btnguardarPago.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
+		btnguardarPago.setBounds(300, 288, 42, 30);
+		Pagos.add(btnguardarPago);
+		Pagos.add(lbmensajeDenegar);
+		
+		btnDarCambio = new JButton("");
+		btnDarCambio.setBounds(247, 418, 53, 42);
+		btnDarCambio.setVisible(false);
+		Pagos.add(btnDarCambio);
+		
+		textFieldDineroDeber = new JTextField();
+		textFieldDineroDeber.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldDineroDeber.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		textFieldDineroDeber.setForeground(new Color(0, 0, 0));
+		textFieldDineroDeber.setEditable(false);
+		textFieldDineroDeber.setBounds(231, 192, 86, 30);
+		Pagos.add(textFieldDineroDeber);
+		textFieldDineroDeber.setColumns(10);
+		
+		lbmensajeAbonarCliente = new JLabel("");
+		lbmensajeAbonarCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		lbmensajeAbonarCliente.setForeground(Color.WHITE);
+		lbmensajeAbonarCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbmensajeAbonarCliente.setBounds(34, 233, 478, 36);
+		Pagos.add(lbmensajeAbonarCliente);
+		
+		textFieldAbonoCliente = new JTextField();
+		textFieldAbonoCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldAbonoCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		textFieldAbonoCliente.setColumns(10);
+		textFieldAbonoCliente.setBounds(208, 289, 86, 30);
+		Pagos.add(textFieldAbonoCliente);
+		
+		lbmensajeCambioCliente = new JLabel("");
+		lbmensajeCambioCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		lbmensajeCambioCliente.setForeground(Color.WHITE);
+		lbmensajeCambioCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbmensajeCambioCliente.setVisible(false);
+		lbmensajeCambioCliente.setBounds(34, 330, 478, 36);
+		Pagos.add(lbmensajeCambioCliente);
+		
+		textFieldcambioTotal = new JTextField();
+		textFieldcambioTotal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		textFieldcambioTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldcambioTotal.setEditable(false);
+		textFieldcambioTotal.setColumns(10);
+		textFieldcambioTotal.setVisible(false);
+		textFieldcambioTotal.setBounds(231, 377, 86, 30);
+		Pagos.add(textFieldcambioTotal);
+		
+		lbmensajeDeber = new JLabel("");
+		lbmensajeDeber.setHorizontalAlignment(SwingConstants.CENTER);
+		lbmensajeDeber.setForeground(new Color(255, 255, 255));
+		lbmensajeDeber.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbmensajeDeber.setBounds(34, 137, 478, 36);
+		Pagos.add(lbmensajeDeber);
+		
+		lbcerrarSesionPago = new JLabel("");
+		lbcerrarSesionPago.setForeground(Color.WHITE);
+		lbcerrarSesionPago.setBounds(426, 41, 31, 30);
 		//
+		fotoEscalarLabel(lbcerrarSesionPago, "assets/finSesion.png");
+		Pagos.add(lbcerrarSesionPago);
 		
-		Principal = new JPanel();
-		Principal.setBounds(0, 0, 548, 502);
-		contentPane.add(Principal);
-		Principal.setLayout(null);
-		Principal.setVisible(false);
+		lbmostrarHoraPago = new JLabel("16 : 42");
+		lbmostrarHoraPago.setForeground(Color.WHITE);
+		lbmostrarHoraPago.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
+		lbmostrarHoraPago.setBounds(82, 48, 83, 23);
+		Pagos.add(lbmostrarHoraPago);
 		
-		lbParaLlevar = new JLabel("Para llevar");
-		lbParaLlevar.setForeground(new Color(255, 255, 255));
-		lbParaLlevar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 25));
-		lbParaLlevar.setBounds(170, 447, 139, 27);
-		Principal.add(lbParaLlevar);
+		lbtituloPago = new JLabel("Coffekie");
+		lbtituloPago.setForeground(Color.WHITE);
+		lbtituloPago.setFont(new Font("Segoe Script", Font.BOLD, 24));
+		lbtituloPago.setBackground(Color.WHITE);
+		lbtituloPago.setBounds(231, 37, 114, 42);
+		Pagos.add(lbtituloPago);
 		
-		separator_6 = new JSeparator();
-		separator_6.setForeground(Color.WHITE);
-		separator_6.setBackground(Color.WHITE);
-		separator_6.setBounds(30, 429, 488, 25);
-		Principal.add(separator_6);
+		separator_22 = new JSeparator();
+		separator_22.setForeground(Color.WHITE);
+		separator_22.setBackground(Color.WHITE);
+		separator_22.setBounds(30, 90, 488, 25);
+		Pagos.add(separator_22);
 		
-		lbCajaRegistradora = new JLabel("");
-		lbCajaRegistradora.setBounds(40, 161, 63, 47);
-		Principal.add(lbCajaRegistradora);
+		lbfondoPagos = new JLabel("");
+		lbfondoPagos.setBounds(0, 0, 548, 502);
 		//
-		fotoEscalarLabel(lbCajaRegistradora, "assets/cajaRegistradora.png");
-		
-		lbDinero = new JLabel("");
-		lbDinero.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
-		lbDinero.setBounds(126, 171, 88, 38);
-		Principal.add(lbDinero);
-		
-		lbHorario = new JLabel("");
-		lbHorario.setFont(new Font("Yu Gothic UI Light", Font.BOLD | Font.ITALIC, 24));
-		lbHorario.setBounds(113, 110, 101, 38);
-		Principal.add(lbHorario);
-		
-		lbCartel = new JLabel("");
-		lbCartel.setBounds(40, 101, 63, 47);
-		//
-		fotoEscalarLabel(lbCartel, "assets/cartelCafeteria4.png");
-		Principal.add(lbCartel);
-		
-		lbNumeroMesa_6 = new JLabel("6");
-		lbNumeroMesa_6.setForeground(Color.WHITE);
-		lbNumeroMesa_6.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		lbNumeroMesa_6.setBounds(397, 370, 20, 30);
-		Principal.add(lbNumeroMesa_6);
-		
-		lbNumeroMesa_5 = new JLabel("5");
-		lbNumeroMesa_5.setForeground(Color.WHITE);
-		lbNumeroMesa_5.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		lbNumeroMesa_5.setBounds(224, 370, 20, 30);
-		Principal.add(lbNumeroMesa_5);
-		
-		lbNumeroMesa_4 = new JLabel("4");
-		lbNumeroMesa_4.setForeground(Color.WHITE);
-		lbNumeroMesa_4.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		lbNumeroMesa_4.setBounds(40, 370, 20, 30);
-		Principal.add(lbNumeroMesa_4);
-		
-		lbNumeroMesa_3 = new JLabel("3");
-		lbNumeroMesa_3.setForeground(Color.WHITE);
-		lbNumeroMesa_3.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		lbNumeroMesa_3.setBounds(397, 264, 20, 30);
-		Principal.add(lbNumeroMesa_3);
-		
-		lbNumeroMesa_2 = new JLabel("2");
-		lbNumeroMesa_2.setForeground(Color.WHITE);
-		lbNumeroMesa_2.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		lbNumeroMesa_2.setBounds(224, 264, 20, 30);
-		Principal.add(lbNumeroMesa_2);
-		
-		lbNumeroMesa = new JLabel("1");
-		lbNumeroMesa.setForeground(new Color(255, 255, 255));
-		lbNumeroMesa.setBounds(40, 264, 20, 30);
-		Principal.add(lbNumeroMesa);
-		lbNumeroMesa.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		
-		lbfotoLlevar = new JLabel("");
-		lbfotoLlevar.setBounds(320, 438, 46, 42);
-		Principal.add(lbfotoLlevar);
-		//
-		fotoEscalarLabel(lbfotoLlevar, "assets/paraLlevar.png");
-		
-		mesa6 = new JLabel("");
-		mesa6.setBounds(417, 342, 79, 71);
-		Principal.add(mesa6);
-		fotoEscalarLabel(mesa6, "assets/mesas.png");
-		
-		mesa5 = new JLabel("");
-		mesa5.setBounds(243, 345, 79, 68);
-		Principal.add(mesa5);
-		fotoEscalarLabel(mesa5, "assets/mesas.png");
-		
-		mesa4 = new JLabel("");
-		mesa4.setBounds(62, 345, 79, 71);
-		Principal.add(mesa4);
-		fotoEscalarLabel(mesa4, "assets/mesas.png");
-		
-		mesa3 = new JLabel("");
-		mesa3.setBounds(417, 240, 79, 71);
-		Principal.add(mesa3);
-		fotoEscalarLabel(mesa3, "assets/mesas.png");
-		
-		mesa2 = new JLabel("");
-		mesa2.setBounds(243, 240, 79, 71);
-		Principal.add(mesa2);
-		fotoEscalarLabel(mesa2, "assets/mesas.png");
-		
-		mesa1 = new JLabel("");
-		mesa1.setBounds(62, 240, 79, 71);
-		Principal.add(mesa1);
-		//SETEAR FOTO DE TODAS LAS MESAS 1-6
-		fotoEscalarLabel(mesa1, "assets/mesas.png");
-		
-		lbfotoContabilidad = new JLabel("");
-		lbfotoContabilidad.setBounds(477, 161, 46, 40);
-		Principal.add(lbfotoContabilidad);
-		//
-		fotoEscalarLabel(lbfotoContabilidad, "assets/contabilidad.png");
-		
-		lbfotoInventario = new JLabel("");
-		lbfotoInventario.setBounds(472, 110, 46, 38);
-		//
-		//SETEO TEXTO A FOTO REGISTRO
-		fotoEscalarLabel(lbfotoInventario, "assets/stock.png");
-		//
-		Principal.add(lbfotoInventario);
-		
-		separator_4 = new JSeparator();
-		separator_4.setOrientation(SwingConstants.VERTICAL);
-		separator_4.setForeground(Color.WHITE);
-		separator_4.setBackground(Color.WHITE);
-		separator_4.setBounds(335, 91, 31, 126);
-		Principal.add(separator_4);
-		
-		separator_3 = new JSeparator();
-		separator_3.setForeground(Color.WHITE);
-		separator_3.setBackground(Color.WHITE);
-		separator_3.setBounds(30, 214, 488, 25);
-		Principal.add(separator_3);
-		
-		btnContabilidad = new JButton("Contabilidad");
-		btnContabilidad.setBackground(new Color(255, 255, 255));
-		btnContabilidad.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
-		btnContabilidad.setBounds(348, 161, 114, 42);
-		Principal.add(btnContabilidad);
-		
-		btnInventario = new JButton("Inventario");
-		btnInventario.setBackground(new Color(255, 255, 255));
-		btnInventario.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
-		btnInventario.setBounds(348, 110, 114, 42);
-		Principal.add(btnInventario);
-		
-		separator = new JSeparator();
-		separator.setForeground(new Color(255, 255, 255));
-		separator.setBackground(new Color(255, 255, 255));
-		separator.setBounds(30, 90, 488, 25);
-		Principal.add(separator);
-		
-		lbfotoSesion = new JLabel("");
-		lbfotoSesion.setBounds(410, 26, 53, 42);
-		Principal.add(lbfotoSesion);
-		
-		lbnombreEmpleado = new JLabel("");
-		lbnombreEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
-		lbnombreEmpleado.setBounds(393, 73, 88, 18);
-		Principal.add(lbnombreEmpleado);
-		lbnombreEmpleado.setForeground(Color.WHITE);
-		lbnombreEmpleado.setFont(new Font("Yu Gothic Light", Font.BOLD, 13));
-		
-		lbcerrarSesion = new JLabel("");
-		lbcerrarSesion.setForeground(Color.WHITE);
-		lbcerrarSesion.setBounds(487, 49, 31, 30);
-		Principal.add(lbcerrarSesion);
-		//FOTO CERRAR SESION
-		fotoEscalarLabel(lbcerrarSesion, "assets/finSesion.png");
-		//
-		
-		lbmostrarHoraPrincipal = new JLabel("16 : 42");
-		lbmostrarHoraPrincipal.setForeground(Color.WHITE);
-		lbmostrarHoraPrincipal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
-		lbmostrarHoraPrincipal.setBounds(80, 44, 79, 23);
-		Principal.add(lbmostrarHoraPrincipal);
-		
-		lbtituloPrincipal = new JLabel("Coffekie");
-		lbtituloPrincipal.setForeground(Color.WHITE);
-		//lbtituloP.setFont(new Font(Font.UNDERLINE));
-		lbtituloPrincipal.setFont(new Font("Segoe Script", Font.BOLD, 24));
-		lbtituloPrincipal.setBackground(Color.WHITE);
-		lbtituloPrincipal.setBounds(221, 38, 119, 42);
-		Principal.add(lbtituloPrincipal);
-		
-			JLabel lbPrincipalFondo = new JLabel("");
-			lbPrincipalFondo.setBounds(0, 0, 548, 502);
-			Principal.add(lbPrincipalFondo);
-			//Fondo interfaz
-			fotoEscalarLabel(lbPrincipalFondo, "assets/fondo2.jpg");
-		
-		Inventario = new JPanel();
-		Inventario.setBounds(0, 0, 548, 502);
-		contentPane.add(Inventario);
-		Inventario.setVisible(false);
-		Inventario.setLayout(null);
-		
-		textFieldNumStock = new JTextField();
-		textFieldNumStock.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldNumStock.setEditable(false);
-		textFieldNumStock.setColumns(10);
-		textFieldNumStock.setBounds(104, 267, 60, 20);
-		Inventario.add(textFieldNumStock);
-		
-		lbmensajeStock = new JLabel("");
-		lbmensajeStock.setHorizontalAlignment(SwingConstants.CENTER);
-		lbmensajeStock.setForeground(new Color(255, 255, 255));
-		lbmensajeStock.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbmensajeStock.setBounds(156, 363, 193, 20);
-		Inventario.add(lbmensajeStock);
-		lbmensajeStock.setVisible(false);
-		
-		btnSetearStock = new JButton("");
-		btnSetearStock.setBounds(186, 422, 72, 23);
-		btnSetearStock.setEnabled(false);
-		Inventario.add(btnSetearStock);
-		
-		lbEdiccionStock = new JLabel("NUEVO STOCK");
-		lbEdiccionStock.setForeground(new Color(255, 255, 255));
-		lbEdiccionStock.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 20));
-		lbEdiccionStock.setBounds(42, 409, 134, 29);
-		Inventario.add(lbEdiccionStock);
-		
-		textFieldEditarStock = new JTextField();
-		textFieldEditarStock.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldEditarStock.setEditable(false);
-		textFieldEditarStock.setColumns(10);
-		textFieldEditarStock.setBounds(186, 399, 72, 20);
-		Inventario.add(textFieldEditarStock);
-		
-		btnverBebida = new JButton("");
-		btnverBebida.setBounds(463, 106, 48, 42);
-		Inventario.add(btnverBebida);
-		//
-		
-		btnverComida = new JButton("");
-		btnverComida.setBounds(387, 107, 48, 42);
-		Inventario.add(btnverComida);
-		//
-		
-		progressBarStock = new JProgressBar();
-		progressBarStock.setBounds(30, 298, 134, 14);
-		Inventario.add(progressBarStock);
-		
-		textFieldTipo = new JTextField();
-		textFieldTipo.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldTipo.setEditable(false);
-		textFieldTipo.setColumns(10);
-		textFieldTipo.setBounds(30, 363, 72, 20);
-		Inventario.add(textFieldTipo);
-		
-		lbtextoTipo = new JLabel("TIPO:");
-		lbtextoTipo.setHorizontalAlignment(SwingConstants.LEFT);
-		lbtextoTipo.setForeground(Color.WHITE);
-		lbtextoTipo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtextoTipo.setBounds(30, 329, 88, 23);
-		Inventario.add(lbtextoTipo);
-		
-		lbImagenInventario = new JLabel("");
-		lbImagenInventario.setBounds(217, 233, 103, 109);
-		Inventario.add(lbImagenInventario);
-		
-		lbtextoStock = new JLabel("STOCK:");
-		lbtextoStock.setHorizontalAlignment(SwingConstants.LEFT);
-		lbtextoStock.setForeground(Color.WHITE);
-		lbtextoStock.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtextoStock.setBounds(30, 264, 88, 23);
-		Inventario.add(lbtextoStock);
-		
-		textFieldPrecio = new JTextField();
-		textFieldPrecio.setEditable(false);
-		textFieldPrecio.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldPrecio.setColumns(10);
-		textFieldPrecio.setBounds(30, 233, 72, 20);
-		Inventario.add(textFieldPrecio);
-		
-		lbtextoPrecio = new JLabel("PRECIO:");
-		lbtextoPrecio.setHorizontalAlignment(SwingConstants.LEFT);
-		lbtextoPrecio.setForeground(Color.WHITE);
-		lbtextoPrecio.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtextoPrecio.setBounds(30, 196, 88, 23);
-		Inventario.add(lbtextoPrecio);
-		
-		lbtextoImagen = new JLabel("IMAGEN:");
-		lbtextoImagen.setHorizontalAlignment(SwingConstants.LEFT);
-		lbtextoImagen.setForeground(Color.WHITE);
-		lbtextoImagen.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtextoImagen.setBounds(232, 196, 88, 23);
-		Inventario.add(lbtextoImagen);
-		
-		textFieldProveedor = new JTextField();
-		textFieldProveedor.setEditable(false);
-		textFieldProveedor.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldProveedor.setColumns(10);
-		textFieldProveedor.setBounds(156, 165, 190, 20);
-		Inventario.add(textFieldProveedor);
-		
-		lbtextoProveedor = new JLabel("PROVEEDOR:");
-		lbtextoProveedor.setHorizontalAlignment(SwingConstants.LEFT);
-		lbtextoProveedor.setForeground(Color.WHITE);
-		lbtextoProveedor.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtextoProveedor.setBounds(30, 162, 134, 23);
-		Inventario.add(lbtextoProveedor);
-		
-		btnVisualizarDatosProducto = new JButton("");
-		btnVisualizarDatosProducto.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
-		btnVisualizarDatosProducto.setBackground(new Color(153, 204, 255));
-		btnVisualizarDatosProducto.setBounds(285, 399, 55, 49);
-		btnVisualizarDatosProducto.setEnabled(false);
-		Inventario.add(btnVisualizarDatosProducto);
-		
-		separator_9 = new JSeparator();
-		separator_9.setForeground(Color.WHITE);
-		separator_9.setBackground(Color.WHITE);
-		separator_9.setBounds(30, 386, 339, 25);
-		Inventario.add(separator_9);
-		
-		listProductos = new JList();
-		listProductos.setBounds(391, 191, 120, 192);
-		Inventario.add(listProductos);
-		
-		lbtextoComida = new JLabel("PRODUCTOS");
-		lbtextoComida.setForeground(new Color(255, 255, 255));
-		lbtextoComida.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtextoComida.setHorizontalAlignment(SwingConstants.CENTER);
-		lbtextoComida.setBounds(391, 159, 120, 23);
-		Inventario.add(lbtextoComida);
-		
-		separator_8 = new JSeparator();
-		separator_8.setOrientation(SwingConstants.VERTICAL);
-		separator_8.setForeground(Color.WHITE);
-		separator_8.setBackground(Color.WHITE);
-		separator_8.setBounds(367, 90, 22, 401);
-		Inventario.add(separator_8);
-		
-		lbtextoID = new JLabel("ID:");
-		lbtextoID.setHorizontalAlignment(SwingConstants.LEFT);
-		lbtextoID.setForeground(Color.WHITE);
-		lbtextoID.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtextoID.setBounds(30, 112, 31, 23);
-		Inventario.add(lbtextoID);
-		
-		lbtextoNombre = new JLabel("NOMBRE:");
-		lbtextoNombre.setHorizontalAlignment(SwingConstants.LEFT);
-		lbtextoNombre.setForeground(Color.WHITE);
-		lbtextoNombre.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtextoNombre.setBounds(138, 112, 94, 23);
-		Inventario.add(lbtextoNombre);
-		
-		textFieldID = new JTextField();
-		textFieldID.setEditable(false);
-		textFieldID.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldID.setBounds(62, 115, 66, 20);
-		Inventario.add(textFieldID);
-		textFieldID.setColumns(10);
-		
-		textFieldNombre = new JTextField();
-		textFieldNombre.setEditable(false);
-		textFieldNombre.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(232, 115, 114, 20);
-		Inventario.add(textFieldNombre);
-		
-		lbcerrarSesionInventario = new JLabel("");
-		lbcerrarSesionInventario.setForeground(Color.WHITE);
-		lbcerrarSesionInventario.setBounds(437, 36, 31, 30);
-		Inventario.add(lbcerrarSesionInventario);
-		//SETEO TEXTO A FOTO REGISTRO
-				fotoEscalarLabel(lbcerrarSesionInventario, "assets/finSesion.png");
-				
-				lbmostrarHoraInventario = new JLabel("16 : 42");
-				lbmostrarHoraInventario.setForeground(Color.WHITE);
-				lbmostrarHoraInventario.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
-				lbmostrarHoraInventario.setBounds(81, 44, 83, 23);
-				Inventario.add(lbmostrarHoraInventario);
-				
-				lbtituloPInventario = new JLabel("Coffekie");
-				lbtituloPInventario.setForeground(Color.WHITE);
-				lbtituloPInventario.setFont(new Font("Segoe Script", Font.BOLD, 24));
-				lbtituloPInventario.setBackground(Color.WHITE);
-				lbtituloPInventario.setBounds(239, 37, 114, 42);
-				Inventario.add(lbtituloPInventario);
-				
-				separator_5 = new JSeparator();
-				separator_5.setBounds(30, 90, 488, 25);
-				Inventario.add(separator_5);
-				separator_5.setForeground(Color.WHITE);
-				separator_5.setBackground(Color.WHITE);
-				
-				lbfondoInventario = new JLabel("");
-				lbfondoInventario.setBounds(0, 0, 548, 502);
-				//
-				fotoEscalarLabel(lbfondoInventario, "assets/fondo2.jpg");
-				Inventario.add(lbfondoInventario);
-		
-		ComandaParaLlevar = new JPanel();
-		ComandaParaLlevar.setBounds(0, 0, 548, 502);
-		contentPane.add(ComandaParaLlevar);
-		ComandaParaLlevar.setVisible(false);
-		ComandaParaLlevar.setLayout(null);
-		
-		btnNewButton_3 = new JButton("New button");
-		btnNewButton_3.setBounds(411, 379, 89, 42);
-		ComandaParaLlevar.add(btnNewButton_3);
-		
-		separator_21 = new JSeparator();
-		separator_21.setForeground(Color.WHITE);
-		separator_21.setBackground(Color.WHITE);
-		separator_21.setBounds(277, 340, 236, 14);
-		ComandaParaLlevar.add(separator_21);
-		
-		lbcomandaLlevarHora = new JLabel("HORA");
-		lbcomandaLlevarHora.setForeground(Color.WHITE);
-		lbcomandaLlevarHora.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbcomandaLlevarHora.setBounds(292, 182, 79, 14);
-		ComandaParaLlevar.add(lbcomandaLlevarHora);
-		
-		btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(303, 379, 89, 42);
-		ComandaParaLlevar.add(btnNewButton);
-		
-		textFieldTotalLlevar = new JTextField();
-		textFieldTotalLlevar.setBounds(381, 308, 86, 20);
-		ComandaParaLlevar.add(textFieldTotalLlevar);
-		textFieldTotalLlevar.setColumns(10);
-		
-		lblPedidoLevarTotal = new JLabel("TOTAL");
-		lblPedidoLevarTotal.setForeground(Color.WHITE);
-		lblPedidoLevarTotal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lblPedidoLevarTotal.setBounds(316, 310, 55, 14);
-		ComandaParaLlevar.add(lblPedidoLevarTotal);
-		
-		listProductosLlevar = new JList();
-		listProductosLlevar.setBounds(47, 321, 209, 123);
-		ComandaParaLlevar.add(listProductosLlevar);
-		
-		lblPedidoProductos = new JLabel("PEDIDO");
-		lblPedidoProductos.setForeground(Color.WHITE);
-		lblPedidoProductos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lblPedidoProductos.setBounds(116, 301, 66, 14);
-		ComandaParaLlevar.add(lblPedidoProductos);
-		
-		separator_20 = new JSeparator();
-		separator_20.setOrientation(SwingConstants.VERTICAL);
-		separator_20.setForeground(Color.WHITE);
-		separator_20.setBackground(Color.WHITE);
-		separator_20.setBounds(278, 291, 19, 158);
-		ComandaParaLlevar.add(separator_20);
-		
-		spinnerP9 = new JSpinner();
-		spinnerP9.setBounds(483, 260, 30, 20);
-		ComandaParaLlevar.add(spinnerP9);
-		
-		spinnerP6 = new JSpinner();
-		spinnerP6.setBounds(313, 260, 30, 20);
-		ComandaParaLlevar.add(spinnerP6);
-		
-		spinnerP3 = new JSpinner();
-		spinnerP3.setBounds(145, 260, 30, 20);
-		ComandaParaLlevar.add(spinnerP3);
-		
-		spinnerP7 = new JSpinner();
-		spinnerP7.setBounds(368, 260, 30, 20);
-		ComandaParaLlevar.add(spinnerP7);
-		
-		spinnerP5 = new JSpinner();
-		spinnerP5.setBounds(258, 260, 30, 20);
-		ComandaParaLlevar.add(spinnerP5);
-		
-		spinnerP4 = new JSpinner();
-		spinnerP4.setBounds(201, 260, 30, 20);
-		ComandaParaLlevar.add(spinnerP4);
-		
-		spinnerP2 = new JSpinner();
-		spinnerP2.setBounds(90, 260, 30, 20);
-		ComandaParaLlevar.add(spinnerP2);
-		
-		spinnerP8 = new JSpinner();
-		spinnerP8.setBounds(422, 260, 30, 20);
-		ComandaParaLlevar.add(spinnerP8);
-		
-		spinnerP1 = new JSpinner();
-		spinnerP1.setBounds(35, 260, 30, 20);
-		ComandaParaLlevar.add(spinnerP1);
-		
-		separator_19 = new JSeparator();
-		separator_19.setForeground(Color.WHITE);
-		separator_19.setBackground(Color.WHITE);
-		separator_19.setBounds(25, 291, 488, 14);
-		ComandaParaLlevar.add(separator_19);
-		
-		textFieldHoraPedidoLlevar = new JTextField();
-		textFieldHoraPedidoLlevar.setEditable(false);
-		textFieldHoraPedidoLlevar.setColumns(10);
-		textFieldHoraPedidoLlevar.setBounds(381, 179, 119, 20);
-		ComandaParaLlevar.add(textFieldHoraPedidoLlevar);
-		
-		textFieldFechaPedidoLlevar = new JTextField();
-		textFieldFechaPedidoLlevar.setEditable(false);
-		textFieldFechaPedidoLlevar.setColumns(10);
-		textFieldFechaPedidoLlevar.setBounds(381, 152, 119, 20);
-		ComandaParaLlevar.add(textFieldFechaPedidoLlevar);
-		
-		textFieldIdPedido = new JTextField();
-		textFieldIdPedido.setEditable(false);
-		textFieldIdPedido.setColumns(10);
-		textFieldIdPedido.setBounds(381, 126, 119, 20);
-		ComandaParaLlevar.add(textFieldIdPedido);
-		
-		btnProductoLlevar9 = new JButton("");
-		btnProductoLlevar9.setBounds(467, 214, 55, 46);
-		ComandaParaLlevar.add(btnProductoLlevar9);
-		
-		btnProductoLlevar8 = new JButton("");
-		btnProductoLlevar8.setBounds(358, 214, 55, 46);
-		ComandaParaLlevar.add(btnProductoLlevar8);
-		
-		btnProductoLlevar7 = new JButton("");
-		btnProductoLlevar7.setBounds(412, 214, 55, 46);
-		ComandaParaLlevar.add(btnProductoLlevar7);
-		
-		btnProductoLlevar6 = new JButton("");
-		btnProductoLlevar6.setBounds(303, 214, 55, 46);
-		ComandaParaLlevar.add(btnProductoLlevar6);
-		
-		btnProductoLlevar4 = new JButton("");
-		btnProductoLlevar4.setBounds(191, 214, 55, 46);
-		ComandaParaLlevar.add(btnProductoLlevar4);
-		
-		btnProductoLlevar3 = new JButton("");
-		btnProductoLlevar3.setBounds(135, 214, 55, 46);
-		ComandaParaLlevar.add(btnProductoLlevar3);
-		
-		btnProductoLlevar2 = new JButton("");
-		btnProductoLlevar2.setBounds(80, 214, 55, 46);
-		ComandaParaLlevar.add(btnProductoLlevar2);
-		
-		btnProductoLlevar5 = new JButton("");
-		btnProductoLlevar5.setBounds(248, 214, 55, 46);
-		ComandaParaLlevar.add(btnProductoLlevar5);
-		
-		btnProductoLlevar1 = new JButton("");
-		btnProductoLlevar1.setBounds(25, 214, 55, 46);
-		ComandaParaLlevar.add(btnProductoLlevar1);
-		
-		lbcomandaLlevarFecha = new JLabel("FECHA");
-		lbcomandaLlevarFecha.setForeground(Color.WHITE);
-		lbcomandaLlevarFecha.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbcomandaLlevarFecha.setBounds(292, 155, 79, 14);
-		ComandaParaLlevar.add(lbcomandaLlevarFecha);
-		
-		lbcomandaLlevarId = new JLabel("ID PEDIDO");
-		lbcomandaLlevarId.setForeground(Color.WHITE);
-		lbcomandaLlevarId.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbcomandaLlevarId.setBounds(292, 126, 79, 14);
-		ComandaParaLlevar.add(lbcomandaLlevarId);
-		
-		lbclienteDireccion = new JLabel("DIRECCION");
-		lbclienteDireccion.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbclienteDireccion.setForeground(new Color(255, 255, 255));
-		lbclienteDireccion.setBounds(39, 179, 79, 14);
-		ComandaParaLlevar.add(lbclienteDireccion);
-		
-		lbclienteTelefono = new JLabel("TELEFONO");
-		lbclienteTelefono.setForeground(new Color(255, 255, 255));
-		lbclienteTelefono.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbclienteTelefono.setBounds(39, 152, 79, 14);
-		ComandaParaLlevar.add(lbclienteTelefono);
-		
-		lbclienteNombre = new JLabel("NOMBRE");
-		lbclienteNombre.setForeground(new Color(255, 255, 255));
-		lbclienteNombre.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbclienteNombre.setBounds(39, 126, 66, 14);
-		ComandaParaLlevar.add(lbclienteNombre);
-		
-		textFieldclienteDireccion = new JTextField();
-		textFieldclienteDireccion.setEditable(false);
-		textFieldclienteDireccion.setColumns(10);
-		textFieldclienteDireccion.setBounds(137, 179, 119, 20);
-		ComandaParaLlevar.add(textFieldclienteDireccion);
-		
-		textFieldclienteTelefono = new JTextField();
-		textFieldclienteTelefono.setEditable(false);
-		textFieldclienteTelefono.setColumns(10);
-		textFieldclienteTelefono.setBounds(137, 152, 119, 20);
-		ComandaParaLlevar.add(textFieldclienteTelefono);
-		
-		textFieldclienteNombre = new JTextField();
-		textFieldclienteNombre.setEditable(false);
-		textFieldclienteNombre.setBounds(137, 126, 119, 20);
-		ComandaParaLlevar.add(textFieldclienteNombre);
-		textFieldclienteNombre.setColumns(10);
-		
-		lbReferencias = new JLabel("REFERENCIAS");
-		lbReferencias.setForeground(Color.WHITE);
-		lbReferencias.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbReferencias.setBounds(360, 101, 119, 14);
-		ComandaParaLlevar.add(lbReferencias);
-		
-		separator_18 = new JSeparator();
-		separator_18.setOrientation(SwingConstants.VERTICAL);
-		separator_18.setForeground(Color.WHITE);
-		separator_18.setBackground(Color.WHITE);
-		separator_18.setBounds(278, 90, 19, 116);
-		ComandaParaLlevar.add(separator_18);
-		
-		separator_17 = new JSeparator();
-		separator_17.setForeground(Color.WHITE);
-		separator_17.setBackground(Color.WHITE);
-		separator_17.setBounds(30, 204, 488, 14);
-		ComandaParaLlevar.add(separator_17);
-		
-		lbdatosCliente = new JLabel("DATOS CLIENTE");
-		lbdatosCliente.setForeground(new Color(255, 255, 255));
-		lbdatosCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbdatosCliente.setBounds(81, 101, 119, 14);
-		ComandaParaLlevar.add(lbdatosCliente);
-		
-		separator_16 = new JSeparator();
-		separator_16.setForeground(Color.WHITE);
-		separator_16.setBackground(Color.WHITE);
-		separator_16.setBounds(30, 90, 488, 14);
-		ComandaParaLlevar.add(separator_16);
-		
-		lbcerrarSesionComandaLlevar = new JLabel("");
-		lbcerrarSesionComandaLlevar.setForeground(Color.WHITE);
-		lbcerrarSesionComandaLlevar.setBounds(435, 44, 31, 30);
-		ComandaParaLlevar.add(lbcerrarSesionComandaLlevar);
-		//
-		fotoEscalarLabel(lbcerrarSesionComandaLlevar, "assets/finSesion.png");
-		
-		lbtituloComandaLlevar = new JLabel("Coffekie");
-		lbtituloComandaLlevar.setForeground(Color.WHITE);
-		lbtituloComandaLlevar.setFont(new Font("Segoe Script", Font.BOLD, 24));
-		lbtituloComandaLlevar.setBackground(Color.WHITE);
-		lbtituloComandaLlevar.setBounds(222, 37, 119, 42);
-		ComandaParaLlevar.add(lbtituloComandaLlevar);
-		
-		lbmostrarHoraComandaLlevar = new JLabel("16 : 42");
-		lbmostrarHoraComandaLlevar.setForeground(Color.WHITE);
-		lbmostrarHoraComandaLlevar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
-		lbmostrarHoraComandaLlevar.setBounds(67, 44, 79, 23);
-		ComandaParaLlevar.add(lbmostrarHoraComandaLlevar);
-		
-		lbfondoComandaLlevar = new JLabel("");
-		lbfondoComandaLlevar.setBounds(0, 0, 548, 502);
-		ComandaParaLlevar.add(lbfondoComandaLlevar);
-		//
-		fotoEscalarLabel(lbfondoComandaLlevar, "assets/fondo2.jpg");
+		fotoEscalarLabel(lbfondoPagos, "assets/fondo2.jpg");
+		Pagos.add(lbfondoPagos);
 		//
 		
 		inicioSesion = new JPanel();

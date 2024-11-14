@@ -10,7 +10,6 @@ public class Mesa {
 	private int id, comandaNum;
 	private String fecha, hora;
 	private HashMap<String, Integer>items;
-	private boolean ocupado;
 	private JList lista;
 	private Double total;
 	
@@ -21,7 +20,6 @@ public class Mesa {
 		this.fecha = fecha;
 		this.hora = hora;
 		this.items = new HashMap<String, Integer>();
-		this.ocupado = ocupado;
 		this.lista = lista;
 	}//Mesa
 
@@ -73,14 +71,6 @@ public class Mesa {
 		this.items = items;
 	}
 
-	public boolean isOcupado() {
-		return ocupado;
-	}
-
-	public void setOcupado(boolean ocupado) {
-		this.ocupado = ocupado;
-	}
-
 	public JList getLista() {
 		return lista;
 	}
@@ -92,7 +82,7 @@ public class Mesa {
 	@Override
 	public String toString() {
 		return "Mesa [id=" + id + ", comandaNum=" + comandaNum + ", total=" + total + ", fecha=" + fecha + ", hora="
-				+ hora + ", items=" + items +  ", ocupado=" + ocupado + ", lista=" + lista + "]";
+				+ hora + ", items=" + items + ", lista=" + lista + "]";
 	}
 	
 }//Mesa
