@@ -12,6 +12,7 @@ public class Mesa {
 	private HashMap<String, Integer>items;
 	private JList lista;
 	private Double total;
+	private boolean pagado=false;
 	
 	public Mesa(int id,String fecha, String hora) {
 		this.id = id;
@@ -21,6 +22,7 @@ public class Mesa {
 		this.hora = hora;
 		this.items = new HashMap<String, Integer>();
 		this.lista = lista;
+		this.pagado=false;
 	}//Mesa
 
 	public int getId() {
@@ -77,6 +79,15 @@ public class Mesa {
 
 	public void setLista(JList lista) {
 		this.lista = lista;
+	}
+	
+
+	public boolean isPagado() {
+		return pagado;
+	}
+
+	public void setPagado(boolean pagado) {
+		this.pagado = pagado;
 	}
 
 	@Override

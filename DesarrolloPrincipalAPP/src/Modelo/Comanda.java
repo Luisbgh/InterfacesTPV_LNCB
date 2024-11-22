@@ -8,11 +8,9 @@ import javax.swing.JList;
 public class Comanda {
 
 	private ArrayList<Mesa>mesas;
-	private HashMap<String, Integer>historial;
 
 	public Comanda(ArrayList<Mesa> mesas) {
 		this.mesas = mesas;
-		this.historial=historial;
 	}
 
 	public ArrayList<Mesa> getMesas() {
@@ -23,18 +21,10 @@ public class Comanda {
 		this.mesas = mesas;
 	}
 
-	public HashMap<String, Integer> getHistorial() {
-		return historial;
-	}
-
-	public void setHistorial(HashMap<String, Integer> historial) {
-		this.historial = historial;
-	}
 
 	@Override
 	public String toString() {
-		return "Comanda [mesas=" + mesas + ", historial=" + historial + "]";
-	}
-	
+		return "Comanda [mesas=" + mesas + "]";
+	}//toString
 	
 }//Comanda
