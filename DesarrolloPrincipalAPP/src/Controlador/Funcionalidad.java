@@ -24,7 +24,9 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
@@ -51,16 +53,18 @@ public class Funcionalidad implements ActionListener, MouseListener{
 	HashMap<String, Integer>listaProductosEstadisticas=new HashMap<String, Integer>();
 	HashMap<String, Integer>listaMesasAtendidas=new HashMap<String, Integer>();
 	HashMap<String, Integer>listaAux=new HashMap<String, Integer>();
+	HashMap<String, Integer>estadisticasMesa=new HashMap<String, Integer>();
 	DefaultListModel modeloComida=new DefaultListModel();
 	DefaultListModel modeloBebida=new DefaultListModel();
 	DefaultListModel modeloItems=new DefaultListModel();
 	DefaultListModel modeloProductos=new DefaultListModel();
-	DefaultListModel modeloProductosEstadisticas=new DefaultListModel();
+	DefaultListModel modeloEstadisticasMesas=new DefaultListModel();
 	DefaultTableModel modeloTablaTransacciones=new DefaultTableModel();
 	DefaultTableModel modeloTablaHistorial=new DefaultTableModel();
 	DefaultTableModel modeloTablaMesas=new DefaultTableModel();
 	DefaultTableModel modeloTablaProductos=new DefaultTableModel();
 	DefaultTableModel modeloTablaComandasTotales=new DefaultTableModel();
+	DefaultTableCellRenderer centrar=new DefaultTableCellRenderer();
 	int hora, minutos, dineroTotal, horaMesa, minutoMesa, fechaMesa, mesa, mesaAux, cantidad=1,  cambioStock, numMesa=0, numComanda=0, contadorTransaccion=0;
 	double precioTotal=0, precioProductos=0, precioPagar=0, dineroCaja=50;
 	boolean cambios=false, pagar=false, edicion=false, deshabilitar=false;;
@@ -152,7 +156,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		//TABLAS
 		fabricarTablaTransacciones();
 		fabricarTablaHistorial();
-		crearTablasMesasyProductos();
 		fabricarTablaHistorialTotal();
 		//MESAS
 		mesas.add(new Mesa(1, String.valueOf(puntero.lbmostrarFecha.getText()), String.valueOf(puntero.lbmostrarHoraPrincipal.getText())));
@@ -426,11 +429,9 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			this.puntero.separator_34.setVisible(false);
 			this.puntero.btnEstadisticas.setVisible(false);
 			this.puntero.btnLimpiar.setVisible(false);
-			this.puntero.scrollPaneMesas.setVisible(true);
-			this.puntero.scrollPaneProductos.setVisible(true);
 			this.puntero.separator_16.setVisible(true);
-			this.puntero.separator_17.setVisible(true);
 			//
+			mostrarEstadisticasMesas();
 		}//if
 
 	}//actionPerformed
@@ -716,7 +717,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.panelAuxiliarHistorial.setVisible(false);
 				this.puntero.panelAuxiliarEstadisticas.setVisible(false);
 				this.puntero.separator_16.setVisible(false);
-				this.puntero.separator_17.setVisible(false);
 				//
 				this.puntero.lbtituloSeleccionado.setText("");
 				this.puntero.separator_24.setVisible(false);
@@ -741,10 +741,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				this.puntero.separator_34.setVisible(false);
 				this.puntero.btnEstadisticas.setVisible(true);
 				this.puntero.btnLimpiar.setVisible(true);
-				this.puntero.scrollPaneMesas.setVisible(false);
-				this.puntero.scrollPaneProductos.setVisible(false);
 				this.puntero.separator_16.setVisible(false);
-				this.puntero.separator_17.setVisible(false);
 			}//if
 		}//if
 		
@@ -1342,6 +1339,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		
 		double diferencia;
 		añadirComandaHistorial();
+		centrarDatosTablas(centrar);
 		diferencia=Double.parseDouble(puntero.textFieldAbonoCliente.getText()) - Double.parseDouble(puntero.textFieldcambioTotal.getText());
 		dineroCaja=dineroCaja + diferencia;
 		//
@@ -1632,6 +1630,7 @@ public void mesaOcupada() {
 					}//if
 				}//for
 		}//for
+		centrarDatosTablas(centrar);
 	}//cargarTransacciones
 	
 	public double modificarSaldo(Double cantidad, String tipo) {
@@ -1669,18 +1668,6 @@ public void mesaOcupada() {
 		modeloTablaHistorial.addRow(new Object[] {id, nComanda, fecha, hora, total});
 		
 	}//añadirComandaHistorial
-	
-	public void crearTablasMesasyProductos() {
-		String columnasMesas [] = {"PUESTO", "MESA", "USO"};
-		String columnasProductos [] = {"PUESTO", "NOMBRE", "PEDIDOS"};
-		//
-		modeloTablaMesas.setColumnIdentifiers(columnasMesas);
-		modeloTablaProductos.setColumnIdentifiers(columnasProductos);
-		//
-		puntero.tableMesas.setModel(modeloTablaMesas);
-		puntero.tableProductos.setModel(modeloTablaProductos);
-		
-	}//void
 	
 	public void calcularEstadisticas(){
 		
@@ -1727,5 +1714,81 @@ public void mesaOcupada() {
 		}//for
 		
 	}//redundanciaInformacionSeteo
+	
+	public void centrarDatosTablas(DefaultTableCellRenderer centrar) {
+		
+		centrar.setHorizontalAlignment(SwingConstants.CENTER);
+		puntero.tableHistorial.getColumnModel().getColumn(0).setCellRenderer(centrar);
+		puntero.tableHistorial.getColumnModel().getColumn(1).setCellRenderer(centrar);
+		puntero.tableHistorial.getColumnModel().getColumn(3).setCellRenderer(centrar);
+		puntero.tableHistorial.getColumnModel().getColumn(4).setCellRenderer(centrar);
+		//
+		puntero.tableTransacciones.getColumnModel().getColumn(0).setCellRenderer(centrar);
+		puntero.tableTransacciones.getColumnModel().getColumn(1).setCellRenderer(centrar);
+		puntero.tableTransacciones.getColumnModel().getColumn(2).setCellRenderer(centrar);
+		puntero.tableTransacciones.getColumnModel().getColumn(3).setCellRenderer(centrar);
+		
+	}//centrarDatosTabla
+	
+	public void mostrarEstadisticasMesas() {
+		
+		//RELLENAMOS PROGRESS BAR CON SU NUMERO DE COMANDAS PARTICULAR
+		for(int i=0; i<comandas.get(0).getMesas().size(); i++) {
+			switch(i) {
+			case 0:
+				puntero.progressBarEstadisticaMesa1.setValue(comandas.get(0).getMesas().get(i).getComandaNum());
+				puntero.progressBarEstadisticaMesa1.setString(String.valueOf(comandas.get(0).getMesas().get(i).getComandaNum()));
+				estadisticasMesa.put("Mesa 1", (comandas.get(0).getMesas().get(i).getComandaNum()));
+				break;
+			case 1:
+				puntero.progressBarEstadisticaMesa2.setValue(comandas.get(0).getMesas().get(i).getComandaNum());
+				puntero.progressBarEstadisticaMesa2.setString(String.valueOf(comandas.get(0).getMesas().get(i).getComandaNum()));
+				estadisticasMesa.put("Mesa 2", (comandas.get(0).getMesas().get(i).getComandaNum()));
+				break;
+			case 2:
+				puntero.progressBarEstadisticaMesa3.setValue(comandas.get(0).getMesas().get(i).getComandaNum());
+				puntero.progressBarEstadisticaMesa3.setString(String.valueOf(comandas.get(0).getMesas().get(i).getComandaNum()));
+				estadisticasMesa.put("Mesa 3", (comandas.get(0).getMesas().get(i).getComandaNum()));
+				break;
+			case 3:
+				puntero.progressBarEstadisticaMesa4.setValue(comandas.get(0).getMesas().get(i).getComandaNum());
+				puntero.progressBarEstadisticaMesa4.setString(String.valueOf(comandas.get(0).getMesas().get(i).getComandaNum()));
+				estadisticasMesa.put("Mesa 4", (comandas.get(0).getMesas().get(i).getComandaNum()));
+				break;
+			case 4:
+				puntero.progressBarEstadisticaMesa5.setValue(comandas.get(0).getMesas().get(i).getComandaNum());
+				puntero.progressBarEstadisticaMesa5.setString(String.valueOf(comandas.get(0).getMesas().get(i).getComandaNum()));
+				estadisticasMesa.put("Mesa 5", (comandas.get(0).getMesas().get(i).getComandaNum()));
+				break;
+			case 5:
+				puntero.progressBarEstadisticaMesa6.setValue(comandas.get(0).getMesas().get(i).getComandaNum());
+				puntero.progressBarEstadisticaMesa6.setString(String.valueOf(comandas.get(0).getMesas().get(i).getComandaNum()));
+				estadisticasMesa.put("Mesa 6", (comandas.get(0).getMesas().get(i).getComandaNum()));
+				break;
+			}//switch
+		}//for
+		//
+		listaEstadisticas();
+		
+	}//mostrarEstadisticasMesa
+	
+	public void listaEstadisticas() {
+		
+		int totalComandas=0;
+		for(int i=0; i<comandas.get(0).getMesas().size(); i++) {
+			totalComandas=totalComandas + comandas.get(0).getMesas().get(i).getComandaNum();
+		}//for
+		for(int i=0; i<comandas.get(0).getMesas().size(); i++) {
+			if(comandas.get(0).getMesas().get(i).getComandaNum()>0) {
+				modeloEstadisticasMesas.removeAllElements();
+				for(Entry<String, Integer> entrada: estadisticasMesa.entrySet()) {
+					modeloEstadisticasMesas.addElement(entrada.getKey() + "   -    " +  (entrada.getValue()*100)/totalComandas + " % ");
+				}//for
+				puntero.listEstadisticasMesa.setModel(modeloEstadisticasMesas);
+			}//if
+		}//for
+		puntero.lbnumComandasTotales.setText(String.valueOf(totalComandas));
+		
+	}//listaEstadisticas
 	
 }//Funcionalidadad

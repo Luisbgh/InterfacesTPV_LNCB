@@ -41,6 +41,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.border.LineBorder;
 import javax.swing.JTable;
+import javax.swing.border.BevelBorder;
 
 public class Interfaz extends JFrame {
 
@@ -293,20 +294,30 @@ public class Interfaz extends JFrame {
 	public JSeparator separator_34;
 	public JTable tableHistorial;
 	public JScrollPane scrollPaneHistorial;
-	public JLabel lbmesas;
 	public JLabel lbproductos;
-	public JTable tableMesas;
-	public JTable tableProductos;
-	public JScrollPane scrollPaneMesas;
-	public JScrollPane scrollPaneProductos;
 	public JSeparator separator_16;
-	public JSeparator separator_17;
 	public JSeparator separator_18;
 	public JSeparator separator_19;
 	public JSeparator separator_20;
 	public JSeparator separator_21;
 	public JLabel lbSubtitulo;
 	public JLabel lbmaximo;
+	public JLabel lbestadisticaMesa1;
+	public JLabel lbestadisticaMesa2;
+	public JLabel lbestadisticaMesa3;
+	public JLabel lbestadisticaMesa4;
+	public JLabel lbestadisticaMesa5;
+	public JLabel lbestadisticaMesa6;
+	public JProgressBar progressBarEstadisticaMesa1;
+	public JProgressBar progressBarEstadisticaMesa2;
+	public JProgressBar progressBarEstadisticaMesa3;
+	public JProgressBar progressBarEstadisticaMesa4;
+	public JProgressBar progressBarEstadisticaMesa5;
+	public JProgressBar progressBarEstadisticaMesa6;
+	public JList listEstadisticasMesa;
+	public JSeparator separator_17;
+	public JLabel lbtotalComandas;
+	public JLabel lbnumComandasTotales;
 	
 
 	/**
@@ -352,15 +363,189 @@ public class Interfaz extends JFrame {
 		panelAuxiliarBanco.setBounds(43, 185, 458, 271);
 		panelAuxiliarBanco.setVisible(false);
 		
-		panelAuxiliarHistorial = new JPanel();
-		panelAuxiliarHistorial.setLayout(null);
-		panelAuxiliarHistorial.setVisible(false);
-		
 		panelAuxiliarInventario = new JPanel();
 		panelAuxiliarInventario.setBorder(new LineBorder(new Color(255, 255, 255), 2, true));
 		panelAuxiliarInventario.setBackground(new Color(192, 192, 192));
 		panelAuxiliarInventario.setBounds(43, 185, 458, 271);
 		panelAuxiliarInventario.setVisible(false);
+		
+		panelAuxiliarHistorial = new JPanel();
+		panelAuxiliarHistorial.setLayout(null);
+		panelAuxiliarHistorial.setVisible(false);
+		panelAuxiliarHistorial.setBorder(new LineBorder(new Color(255, 255, 255), 2));
+		panelAuxiliarHistorial.setBackground(Color.LIGHT_GRAY);
+		panelAuxiliarHistorial.setBounds(43, 185, 458, 271);
+		Contabilidad.add(panelAuxiliarHistorial);
+		
+		panelAuxiliarEstadisticas = new JPanel();
+		panelAuxiliarEstadisticas.setBorder(new LineBorder(new Color(255, 255, 255), 2));
+		panelAuxiliarEstadisticas.setBackground(new Color(192, 192, 192));
+		panelAuxiliarEstadisticas.setBounds(26, 55, 406, 213);
+		panelAuxiliarHistorial.add(panelAuxiliarEstadisticas);
+		panelAuxiliarEstadisticas.setVisible(false);
+		panelAuxiliarEstadisticas.setLayout(null);
+		
+		lblNewLabel = new JLabel("Estadisticas");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lblNewLabel.setBounds(156, 11, 109, 21);
+		panelAuxiliarEstadisticas.add(lblNewLabel);
+		
+		lbcerrarSesionEstadisticas = new JLabel("");
+		lbcerrarSesionEstadisticas.setForeground(Color.WHITE);
+		lbcerrarSesionEstadisticas.setBounds(365, 6, 31, 30);
+		//
+		fotoEscalarLabel(lbcerrarSesionEstadisticas, "assets/finSesion.png");
+		panelAuxiliarEstadisticas.add(lbcerrarSesionEstadisticas);
+		
+		lbproductos = new JLabel("Mesas");
+		lbproductos.setForeground(Color.WHITE);
+		lbproductos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbproductos.setBounds(301, 43, 65, 21);
+		panelAuxiliarEstadisticas.add(lbproductos);
+		
+		separator_16 = new JSeparator();
+		separator_16.setForeground(new Color(255, 255, 255));
+		separator_16.setBounds(10, 40, 386, 2);
+		separator_16.setVisible(false);
+		panelAuxiliarEstadisticas.add(separator_16);
+		
+		lbestadisticaMesa1 = new JLabel("Mesa 1");
+		lbestadisticaMesa1.setForeground(Color.WHITE);
+		lbestadisticaMesa1.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa1.setBounds(10, 68, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa1);
+		
+		lbestadisticaMesa2 = new JLabel("Mesa 2");
+		lbestadisticaMesa2.setForeground(Color.WHITE);
+		lbestadisticaMesa2.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa2.setBounds(10, 91, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa2);
+		
+		lbestadisticaMesa3 = new JLabel("Mesa 3");
+		lbestadisticaMesa3.setForeground(Color.WHITE);
+		lbestadisticaMesa3.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa3.setBounds(10, 113, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa3);
+		
+		lbestadisticaMesa4 = new JLabel("Mesa 4");
+		lbestadisticaMesa4.setForeground(Color.WHITE);
+		lbestadisticaMesa4.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa4.setBounds(10, 135, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa4);
+		
+		lbestadisticaMesa5 = new JLabel("Mesa 5");
+		lbestadisticaMesa5.setForeground(Color.WHITE);
+		lbestadisticaMesa5.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa5.setBounds(10, 158, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa5);
+		
+		lbestadisticaMesa6 = new JLabel("Mesa 6");
+		lbestadisticaMesa6.setForeground(Color.WHITE);
+		lbestadisticaMesa6.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa6.setBounds(10, 180, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa6);
+		
+		progressBarEstadisticaMesa1 = new JProgressBar();
+		progressBarEstadisticaMesa1.setBounds(80, 73, 146, 14);
+		progressBarEstadisticaMesa1.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa1);
+		progressBarEstadisticaMesa1.setForeground(Color.BLUE);
+		progressBarEstadisticaMesa1.setMaximum(10);
+		
+		progressBarEstadisticaMesa2 = new JProgressBar();
+		progressBarEstadisticaMesa2.setBounds(80, 96, 146, 14);
+		progressBarEstadisticaMesa2.setForeground(Color.RED);
+		progressBarEstadisticaMesa2.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa2);
+		progressBarEstadisticaMesa2.setMaximum(10);
+		
+		progressBarEstadisticaMesa3 = new JProgressBar();
+		progressBarEstadisticaMesa3.setBounds(80, 118, 146, 14);
+		progressBarEstadisticaMesa3.setForeground(Color.MAGENTA);
+		progressBarEstadisticaMesa3.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa3);
+		progressBarEstadisticaMesa3.setMaximum(10);
+		
+		progressBarEstadisticaMesa4 = new JProgressBar();
+		progressBarEstadisticaMesa4.setBounds(80, 140, 146, 14);
+		progressBarEstadisticaMesa4.setForeground(Color.YELLOW);
+		progressBarEstadisticaMesa4.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa4);
+		progressBarEstadisticaMesa4.setMaximum(10);
+		
+		progressBarEstadisticaMesa5 = new JProgressBar();
+		progressBarEstadisticaMesa5.setBounds(80, 163, 146, 14);
+		progressBarEstadisticaMesa5.setForeground(Color.GREEN);
+		progressBarEstadisticaMesa5.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa5);
+		progressBarEstadisticaMesa5.setMaximum(10);
+		
+		progressBarEstadisticaMesa6 = new JProgressBar();
+		progressBarEstadisticaMesa6.setBounds(80, 185, 146, 14);
+		progressBarEstadisticaMesa6.setForeground(Color.ORANGE);
+		progressBarEstadisticaMesa6.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa6);
+		progressBarEstadisticaMesa6.setMaximum(10);
+		
+		listEstadisticasMesa = new JList();
+		listEstadisticasMesa.setBounds(276, 70, 109, 118);
+		panelAuxiliarEstadisticas.add(listEstadisticasMesa);
+		
+		separator_17 = new JSeparator();
+		separator_17.setForeground(new Color(255, 255, 255));
+		separator_17.setOrientation(SwingConstants.VERTICAL);
+		separator_17.setBounds(258, 43, 16, 170);
+		panelAuxiliarEstadisticas.add(separator_17);
+		
+		lbtotalComandas = new JLabel("Total:");
+		lbtotalComandas.setForeground(Color.WHITE);
+		lbtotalComandas.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbtotalComandas.setBounds(10, 43, 47, 21);
+		panelAuxiliarEstadisticas.add(lbtotalComandas);
+		
+		lbnumComandasTotales = new JLabel("");
+		lbnumComandasTotales.setForeground(Color.WHITE);
+		lbnumComandasTotales.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbnumComandasTotales.setBounds(58, 43, 47, 21);
+		panelAuxiliarEstadisticas.add(lbnumComandasTotales);
+		
+		lbtituloHistorial = new JLabel("Historial Comandas");
+		lbtituloHistorial.setForeground(Color.WHITE);
+		lbtituloHistorial.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtituloHistorial.setBounds(149, 11, 175, 20);
+		panelAuxiliarHistorial.add(lbtituloHistorial);
+		
+		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.setBackground(new Color(220, 20, 60));
+		btnLimpiar.setForeground(new Color(255, 255, 255));
+		btnLimpiar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		btnLimpiar.setBounds(270, 213, 117, 42);
+		panelAuxiliarHistorial.add(btnLimpiar);
+		
+		btnEstadisticas = new JButton("Estadisticas");
+		btnEstadisticas.setBackground(new Color(0, 0, 0));
+		btnEstadisticas.setForeground(new Color(255, 255, 255));
+		btnEstadisticas.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		btnEstadisticas.setBounds(65, 213, 117, 42);
+		panelAuxiliarHistorial.add(btnEstadisticas);
+		
+		separator_34 = new JSeparator();
+		separator_34.setForeground(new Color(255, 255, 255));
+		separator_34.setBounds(10, 42, 438, 2);
+		separator_34.setVisible(false);
+		panelAuxiliarHistorial.add(separator_34);
+		
+		scrollPaneHistorial = new JScrollPane();
+		scrollPaneHistorial.setBounds(38, 58, 384, 146);
+		panelAuxiliarHistorial.add(scrollPaneHistorial);
+		
+		tableHistorial = new JTable();
+		tableHistorial.getTableHeader().setBackground(Color.RED);
+		tableHistorial.getTableHeader().setForeground(Color.WHITE);
+		
+		tableHistorial.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 255, 255), null, null, null));
+		scrollPaneHistorial.setViewportView(tableHistorial);
 		Contabilidad.add(panelAuxiliarInventario);
 		panelAuxiliarInventario.setLayout(null);
 		
@@ -498,105 +683,6 @@ public class Interfaz extends JFrame {
 		btnComprobarProductoInventario.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
 		btnComprobarProductoInventario.setBounds(250, 2, 40, 27);
 		panelAuxiliarInventario.add(btnComprobarProductoInventario);
-		panelAuxiliarHistorial.setBorder(new LineBorder(new Color(255, 255, 255), 2));
-		panelAuxiliarHistorial.setBackground(Color.LIGHT_GRAY);
-		panelAuxiliarHistorial.setBounds(43, 185, 458, 271);
-		Contabilidad.add(panelAuxiliarHistorial);
-		
-		panelAuxiliarEstadisticas = new JPanel();
-		panelAuxiliarEstadisticas.setBorder(new LineBorder(new Color(255, 255, 255), 2));
-		panelAuxiliarEstadisticas.setBackground(new Color(192, 192, 192));
-		panelAuxiliarEstadisticas.setBounds(26, 58, 406, 197);
-		panelAuxiliarHistorial.add(panelAuxiliarEstadisticas);
-		panelAuxiliarEstadisticas.setVisible(false);
-		panelAuxiliarEstadisticas.setLayout(null);
-		
-		lblNewLabel = new JLabel("Estadisticas");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lblNewLabel.setBounds(156, 11, 109, 21);
-		panelAuxiliarEstadisticas.add(lblNewLabel);
-		
-		lbcerrarSesionEstadisticas = new JLabel("");
-		lbcerrarSesionEstadisticas.setForeground(Color.WHITE);
-		lbcerrarSesionEstadisticas.setBounds(365, 6, 31, 30);
-		//
-		fotoEscalarLabel(lbcerrarSesionEstadisticas, "assets/finSesion.png");
-		panelAuxiliarEstadisticas.add(lbcerrarSesionEstadisticas);
-		
-		lbmesas = new JLabel("Mesas");
-		lbmesas.setForeground(new Color(255, 255, 255));
-		lbmesas.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbmesas.setBounds(66, 47, 68, 21);
-		panelAuxiliarEstadisticas.add(lbmesas);
-		
-		lbproductos = new JLabel("Productos");
-		lbproductos.setForeground(Color.WHITE);
-		lbproductos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbproductos.setBounds(260, 47, 97, 21);
-		panelAuxiliarEstadisticas.add(lbproductos);
-		
-		scrollPaneMesas = new JScrollPane();
-		scrollPaneMesas.setBounds(10, 79, 181, 96);
-		scrollPaneMesas.setVisible(false);
-		panelAuxiliarEstadisticas.add(scrollPaneMesas);
-		
-		tableMesas = new JTable();
-		scrollPaneMesas.setViewportView(tableMesas);
-		
-		scrollPaneProductos = new JScrollPane();
-		scrollPaneProductos.setBounds(213, 79, 183, 96);
-		scrollPaneProductos.setVisible(false);
-		panelAuxiliarEstadisticas.add(scrollPaneProductos);
-		
-		tableProductos = new JTable();
-		scrollPaneProductos.setViewportView(tableProductos);
-		
-		separator_16 = new JSeparator();
-		separator_16.setForeground(new Color(255, 255, 255));
-		separator_16.setBounds(10, 40, 386, 2);
-		separator_16.setVisible(false);
-		panelAuxiliarEstadisticas.add(separator_16);
-		
-		separator_17 = new JSeparator();
-		separator_17.setForeground(new Color(255, 255, 255));
-		separator_17.setOrientation(SwingConstants.VERTICAL);
-		separator_17.setVisible(false);
-		separator_17.setBounds(201, 43, 2, 154);
-		panelAuxiliarEstadisticas.add(separator_17);
-		
-		lbtituloHistorial = new JLabel("Historial Comandas");
-		lbtituloHistorial.setForeground(Color.WHITE);
-		lbtituloHistorial.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtituloHistorial.setBounds(149, 11, 175, 20);
-		panelAuxiliarHistorial.add(lbtituloHistorial);
-		
-		btnLimpiar = new JButton("Limpiar");
-		btnLimpiar.setBackground(new Color(220, 20, 60));
-		btnLimpiar.setForeground(new Color(255, 255, 255));
-		btnLimpiar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		btnLimpiar.setBounds(270, 213, 117, 42);
-		panelAuxiliarHistorial.add(btnLimpiar);
-		
-		btnEstadisticas = new JButton("Estadisticas");
-		btnEstadisticas.setBackground(new Color(0, 0, 0));
-		btnEstadisticas.setForeground(new Color(255, 255, 255));
-		btnEstadisticas.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		btnEstadisticas.setBounds(65, 213, 117, 42);
-		panelAuxiliarHistorial.add(btnEstadisticas);
-		
-		separator_34 = new JSeparator();
-		separator_34.setForeground(new Color(255, 255, 255));
-		separator_34.setBounds(10, 42, 438, 2);
-		separator_34.setVisible(false);
-		panelAuxiliarHistorial.add(separator_34);
-		
-		scrollPaneHistorial = new JScrollPane();
-		scrollPaneHistorial.setBounds(38, 58, 384, 146);
-		panelAuxiliarHistorial.add(scrollPaneHistorial);
-		
-		tableHistorial = new JTable();
-		scrollPaneHistorial.setViewportView(tableHistorial);
 		Contabilidad.add(panelAuxiliarBanco);
 		panelAuxiliarBanco.setLayout(null);
 		
@@ -605,6 +691,8 @@ public class Interfaz extends JFrame {
 		panelAuxiliarBanco.add(scrollPaneBanco);
 		
 		tableTransacciones = new JTable();
+		tableTransacciones.getTableHeader().setBackground(Color.BLACK);
+		tableTransacciones.getTableHeader().setForeground(Color.WHITE);
 		scrollPaneBanco.setViewportView(tableTransacciones);
 		tableTransacciones.setVisible(false);
 		
