@@ -320,6 +320,7 @@ public class Interfaz extends JFrame {
 	public JSeparator separator_17;
 	public JLabel lbtotalComandas;
 	public JLabel lbnumComandasTotales;
+	public JLabel lbmensajeInventario2;
 	
 
 	/**
@@ -352,6 +353,1277 @@ public class Interfaz extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		Contabilidad = new JPanel();
+		Contabilidad.setBounds(0, 0, 548, 502);
+		contentPane.add(Contabilidad);
+		Contabilidad.setVisible(false);
+		Contabilidad.setLayout(null);
+		
+		panelAuxiliarBanco = new JPanel();
+		panelAuxiliarBanco.setBorder(new LineBorder(new Color(255, 255, 255), 2, true));
+		panelAuxiliarBanco.setBackground(new Color(192, 192, 192));
+		panelAuxiliarBanco.setBounds(43, 185, 458, 271);
+		panelAuxiliarBanco.setVisible(false);
+		
+		panelAuxiliarHistorial = new JPanel();
+		panelAuxiliarHistorial.setLayout(null);
+		panelAuxiliarHistorial.setVisible(false);
+		
+		panelAuxiliarInventario = new JPanel();
+		panelAuxiliarInventario.setBorder(new LineBorder(new Color(255, 255, 255), 2, true));
+		panelAuxiliarInventario.setBackground(new Color(192, 192, 192));
+		panelAuxiliarInventario.setBounds(43, 185, 458, 271);
+		panelAuxiliarInventario.setVisible(false);
+		Contabilidad.add(panelAuxiliarInventario);
+		panelAuxiliarInventario.setLayout(null);
+		
+		lbmaximo = new JLabel("CAP: 0 - 100");
+		lbmaximo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 11));
+		lbmaximo.setBounds(66, 200, 72, 20);
+		panelAuxiliarInventario.add(lbmaximo);
+		
+		lbmensajeInventario = new JLabel("");
+		lbmensajeInventario.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbmensajeInventario.setBounds(127, 177, 141, 20);
+		panelAuxiliarInventario.add(lbmensajeInventario);
+		
+		listInventario = new JList();
+		listInventario.setBounds(307, 44, 133, 183);
+		panelAuxiliarInventario.add(listInventario);
+		
+		btnGuardarEdicion = new JButton("Guardar cambios");
+		btnGuardarEdicion.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
+		btnGuardarEdicion.setBounds(307, 228, 133, 23);
+		btnGuardarEdicion.setVisible(false);
+		panelAuxiliarInventario.add(btnGuardarEdicion);
+		
+		lbmostrarProductos = new JLabel("Productos");
+		lbmostrarProductos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbmostrarProductos.setBounds(334, 11, 80, 23);
+		panelAuxiliarInventario.add(lbmostrarProductos);
+		
+		separator_25 = new JSeparator();
+		separator_25.setOrientation(SwingConstants.VERTICAL);
+		separator_25.setBounds(288, 0, 18, 271);
+		panelAuxiliarInventario.add(separator_25);
+		
+		separator_26 = new JSeparator();
+		separator_26.setBounds(8, 28, 277, 23);
+		panelAuxiliarInventario.add(separator_26);
+		
+		textNombreProductoMostrado = new JTextField("");
+		textNombreProductoMostrado.setEditable(false);
+		textNombreProductoMostrado.setHorizontalAlignment(SwingConstants.CENTER);
+		textNombreProductoMostrado.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		textNombreProductoMostrado.setBounds(8, 5, 141, 22);
+		panelAuxiliarInventario.add(textNombreProductoMostrado);
+		
+		lbIdProductoMostrado = new JLabel("");
+		lbIdProductoMostrado.setHorizontalAlignment(SwingConstants.CENTER);
+		lbIdProductoMostrado.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbIdProductoMostrado.setBounds(165, 6, 72, 22);
+		panelAuxiliarInventario.add(lbIdProductoMostrado);
+		
+		btnEditar = new JButton("Editar");
+		btnEditar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
+		btnEditar.setBounds(0, 248, 288, 23);
+		btnEditar.setVisible(false);
+		panelAuxiliarInventario.add(btnEditar);
+		
+		lbInventarioTipo = new JLabel();
+		lbInventarioTipo.setText("Tipo");
+		lbInventarioTipo.setHorizontalAlignment(SwingConstants.LEFT);
+		lbInventarioTipo.setForeground(new Color(0, 0, 0));
+		lbInventarioTipo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbInventarioTipo.setBackground(Color.WHITE);
+		lbInventarioTipo.setBounds(18, 39, 72, 20);
+		panelAuxiliarInventario.add(lbInventarioTipo);
+		
+		lbInventarioPrecio = new JLabel();
+		lbInventarioPrecio.setText("Precio");
+		lbInventarioPrecio.setHorizontalAlignment(SwingConstants.LEFT);
+		lbInventarioPrecio.setForeground(new Color(0, 0, 0));
+		lbInventarioPrecio.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbInventarioPrecio.setBackground(Color.WHITE);
+		lbInventarioPrecio.setBounds(18, 86, 72, 20);
+		panelAuxiliarInventario.add(lbInventarioPrecio);
+		
+		lbInventarioProveedor = new JLabel();
+		lbInventarioProveedor.setText("Proveedor");
+		lbInventarioProveedor.setHorizontalAlignment(SwingConstants.LEFT);
+		lbInventarioProveedor.setForeground(new Color(0, 0, 0));
+		lbInventarioProveedor.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbInventarioProveedor.setBackground(Color.WHITE);
+		lbInventarioProveedor.setBounds(18, 130, 94, 20);
+		panelAuxiliarInventario.add(lbInventarioProveedor);
+		
+		lbInventarioStock = new JLabel();
+		lbInventarioStock.setText("Stock");
+		lbInventarioStock.setHorizontalAlignment(SwingConstants.LEFT);
+		lbInventarioStock.setForeground(new Color(0, 0, 0));
+		lbInventarioStock.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbInventarioStock.setBackground(Color.WHITE);
+		lbInventarioStock.setBounds(18, 177, 72, 20);
+		panelAuxiliarInventario.add(lbInventarioStock);
+		
+		textInventarioTipo = new JTextField();
+		textInventarioTipo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		textInventarioTipo.setHorizontalAlignment(SwingConstants.CENTER);
+		textInventarioTipo.setEditable(false);
+		textInventarioTipo.setBounds(18, 62, 86, 20);
+		panelAuxiliarInventario.add(textInventarioTipo);
+		textInventarioTipo.setColumns(10);
+		
+		textInventarioPrecio = new JTextField();
+		textInventarioPrecio.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		textInventarioPrecio.setHorizontalAlignment(SwingConstants.CENTER);
+		textInventarioPrecio.setEditable(false);
+		textInventarioPrecio.setColumns(10);
+		textInventarioPrecio.setBounds(18, 108, 86, 20);
+		panelAuxiliarInventario.add(textInventarioPrecio);
+		
+		textInventarioProveedor = new JTextField();
+		textInventarioProveedor.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		textInventarioProveedor.setHorizontalAlignment(SwingConstants.CENTER);
+		textInventarioProveedor.setEditable(false);
+		textInventarioProveedor.setColumns(10);
+		textInventarioProveedor.setBounds(18, 154, 118, 20);
+		panelAuxiliarInventario.add(textInventarioProveedor);
+		
+		textInventarioStock = new JTextField();
+		textInventarioStock.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		textInventarioStock.setHorizontalAlignment(SwingConstants.CENTER);
+		textInventarioStock.setEditable(false);
+		textInventarioStock.setColumns(10);
+		textInventarioStock.setBounds(18, 200, 40, 20);
+		panelAuxiliarInventario.add(textInventarioStock);
+		
+		progressBarInventario = new JProgressBar();
+		progressBarInventario.setBounds(18, 228, 146, 14);
+		panelAuxiliarInventario.add(progressBarInventario);
+		
+		lbInventarioImagen = new JLabel();
+		lbInventarioImagen.setText("Imagen");
+		lbInventarioImagen.setHorizontalAlignment(SwingConstants.LEFT);
+		lbInventarioImagen.setForeground(Color.BLACK);
+		lbInventarioImagen.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbInventarioImagen.setBackground(Color.WHITE);
+		lbInventarioImagen.setBounds(175, 39, 72, 20);
+		panelAuxiliarInventario.add(lbInventarioImagen);
+		
+		lbmostrarImagenInventario = new JLabel("");
+		lbmostrarImagenInventario.setBounds(153, 73, 103, 77);
+		panelAuxiliarInventario.add(lbmostrarImagenInventario);
+		
+		btnComprobarProductoInventario = new JButton("");
+		btnComprobarProductoInventario.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
+		btnComprobarProductoInventario.setBounds(250, 2, 40, 27);
+		panelAuxiliarInventario.add(btnComprobarProductoInventario);
+		
+		lbmensajeInventario2 = new JLabel("");
+		lbmensajeInventario2.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 11));
+		lbmensajeInventario2.setBounds(137, 200, 141, 20);
+		panelAuxiliarInventario.add(lbmensajeInventario2);
+		panelAuxiliarHistorial.setBorder(new LineBorder(new Color(255, 255, 255), 2));
+		panelAuxiliarHistorial.setBackground(Color.LIGHT_GRAY);
+		panelAuxiliarHistorial.setBounds(43, 185, 458, 271);
+		Contabilidad.add(panelAuxiliarHistorial);
+		
+		panelAuxiliarEstadisticas = new JPanel();
+		panelAuxiliarEstadisticas.setBorder(new LineBorder(new Color(255, 255, 255), 2));
+		panelAuxiliarEstadisticas.setBackground(new Color(192, 192, 192));
+		panelAuxiliarEstadisticas.setBounds(26, 55, 406, 213);
+		panelAuxiliarHistorial.add(panelAuxiliarEstadisticas);
+		panelAuxiliarEstadisticas.setVisible(false);
+		panelAuxiliarEstadisticas.setLayout(null);
+		
+		lblNewLabel = new JLabel("Estadisticas");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lblNewLabel.setBounds(156, 11, 109, 21);
+		panelAuxiliarEstadisticas.add(lblNewLabel);
+		
+		lbcerrarSesionEstadisticas = new JLabel("");
+		lbcerrarSesionEstadisticas.setForeground(Color.WHITE);
+		lbcerrarSesionEstadisticas.setBounds(365, 6, 31, 30);
+		fotoEscalarLabel(lbcerrarSesionEstadisticas, "assets/finSesion.png");
+		panelAuxiliarEstadisticas.add(lbcerrarSesionEstadisticas);
+		
+		lbproductos = new JLabel("Mesas");
+		lbproductos.setForeground(Color.WHITE);
+		lbproductos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbproductos.setBounds(301, 43, 65, 21);
+		panelAuxiliarEstadisticas.add(lbproductos);
+		
+		separator_16 = new JSeparator();
+		separator_16.setForeground(new Color(255, 255, 255));
+		separator_16.setBounds(10, 40, 386, 2);
+		separator_16.setVisible(false);
+		panelAuxiliarEstadisticas.add(separator_16);
+		
+		lbestadisticaMesa1 = new JLabel("Mesa 1");
+		lbestadisticaMesa1.setForeground(Color.WHITE);
+		lbestadisticaMesa1.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa1.setBounds(10, 68, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa1);
+		
+		lbestadisticaMesa2 = new JLabel("Mesa 2");
+		lbestadisticaMesa2.setForeground(Color.WHITE);
+		lbestadisticaMesa2.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa2.setBounds(10, 91, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa2);
+		
+		lbestadisticaMesa3 = new JLabel("Mesa 3");
+		lbestadisticaMesa3.setForeground(Color.WHITE);
+		lbestadisticaMesa3.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa3.setBounds(10, 113, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa3);
+		
+		lbestadisticaMesa4 = new JLabel("Mesa 4");
+		lbestadisticaMesa4.setForeground(Color.WHITE);
+		lbestadisticaMesa4.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa4.setBounds(10, 135, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa4);
+		
+		lbestadisticaMesa5 = new JLabel("Mesa 5");
+		lbestadisticaMesa5.setForeground(Color.WHITE);
+		lbestadisticaMesa5.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa5.setBounds(10, 158, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa5);
+		
+		lbestadisticaMesa6 = new JLabel("Mesa 6");
+		lbestadisticaMesa6.setForeground(Color.WHITE);
+		lbestadisticaMesa6.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbestadisticaMesa6.setBounds(10, 180, 73, 21);
+		panelAuxiliarEstadisticas.add(lbestadisticaMesa6);
+		
+		progressBarEstadisticaMesa1 = new JProgressBar();
+		progressBarEstadisticaMesa1.setBounds(80, 73, 146, 14);
+		progressBarEstadisticaMesa1.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa1);
+		progressBarEstadisticaMesa1.setForeground(Color.BLUE);
+		progressBarEstadisticaMesa1.setMaximum(10);
+		
+		progressBarEstadisticaMesa2 = new JProgressBar();
+		progressBarEstadisticaMesa2.setBounds(80, 96, 146, 14);
+		progressBarEstadisticaMesa2.setForeground(Color.RED);
+		progressBarEstadisticaMesa2.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa2);
+		progressBarEstadisticaMesa2.setMaximum(10);
+		
+		progressBarEstadisticaMesa3 = new JProgressBar();
+		progressBarEstadisticaMesa3.setBounds(80, 118, 146, 14);
+		progressBarEstadisticaMesa3.setForeground(Color.MAGENTA);
+		progressBarEstadisticaMesa3.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa3);
+		progressBarEstadisticaMesa3.setMaximum(10);
+		
+		progressBarEstadisticaMesa4 = new JProgressBar();
+		progressBarEstadisticaMesa4.setBounds(80, 140, 146, 14);
+		progressBarEstadisticaMesa4.setForeground(Color.YELLOW);
+		progressBarEstadisticaMesa4.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa4);
+		progressBarEstadisticaMesa4.setMaximum(10);
+		
+		progressBarEstadisticaMesa5 = new JProgressBar();
+		progressBarEstadisticaMesa5.setBounds(80, 163, 146, 14);
+		progressBarEstadisticaMesa5.setForeground(Color.GREEN);
+		progressBarEstadisticaMesa5.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa5);
+		progressBarEstadisticaMesa5.setMaximum(10);
+		
+		progressBarEstadisticaMesa6 = new JProgressBar();
+		progressBarEstadisticaMesa6.setBounds(80, 185, 146, 14);
+		progressBarEstadisticaMesa6.setForeground(Color.ORANGE);
+		progressBarEstadisticaMesa6.setStringPainted(true);
+		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa6);
+		progressBarEstadisticaMesa6.setMaximum(10);
+		
+		listEstadisticasMesa = new JList();
+		listEstadisticasMesa.setBounds(276, 73, 109, 118);
+		panelAuxiliarEstadisticas.add(listEstadisticasMesa);
+		
+		separator_17 = new JSeparator();
+		separator_17.setForeground(new Color(255, 255, 255));
+		separator_17.setOrientation(SwingConstants.VERTICAL);
+		separator_17.setBounds(258, 43, 16, 170);
+		panelAuxiliarEstadisticas.add(separator_17);
+		
+		lbtotalComandas = new JLabel("Comandas activas/realizadas:");
+		lbtotalComandas.setForeground(Color.WHITE);
+		lbtotalComandas.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbtotalComandas.setBounds(10, 43, 197, 21);
+		panelAuxiliarEstadisticas.add(lbtotalComandas);
+		
+		lbnumComandasTotales = new JLabel("");
+		lbnumComandasTotales.setHorizontalAlignment(SwingConstants.CENTER);
+		lbnumComandasTotales.setForeground(new Color(0, 0, 0));
+		lbnumComandasTotales.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbnumComandasTotales.setBounds(206, 43, 52, 21);
+		panelAuxiliarEstadisticas.add(lbnumComandasTotales);
+		
+		lbtituloHistorial = new JLabel("Historial de Comandas");
+		lbtituloHistorial.setForeground(Color.WHITE);
+		lbtituloHistorial.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtituloHistorial.setBounds(134, 11, 207, 20);
+		panelAuxiliarHistorial.add(lbtituloHistorial);
+		
+		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.setBackground(new Color(220, 20, 60));
+		btnLimpiar.setForeground(new Color(255, 255, 255));
+		btnLimpiar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		btnLimpiar.setBounds(270, 213, 117, 42);
+		panelAuxiliarHistorial.add(btnLimpiar);
+		
+		btnEstadisticas = new JButton("Estadisticas");
+		btnEstadisticas.setBackground(new Color(0, 0, 0));
+		btnEstadisticas.setForeground(new Color(255, 255, 255));
+		btnEstadisticas.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		btnEstadisticas.setBounds(65, 213, 117, 42);
+		panelAuxiliarHistorial.add(btnEstadisticas);
+		
+		separator_34 = new JSeparator();
+		separator_34.setForeground(new Color(255, 255, 255));
+		separator_34.setBounds(10, 42, 438, 2);
+		separator_34.setVisible(false);
+		panelAuxiliarHistorial.add(separator_34);
+		
+		scrollPaneHistorial = new JScrollPane();
+		scrollPaneHistorial.setBounds(38, 58, 384, 146);
+		panelAuxiliarHistorial.add(scrollPaneHistorial);
+		
+		tableHistorial = new JTable();
+		tableHistorial.getTableHeader().setBackground(Color.RED);
+		tableHistorial.getTableHeader().setForeground(Color.WHITE);
+		
+		tableHistorial.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 255, 255), null, null, null));
+		scrollPaneHistorial.setViewportView(tableHistorial);
+		Contabilidad.add(panelAuxiliarBanco);
+		panelAuxiliarBanco.setLayout(null);
+		
+		scrollPaneBanco = new JScrollPane();
+		scrollPaneBanco.setBounds(30, 194, 398, 66);
+		panelAuxiliarBanco.add(scrollPaneBanco);
+		
+		tableTransacciones = new JTable();
+		tableTransacciones.getTableHeader().setBackground(Color.BLACK);
+		tableTransacciones.getTableHeader().setForeground(Color.WHITE);
+		scrollPaneBanco.setViewportView(tableTransacciones);
+		tableTransacciones.setVisible(false);
+		
+		lbnombreCuenta = new JLabel("");
+		lbnombreCuenta.setForeground(new Color(0, 0, 0));
+		lbnombreCuenta.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbnombreCuenta.setBounds(135, 160, 76, 14);
+		
+		panelAuxiliarBanco.add(lbnombreCuenta);
+		
+		comboBoxBanco = new JComboBox();
+		comboBoxBanco.setBounds(10, 29, 96, 22);
+		panelAuxiliarBanco.add(comboBoxBanco);
+		
+		lbCuentas = new JLabel("Cuentas");
+		lbCuentas.setForeground(new Color(255, 255, 255));
+		lbCuentas.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
+		lbCuentas.setBounds(25, 11, 70, 14);
+		panelAuxiliarBanco.add(lbCuentas);
+		
+		lblSaldos = new JLabel("Saldo");
+		lblSaldos.setForeground(new Color(255, 255, 255));
+		lblSaldos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
+		lblSaldos.setBounds(151, 7, 53, 20);
+		panelAuxiliarBanco.add(lblSaldos);
+		
+		lbMostrarSaldo = new JLabel();
+		lbMostrarSaldo.setHorizontalAlignment(SwingConstants.CENTER);
+		lbMostrarSaldo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbMostrarSaldo.setBounds(203, 7, 100, 20);
+		lbMostrarSaldo.setVisible(false);
+		panelAuxiliarBanco.add(lbMostrarSaldo);
+		
+		lbfechaContabilidad = new JLabel("");
+		lbfechaContabilidad.setForeground(Color.WHITE);
+		lbfechaContabilidad.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
+		lbfechaContabilidad.setBounds(352, 5, 96, 20);
+		panelAuxiliarBanco.add(lbfechaContabilidad);
+		
+		separator_27 = new JSeparator();
+		separator_27.setForeground(new Color(255, 255, 255));
+		separator_27.setBounds(10, 143, 438, 14);
+		panelAuxiliarBanco.add(separator_27);
+		
+		separator_28 = new JSeparator();
+		separator_28.setOrientation(SwingConstants.VERTICAL);
+		separator_28.setForeground(Color.WHITE);
+		separator_28.setBounds(111, 3, 13, 141);
+		panelAuxiliarBanco.add(separator_28);
+		
+		separator_29 = new JSeparator();
+		separator_29.setOrientation(SwingConstants.VERTICAL);
+		separator_29.setForeground(Color.WHITE);
+		separator_29.setBounds(337, 3, 13, 28);
+		panelAuxiliarBanco.add(separator_29);
+		
+		separator_30 = new JSeparator();
+		separator_30.setForeground(Color.WHITE);
+		separator_30.setBounds(111, 29, 347, 22);
+		panelAuxiliarBanco.add(separator_30);
+		
+		btnIngresar = new JButton("");
+		btnIngresar.setBackground(new Color(46, 139, 87));
+		btnIngresar.setBounds(151, 79, 97, 53);
+		panelAuxiliarBanco.add(btnIngresar);
+		
+		btnGastos = new JButton("");
+		btnGastos.setBackground(new Color(204, 0, 51));
+		btnGastos.setBounds(313, 80, 96, 52);
+		panelAuxiliarBanco.add(btnGastos);
+		
+		lbModificar = new JLabel("Modificar");
+		lbModificar.setForeground(Color.WHITE);
+		lbModificar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
+		lbModificar.setBounds(250, 34, 86, 22);
+		panelAuxiliarBanco.add(lbModificar);
+		
+		separator_31 = new JSeparator();
+		separator_31.setForeground(Color.WHITE);
+		separator_31.setBounds(111, 58, 347, 22);
+		panelAuxiliarBanco.add(separator_31);
+		
+		lbcontraseñaBanco = new JLabel("Contraseña*");
+		lbcontraseñaBanco.setForeground(Color.WHITE);
+		lbcontraseñaBanco.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbcontraseñaBanco.setVisible(false);
+		lbcontraseñaBanco.setBounds(128, 87, 86, 14);
+		panelAuxiliarBanco.add(lbcontraseñaBanco);
+		
+		lbMostrarContraseñaBanco = new JLabel();
+		lbMostrarContraseñaBanco.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbMostrarContraseñaBanco.setHorizontalAlignment(SwingConstants.CENTER);
+		lbMostrarContraseñaBanco.setBounds(217, 84, 86, 20);
+		panelAuxiliarBanco.add(lbMostrarContraseñaBanco);
+		
+		lbcantidadImpuesta = new JLabel("Cantidad*");
+		lbcantidadImpuesta.setForeground(Color.WHITE);
+		lbcantidadImpuesta.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbcantidadImpuesta.setVisible(false);
+		lbcantidadImpuesta.setBounds(128, 118, 76, 14);
+		panelAuxiliarBanco.add(lbcantidadImpuesta);
+		
+		textFieldCantidadBanco = new JTextField();
+		textFieldCantidadBanco.setColumns(10);
+		textFieldCantidadBanco.setBounds(217, 114, 86, 20);
+		textFieldCantidadBanco.setVisible(false);
+		panelAuxiliarBanco.add(textFieldCantidadBanco);
+		
+		rdbtnConcepto = new JRadioButton("Comandas");
+		rdbtnConcepto.setBounds(327, 80, 109, 23);
+		rdbtnConcepto.setVisible(false);
+		panelAuxiliarBanco.add(rdbtnConcepto);
+		
+		lbconcepto = new JLabel("Concepto*");
+		lbconcepto.setForeground(Color.WHITE);
+		lbconcepto.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbconcepto.setVisible(false);
+		lbconcepto.setBounds(352, 62, 76, 14);
+		panelAuxiliarBanco.add(lbconcepto);
+		
+		rdbtnConcepto2 = new JRadioButton("Otros Ingresos");
+		rdbtnConcepto2.setBounds(327, 110, 109, 23);
+		rdbtnConcepto2.setVisible(false);
+		panelAuxiliarBanco.add(rdbtnConcepto2);
+		//ASIGNAR LOS BOTONES AL BUTTON GRUOUP
+		grupoBotones.add(rdbtnConcepto);
+		grupoBotones.add(rdbtnConcepto2);
+		
+		lbRetroceder = new JLabel("");
+		lbRetroceder.setForeground(Color.WHITE);
+		lbRetroceder.setBounds(421, 34, 27, 22);
+		panelAuxiliarBanco.add(lbRetroceder);
+		fotoEscalarLabel(lbRetroceder, "assets/finSesion.png");
+		
+		btnGuardarCambios = new JButton("Guardar");
+		btnGuardarCambios.setBackground(new Color(51, 204, 102));
+		btnGuardarCambios.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
+		btnGuardarCambios.setBounds(116, 33, 89, 23);
+		btnGuardarCambios.setVisible(false);
+		panelAuxiliarBanco.add(btnGuardarCambios);
+		
+		lbmensajeInformativo = new JLabel("");
+		lbmensajeInformativo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbmensajeInformativo.setForeground(new Color(255, 255, 255));
+		lbmensajeInformativo.setBounds(227, 153, 221, 22);
+		panelAuxiliarBanco.add(lbmensajeInformativo);
+		
+		lbtextoMostrar = new JLabel("Transacciones");
+		lbtextoMostrar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
+		lbtextoMostrar.setForeground(new Color(255, 255, 255));
+		lbtextoMostrar.setBounds(10, 155, 114, 22);
+		panelAuxiliarBanco.add(lbtextoMostrar);
+		
+		separator_32 = new JSeparator();
+		separator_32.setForeground(Color.WHITE);
+		separator_32.setBounds(10, 179, 438, 14);
+		panelAuxiliarBanco.add(separator_32);
+		
+		separator_33 = new JSeparator();
+		separator_33.setOrientation(SwingConstants.VERTICAL);
+		separator_33.setForeground(Color.WHITE);
+		separator_33.setBounds(200, 143, 13, 37);
+		panelAuxiliarBanco.add(separator_33);
+		lbRetroceder.setVisible(false);
+		
+		lbContextoMenu = new JLabel("Seleccione la opcion que desee gestionar de las posibles");
+		lbContextoMenu.setForeground(new Color(255, 255, 255));
+		lbContextoMenu.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
+		lbContextoMenu.setBounds(164, 93, 359, 22);
+		Contabilidad.add(lbContextoMenu);
+		
+		menuBar = new JMenuBar();
+		menuBar.setBounds(29, 93, 125, 22);
+		Contabilidad.add(menuBar);
+		
+		Menu = new JMenu("Contabilidad");
+		Menu.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		Menu.setForeground(new Color(0, 0, 0));
+		menuBar.add(Menu);
+		
+		menuHistorial = new JMenuItem("Historial");
+		menuHistorial.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		Menu.add(menuHistorial);
+		
+		menuInventario = new JMenuItem("Inventario");
+		menuInventario.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		Menu.add(menuInventario);
+		
+		menuBanco = new JMenuItem("Banco");
+		menuBanco.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		Menu.add(menuBanco);
+		
+		separator_23 = new JSeparator();
+		separator_23.setForeground(Color.WHITE);
+		separator_23.setBackground(Color.WHITE);
+		separator_23.setBounds(30, 90, 488, 25);
+		Contabilidad.add(separator_23);
+		
+		lbtituloContabilidad = new JLabel("Coffekie");
+		lbtituloContabilidad.setForeground(Color.WHITE);
+		lbtituloContabilidad.setFont(new Font("Segoe Script", Font.BOLD, 24));
+		lbtituloContabilidad.setBackground(Color.WHITE);
+		lbtituloContabilidad.setBounds(221, 38, 114, 42);
+		Contabilidad.add(lbtituloContabilidad);
+		
+		lbmostrarHoraContabilidad = new JLabel("16 : 42");
+		lbmostrarHoraContabilidad.setForeground(Color.WHITE);
+		lbmostrarHoraContabilidad.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
+		lbmostrarHoraContabilidad.setBounds(80, 44, 83, 23);
+		Contabilidad.add(lbmostrarHoraContabilidad);
+		
+		lbcerrarSesionContabilidad = new JLabel("");
+		lbcerrarSesionContabilidad.setForeground(Color.WHITE);
+		lbcerrarSesionContabilidad.setBounds(418, 45, 31, 30);
+		fotoEscalarLabel(lbcerrarSesionContabilidad, "assets/finSesion.png");
+		Contabilidad.add(lbcerrarSesionContabilidad);
+		
+		lbtituloSeleccionado = new JLabel("");
+		lbtituloSeleccionado.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtituloSeleccionado.setForeground(new Color(255, 255, 255));
+		lbtituloSeleccionado.setBounds(354, 126, 95, 22);
+		Contabilidad.add(lbtituloSeleccionado);
+		
+		separator_24 = new JSeparator();
+		separator_24.setForeground(Color.WHITE);
+		separator_24.setBackground(Color.WHITE);
+		separator_24.setVisible(false);
+		separator_24.setBounds(270, 159, 231, 25);
+		Contabilidad.add(separator_24);
+		
+		lbfondoContabilidad = new JLabel("");
+		lbfondoContabilidad.setBounds(0, 0, 548, 502);
+		fotoEscalarLabel(lbfondoContabilidad, "assets/fondo2.jpg");
+		Contabilidad.add(lbfondoContabilidad);
+		
+		Pagos = new JPanel();
+		Pagos.setBounds(0, 0, 548, 502);
+		contentPane.add(Pagos);
+		Pagos.setLayout(null);
+		Pagos.setVisible(false);
+		
+		lbmensajeDenegar = new JLabel("");
+		lbmensajeDenegar.setHorizontalAlignment(SwingConstants.CENTER);
+		lbmensajeDenegar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbmensajeDenegar.setForeground(new Color(255, 0, 0));
+		lbmensajeDenegar.setBounds(111, 339, 329, 27);
+		lbmensajeDenegar.setVisible(false);
+		
+		btnguardarPago = new JButton("€");
+		btnguardarPago.setBackground(new Color(128, 255, 128));
+		btnguardarPago.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		btnguardarPago.setBounds(300, 289, 42, 30);
+		Pagos.add(btnguardarPago);
+		Pagos.add(lbmensajeDenegar);
+		
+		btnDarCambio = new JButton("");
+		btnDarCambio.setBounds(247, 418, 53, 42);
+		btnDarCambio.setVisible(false);
+		Pagos.add(btnDarCambio);
+		
+		textFieldDineroDeber = new JTextField();
+		textFieldDineroDeber.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldDineroDeber.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		textFieldDineroDeber.setForeground(new Color(0, 0, 0));
+		textFieldDineroDeber.setEditable(false);
+		textFieldDineroDeber.setBounds(231, 192, 86, 30);
+		Pagos.add(textFieldDineroDeber);
+		textFieldDineroDeber.setColumns(10);
+		
+		lbmensajeAbonarCliente = new JLabel("");
+		lbmensajeAbonarCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		lbmensajeAbonarCliente.setForeground(Color.WHITE);
+		lbmensajeAbonarCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbmensajeAbonarCliente.setBounds(34, 233, 478, 36);
+		Pagos.add(lbmensajeAbonarCliente);
+		
+		textFieldAbonoCliente = new JTextField();
+		textFieldAbonoCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldAbonoCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		textFieldAbonoCliente.setColumns(10);
+		textFieldAbonoCliente.setBounds(208, 289, 86, 30);
+		Pagos.add(textFieldAbonoCliente);
+		
+		lbmensajeCambioCliente = new JLabel("");
+		lbmensajeCambioCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		lbmensajeCambioCliente.setForeground(Color.WHITE);
+		lbmensajeCambioCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbmensajeCambioCliente.setVisible(false);
+		lbmensajeCambioCliente.setBounds(34, 330, 478, 36);
+		Pagos.add(lbmensajeCambioCliente);
+		
+		textFieldcambioTotal = new JTextField();
+		textFieldcambioTotal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		textFieldcambioTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldcambioTotal.setEditable(false);
+		textFieldcambioTotal.setColumns(10);
+		textFieldcambioTotal.setVisible(false);
+		textFieldcambioTotal.setBounds(231, 377, 86, 30);
+		Pagos.add(textFieldcambioTotal);
+		
+		lbmensajeDeber = new JLabel("");
+		lbmensajeDeber.setHorizontalAlignment(SwingConstants.CENTER);
+		lbmensajeDeber.setForeground(new Color(255, 255, 255));
+		lbmensajeDeber.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbmensajeDeber.setBounds(34, 137, 478, 36);
+		Pagos.add(lbmensajeDeber);
+		
+		lbcerrarSesionPago = new JLabel("");
+		lbcerrarSesionPago.setForeground(Color.WHITE);
+		lbcerrarSesionPago.setBounds(442, 41, 31, 30);
+		fotoEscalarLabel(lbcerrarSesionPago, "assets/finSesion.png");
+		Pagos.add(lbcerrarSesionPago);
+		
+		lbmostrarHoraPago = new JLabel("16 : 42");
+		lbmostrarHoraPago.setForeground(Color.WHITE);
+		lbmostrarHoraPago.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
+		lbmostrarHoraPago.setBounds(80, 44, 79, 23);
+		Pagos.add(lbmostrarHoraPago);
+		
+		lbtituloPago = new JLabel("Coffekie");
+		lbtituloPago.setForeground(Color.WHITE);
+		lbtituloPago.setFont(new Font("Segoe Script", Font.BOLD, 24));
+		lbtituloPago.setBackground(Color.WHITE);
+		lbtituloPago.setBounds(221, 38, 119, 42);
+		Pagos.add(lbtituloPago);
+		
+		separator_22 = new JSeparator();
+		separator_22.setForeground(Color.WHITE);
+		separator_22.setBackground(Color.WHITE);
+		separator_22.setBounds(30, 90, 488, 25);
+		Pagos.add(separator_22);
+		
+		lbfondoPagos = new JLabel("");
+		lbfondoPagos.setBounds(0, 0, 548, 502);
+		fotoEscalarLabel(lbfondoPagos, "assets/fondo2.jpg");
+		Pagos.add(lbfondoPagos);
+		
+		Comanda = new JPanel();
+		Comanda.setBounds(0, 0, 548, 502);
+		contentPane.add(Comanda);
+		Comanda.setLayout(null);
+		
+		lbfondoComanda = new JLabel("");
+		lbfondoComanda.setBounds(0, 0, 548, 502);
+		Comanda.setVisible(false);
+		
+		btnrestarComida = new JButton("-");
+		btnrestarComida.setForeground(Color.BLACK);
+		btnrestarComida.setFont(new Font("Tempus Sans ITC", Font.BOLD, 23));
+		btnrestarComida.setBackground(new Color(255, 0, 51));
+		btnrestarComida.setBounds(100, 343, 47, 28);
+		btnrestarComida.setVisible(false);
+		
+		lbPagar = new JLabel("");
+		lbPagar.setBounds(342, 436, 89, 42);
+		Comanda.add(lbPagar);
+		fotoEscalarLabel(lbPagar, "assets/pagar.png");
+		Comanda.add(btnrestarComida);
+		
+		lbmensajePedido = new JLabel("");
+		lbmensajePedido.setHorizontalAlignment(SwingConstants.CENTER);
+		lbmensajePedido.setForeground(new Color(255, 255, 255));
+		lbmensajePedido.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbmensajePedido.setBounds(58, 441, 253, 27);
+		lbmensajePedido.setVisible(false);
+		Comanda.add(lbmensajePedido);
+		
+		separator_15 = new JSeparator();
+		separator_15.setOrientation(SwingConstants.VERTICAL);
+		separator_15.setForeground(Color.WHITE);
+		separator_15.setBackground(Color.WHITE);
+		separator_15.setBounds(243, 373, 11, 58);
+		Comanda.add(separator_15);
+		
+		textFieldTotal = new JTextField();
+		textFieldTotal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 16));
+		textFieldTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldTotal.setEditable(false);
+		textFieldTotal.setColumns(10);
+		textFieldTotal.setBounds(112, 396, 89, 20);
+		Comanda.add(textFieldTotal);
+		
+		textFieldFecha = new JTextField();
+		textFieldFecha.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		textFieldFecha.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldFecha.setEditable(false);
+		textFieldFecha.setColumns(10);
+		textFieldFecha.setBounds(304, 396, 81, 20);
+		Comanda.add(textFieldFecha);
+		
+		textFieldHora = new JTextField();
+		textFieldHora.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
+		textFieldHora.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldHora.setEditable(false);
+		textFieldHora.setColumns(10);
+		textFieldHora.setBounds(444, 396, 64, 20);
+		Comanda.add(textFieldHora);
+		
+		
+		lbHoraComanda = new JLabel("HORA");
+		lbHoraComanda.setForeground(Color.WHITE);
+		lbHoraComanda.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbHoraComanda.setBounds(395, 396, 52, 23);
+		Comanda.add(lbHoraComanda);
+		
+		lbFechaComanda = new JLabel("FECHA");
+		lbFechaComanda.setForeground(Color.WHITE);
+		lbFechaComanda.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbFechaComanda.setBounds(253, 396, 58, 23);
+		Comanda.add(lbFechaComanda);
+		
+		separator_14 = new JSeparator();
+		separator_14.setForeground(Color.WHITE);
+		separator_14.setBackground(Color.WHITE);
+		separator_14.setBounds(30, 429, 488, 14);
+		Comanda.add(separator_14);
+		
+		lblTotal = new JLabel("TOTAL");
+		lblTotal.setForeground(Color.WHITE);
+		lblTotal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lblTotal.setBounds(58, 396, 52, 23);
+		Comanda.add(lblTotal);
+		
+		separator_13 = new JSeparator();
+		separator_13.setForeground(Color.WHITE);
+		separator_13.setBackground(Color.WHITE);
+		separator_13.setBounds(30, 376, 488, 25);
+		Comanda.add(separator_13);
+		
+		separator_12 = new JSeparator();
+		separator_12.setOrientation(SwingConstants.VERTICAL);
+		separator_12.setForeground(Color.WHITE);
+		separator_12.setBackground(Color.WHITE);
+		separator_12.setBounds(243, 120, 37, 256);
+		Comanda.add(separator_12);
+		
+		btnProducto9 = new JButton("");
+		btnProducto9.setBounds(449, 290, 69, 65);
+		Comanda.add(btnProducto9);
+		
+		btnProducto8 = new JButton("");
+		btnProducto8.setBounds(354, 290, 69, 65);
+		Comanda.add(btnProducto8);
+		
+		btnProducto7 = new JButton("");
+		btnProducto7.setBounds(258, 290, 69, 65);
+		Comanda.add(btnProducto7);
+		
+		btnProducto5 = new JButton("");
+		btnProducto5.setBounds(354, 212, 69, 65);
+		Comanda.add(btnProducto5);
+		
+		btnProducto6 = new JButton("");
+		btnProducto6.setBounds(449, 212, 69, 65);
+		Comanda.add(btnProducto6);
+		
+		btnProducto4 = new JButton("");
+		btnProducto4.setBounds(258, 212, 69, 65);
+		Comanda.add(btnProducto4);
+		
+		btnProducto3 = new JButton("");
+		btnProducto3.setBounds(449, 132, 69, 65);
+		Comanda.add(btnProducto3);
+		
+		btnProducto2 = new JButton("");
+		btnProducto2.setBounds(354, 132, 69, 65);
+		Comanda.add(btnProducto2);
+		
+		btnProducto1 = new JButton("");
+		btnProducto1.setBounds(258, 132, 69, 65);
+		Comanda.add(btnProducto1);
+		
+		listPedido = new JList();
+		listPedido.setBounds(30, 156, 196, 180);
+		Comanda.add(listPedido);	
+		
+		lblPedido = new JLabel("PEDIDO");
+		lblPedido.setForeground(Color.WHITE);
+		lblPedido.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lblPedido.setBounds(100, 134, 64, 23);
+		Comanda.add(lblPedido);
+		
+		separator_11 = new JSeparator();
+		separator_11.setForeground(Color.WHITE);
+		separator_11.setBackground(Color.WHITE);
+		separator_11.setBounds(30, 120, 488, 25);
+		Comanda.add(separator_11);
+		
+		textFieldNumComanda = new JTextField();
+		textFieldNumComanda.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldNumComanda.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
+		textFieldNumComanda.setEditable(false);
+		textFieldNumComanda.setColumns(10);
+		textFieldNumComanda.setBounds(415, 96, 52, 20);
+		Comanda.add(textFieldNumComanda);
+		
+		textFieldNumMesa = new JTextField();
+		textFieldNumMesa.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
+		textFieldNumMesa.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldNumMesa.setEditable(false);
+		textFieldNumMesa.setBounds(164, 97, 52, 20);
+		Comanda.add(textFieldNumMesa);
+		textFieldNumMesa.setColumns(10);
+		
+		lblNumComanda = new JLabel("COMANDA");
+		lblNumComanda.setForeground(new Color(255, 255, 255));
+		lblNumComanda.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lblNumComanda.setBackground(new Color(255, 255, 255));
+		lblNumComanda.setBounds(322, 101, 83, 14);
+		Comanda.add(lblNumComanda);
+		
+		lbtextoMesaComanda = new JLabel("MESA");
+		lbtextoMesaComanda.setForeground(new Color(255, 255, 255));
+		lbtextoMesaComanda.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		lbtextoMesaComanda.setBounds(108, 98, 46, 23);
+		Comanda.add(lbtextoMesaComanda);
+		
+		lbcerrarSesionComanda = new JLabel("");
+		lbcerrarSesionComanda.setForeground(Color.WHITE);
+		lbcerrarSesionComanda.setBounds(442, 41, 31, 30);
+		Comanda.add(lbcerrarSesionComanda);
+		fotoEscalarLabel(lbcerrarSesionComanda, "assets/finSesion.png");
+		
+		lbmostrarHoraComanda = new JLabel("16 : 42");
+		lbmostrarHoraComanda.setForeground(Color.WHITE);
+		lbmostrarHoraComanda.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
+		lbmostrarHoraComanda.setBounds(80, 44, 79, 23);
+		Comanda.add(lbmostrarHoraComanda);
+		
+		lbtituloPComanda = new JLabel("Coffekie");
+		lbtituloPComanda.setForeground(Color.WHITE);
+		lbtituloPComanda.setFont(new Font("Segoe Script", Font.BOLD, 24));
+		lbtituloPComanda.setBackground(Color.WHITE);
+		lbtituloPComanda.setBounds(221, 38, 119, 42);
+		Comanda.add(lbtituloPComanda);
+		
+		separator_10 = new JSeparator();
+		separator_10.setForeground(Color.WHITE);
+		separator_10.setBackground(Color.WHITE);
+		separator_10.setBounds(30, 90, 488, 25);
+		Comanda.add(separator_10);
+		Comanda.add(lbfondoComanda);
+		fotoEscalarLabel(lbfondoComanda, "assets/fondo2.jpg");
+		
+		Principal = new JPanel();
+		Principal.setBounds(0, 0, 548, 502);
+		contentPane.add(Principal);
+		Principal.setLayout(null);
+		Principal.setVisible(false);
+		
+		lbensajeInformativoMenu = new JLabel("Coffekie@2024LNCB");
+		lbensajeInformativoMenu.setForeground(new Color(255, 255, 255));
+		lbensajeInformativoMenu.setFont(new Font("Yu Gothic UI Light", Font.BOLD | Font.ITALIC, 20));
+		lbensajeInformativoMenu.setBounds(173, 440, 204, 27);
+		Principal.add(lbensajeInformativoMenu);
+		
+		separator_6 = new JSeparator();
+		separator_6.setForeground(Color.WHITE);
+		separator_6.setBackground(Color.WHITE);
+		separator_6.setBounds(30, 429, 488, 25);
+		Principal.add(separator_6);
+		
+		lbCajaRegistradora = new JLabel("");
+		lbCajaRegistradora.setBounds(40, 161, 63, 47);
+		Principal.add(lbCajaRegistradora);
+		fotoEscalarLabel(lbCajaRegistradora, "assets/cajaRegistradora.png");
+		
+		lbDinero = new JLabel("");
+		lbDinero.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
+		lbDinero.setBounds(126, 171, 88, 38);
+		Principal.add(lbDinero);
+		
+		lbHorario = new JLabel("");
+		lbHorario.setFont(new Font("Yu Gothic UI Light", Font.BOLD | Font.ITALIC, 24));
+		lbHorario.setBounds(113, 110, 101, 38);
+		Principal.add(lbHorario);
+		
+		lbCartel = new JLabel("");
+		lbCartel.setBounds(40, 101, 63, 47);
+		fotoEscalarLabel(lbCartel, "assets/cartelCafeteria4.png");
+		Principal.add(lbCartel);
+		
+		lbNumeroMesa_6 = new JLabel("6");
+		lbNumeroMesa_6.setForeground(Color.WHITE);
+		lbNumeroMesa_6.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		lbNumeroMesa_6.setBounds(397, 370, 20, 30);
+		Principal.add(lbNumeroMesa_6);
+		
+		lbNumeroMesa_5 = new JLabel("5");
+		lbNumeroMesa_5.setForeground(Color.WHITE);
+		lbNumeroMesa_5.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		lbNumeroMesa_5.setBounds(224, 370, 20, 30);
+		Principal.add(lbNumeroMesa_5);
+		
+		lbNumeroMesa_4 = new JLabel("4");
+		lbNumeroMesa_4.setForeground(Color.WHITE);
+		lbNumeroMesa_4.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		lbNumeroMesa_4.setBounds(40, 370, 20, 30);
+		Principal.add(lbNumeroMesa_4);
+		
+		lbNumeroMesa_3 = new JLabel("3");
+		lbNumeroMesa_3.setForeground(Color.WHITE);
+		lbNumeroMesa_3.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		lbNumeroMesa_3.setBounds(397, 264, 20, 30);
+		Principal.add(lbNumeroMesa_3);
+		
+		lbNumeroMesa_2 = new JLabel("2");
+		lbNumeroMesa_2.setForeground(Color.WHITE);
+		lbNumeroMesa_2.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		lbNumeroMesa_2.setBounds(224, 264, 20, 30);
+		Principal.add(lbNumeroMesa_2);
+		
+		lbNumeroMesa = new JLabel("1");
+		lbNumeroMesa.setForeground(new Color(255, 255, 255));
+		lbNumeroMesa.setBounds(40, 264, 20, 30);
+		Principal.add(lbNumeroMesa);
+		lbNumeroMesa.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
+		
+		mesa6 = new JLabel("");
+		mesa6.setBounds(417, 342, 79, 71);
+		Principal.add(mesa6);
+		fotoEscalarLabel(mesa6, "assets/mesas.png");
+		
+		mesa5 = new JLabel("");
+		mesa5.setBounds(243, 345, 79, 68);
+		Principal.add(mesa5);
+		fotoEscalarLabel(mesa5, "assets/mesas.png");
+		
+		mesa4 = new JLabel("");
+		mesa4.setBounds(62, 345, 79, 71);
+		Principal.add(mesa4);
+		fotoEscalarLabel(mesa4, "assets/mesas.png");
+		
+		mesa3 = new JLabel("");
+		mesa3.setBounds(417, 240, 79, 71);
+		Principal.add(mesa3);
+		fotoEscalarLabel(mesa3, "assets/mesas.png");
+		
+		mesa2 = new JLabel("");
+		mesa2.setBounds(243, 240, 79, 71);
+		Principal.add(mesa2);
+		fotoEscalarLabel(mesa2, "assets/mesas.png");
+		
+		mesa1 = new JLabel("");
+		mesa1.setBounds(62, 240, 79, 71);
+		Principal.add(mesa1);
+		fotoEscalarLabel(mesa1, "assets/mesas.png");
+		
+		lbfotoContabilidad = new JLabel("");
+		lbfotoContabilidad.setBounds(477, 161, 46, 40);
+		Principal.add(lbfotoContabilidad);
+		fotoEscalarLabel(lbfotoContabilidad, "assets/contabilidad.png");
+		
+		lbfotoInventario = new JLabel("");
+		lbfotoInventario.setBounds(472, 110, 46, 38);
+		fotoEscalarLabel(lbfotoInventario, "assets/stock.png");
+		Principal.add(lbfotoInventario);
+		
+		separator_4 = new JSeparator();
+		separator_4.setOrientation(SwingConstants.VERTICAL);
+		separator_4.setForeground(Color.WHITE);
+		separator_4.setBackground(Color.WHITE);
+		separator_4.setBounds(335, 91, 31, 126);
+		Principal.add(separator_4);
+		
+		separator_3 = new JSeparator();
+		separator_3.setForeground(Color.WHITE);
+		separator_3.setBackground(Color.WHITE);
+		separator_3.setBounds(30, 214, 488, 25);
+		Principal.add(separator_3);
+		
+		btnContabilidad = new JButton("Contabilidad");
+		btnContabilidad.setBackground(new Color(255, 255, 255));
+		btnContabilidad.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
+		btnContabilidad.setBounds(348, 161, 114, 42);
+		Principal.add(btnContabilidad);
+		
+		btnProductos = new JButton("Productos");
+		btnProductos.setBackground(new Color(255, 255, 255));
+		btnProductos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
+		btnProductos.setBounds(348, 110, 114, 42);
+		Principal.add(btnProductos);
+		
+		separator = new JSeparator();
+		separator.setForeground(new Color(255, 255, 255));
+		separator.setBackground(new Color(255, 255, 255));
+		separator.setBounds(30, 90, 488, 25);
+		Principal.add(separator);
+		
+		lbfotoSesion = new JLabel("");
+		lbfotoSesion.setBounds(410, 26, 53, 42);
+		Principal.add(lbfotoSesion);
+		
+		lbnombreEmpleado = new JLabel("");
+		lbnombreEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
+		lbnombreEmpleado.setBounds(393, 68, 88, 18);
+		Principal.add(lbnombreEmpleado);
+		lbnombreEmpleado.setForeground(Color.WHITE);
+		lbnombreEmpleado.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
+		
+		lbcerrarSesion = new JLabel("");
+		lbcerrarSesion.setForeground(Color.WHITE);
+		lbcerrarSesion.setBounds(487, 49, 31, 30);
+		Principal.add(lbcerrarSesion);
+		fotoEscalarLabel(lbcerrarSesion, "assets/finSesion.png");
+		
+		lbmostrarHoraPrincipal = new JLabel("16 : 42");
+		lbmostrarHoraPrincipal.setForeground(Color.WHITE);
+		lbmostrarHoraPrincipal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
+		lbmostrarHoraPrincipal.setBounds(80, 44, 79, 23);
+		Principal.add(lbmostrarHoraPrincipal);
+		
+		lbtituloPrincipal = new JLabel("Coffekie");
+		lbtituloPrincipal.setForeground(Color.WHITE);
+		lbtituloPrincipal.setFont(new Font("Segoe Script", Font.BOLD, 24));
+		lbtituloPrincipal.setBackground(Color.WHITE);
+		lbtituloPrincipal.setBounds(221, 38, 119, 42);
+		Principal.add(lbtituloPrincipal);
+		
+			JLabel lbPrincipalFondo = new JLabel("");
+			lbPrincipalFondo.setBounds(0, 0, 548, 502);
+			Principal.add(lbPrincipalFondo);
+			fotoEscalarLabel(lbPrincipalFondo, "assets/fondo2.jpg");
+		
+		Configuracion = new JPanel();
+		Configuracion.setBounds(0, 0, 548, 502);
+		contentPane.add(Configuracion);
+		Configuracion.setLayout(null);
+		Configuracion.setVisible(false);
+		
+		lbtextoEdicion = new JLabel("EDITAR DATOS");
+		lbtextoEdicion.setForeground(Color.WHITE);
+		lbtextoEdicion.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtextoEdicion.setBounds(213, 241, 154, 20);
+		Configuracion.add(lbtextoEdicion);
+		
+		lbtextoContraseña = new JLabel("Contraseña");
+		lbtextoContraseña.setForeground(Color.WHITE);
+		lbtextoContraseña.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
+		lbtextoContraseña.setBounds(53, 159, 109, 25);
+		Configuracion.add(lbtextoContraseña);
+		
+		lbtextoJornadaI = new JLabel("Jornada Inicio");
+		lbtextoJornadaI.setForeground(Color.WHITE);
+		lbtextoJornadaI.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
+		lbtextoJornadaI.setBounds(278, 143, 120, 25);
+		Configuracion.add(lbtextoJornadaI);
+		
+		lbtextoSueldo = new JLabel("Sueldo");
+		lbtextoSueldo.setForeground(Color.WHITE);
+		lbtextoSueldo.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
+		lbtextoSueldo.setBounds(53, 195, 80, 25);
+		Configuracion.add(lbtextoSueldo);
+		
+		lbtextoUsuario = new JLabel("Usuario");
+		lbtextoUsuario.setForeground(Color.WHITE);
+		lbtextoUsuario.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
+		lbtextoUsuario.setBounds(53, 123, 97, 25);
+		Configuracion.add(lbtextoUsuario);
+		
+		lbJornadaF = new JLabel("Jornada Fin");
+		lbJornadaF.setForeground(Color.WHITE);
+		lbJornadaF.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
+		lbJornadaF.setBounds(278, 179, 120, 25);
+		Configuracion.add(lbJornadaF);
+		
+		textFieldDatoFin = new JTextField();
+		textFieldDatoFin.setEditable(false);
+		textFieldDatoFin.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldDatoFin.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		textFieldDatoFin.setColumns(10);
+		textFieldDatoFin.setBounds(393, 184, 120, 20);
+		Configuracion.add(textFieldDatoFin);
+		
+		textFieldDatoInicio = new JTextField();
+		textFieldDatoInicio.setEditable(false);
+		textFieldDatoInicio.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldDatoInicio.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		textFieldDatoInicio.setColumns(10);
+		textFieldDatoInicio.setBounds(393, 148, 120, 20);
+		Configuracion.add(textFieldDatoInicio);
+		
+		textFieldDatoSueldo = new JTextField();
+		textFieldDatoSueldo.setEditable(false);
+		textFieldDatoSueldo.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldDatoSueldo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		textFieldDatoSueldo.setColumns(10);
+		textFieldDatoSueldo.setBounds(148, 196, 120, 20);
+		Configuracion.add(textFieldDatoSueldo);
+		
+		textFieldDatoPass = new JTextField();
+		textFieldDatoPass.setEditable(false);
+		textFieldDatoPass.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldDatoPass.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		textFieldDatoPass.setColumns(10);
+		textFieldDatoPass.setBounds(148, 164, 120, 20);
+		Configuracion.add(textFieldDatoPass);
+		
+		textFieldDatoUser = new JTextField();
+		textFieldDatoUser.setEditable(false);
+		textFieldDatoUser.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldDatoUser.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
+		textFieldDatoUser.setColumns(10);
+		textFieldDatoUser.setBounds(148, 128, 120, 20);
+		Configuracion.add(textFieldDatoUser);
+		
+		separator_7 = new JSeparator();
+		separator_7.setForeground(Color.WHITE);
+		separator_7.setBackground(Color.WHITE);
+		separator_7.setBounds(41, 236, 472, 14);
+		Configuracion.add(separator_7);
+		
+		lbtextoDatosPersonales = new JLabel("DATOS PERSONALES");
+		lbtextoDatosPersonales.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
+		lbtextoDatosPersonales.setForeground(new Color(255, 255, 255));
+		lbtextoDatosPersonales.setBounds(196, 97, 202, 20);
+		Configuracion.add(lbtextoDatosPersonales);
+		
+		mensajeInformativoConfiguracion = new JLabel("");
+		mensajeInformativoConfiguracion.setForeground(new Color(255, 0, 0));
+		mensajeInformativoConfiguracion.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		mensajeInformativoConfiguracion.setBackground(new Color(255, 0, 0));
+		mensajeInformativoConfiguracion.setHorizontalAlignment(SwingConstants.CENTER);
+		mensajeInformativoConfiguracion.setBounds(64, 444, 413, 14);
+		Configuracion.add(mensajeInformativoConfiguracion);
+		
+		textJIConf = new JTextField();
+		textJIConf.setHorizontalAlignment(SwingConstants.CENTER);
+		textJIConf.setColumns(10);
+		textJIConf.setBounds(172, 398, 120, 20);
+		Configuracion.add(textJIConf);
+		
+		textPassConf = new JTextField();
+		textPassConf.setHorizontalAlignment(SwingConstants.CENTER);
+		textPassConf.setColumns(10);
+		textPassConf.setBounds(172, 283, 120, 20);
+		Configuracion.add(textPassConf);
+		
+		textJFConf = new JTextField();
+		textJFConf.setHorizontalAlignment(SwingConstants.CENTER);
+		textJFConf.setColumns(10);
+		textJFConf.setBounds(172, 359, 120, 20);
+		Configuracion.add(textJFConf);
+		
+		textSueldoConf = new JTextField();
+		textSueldoConf.setHorizontalAlignment(SwingConstants.CENTER);
+		textSueldoConf.setColumns(10);
+		textSueldoConf.setBounds(172, 322, 120, 20);
+		Configuracion.add(textSueldoConf);
+		
+		btnGuardarInfo = new JButton("Guardar");
+		btnGuardarInfo.setFont(new Font("SansSerif", Font.BOLD, 15));
+		btnGuardarInfo.setBackground(new Color(255, 255, 255));
+		btnGuardarInfo.setBounds(369, 299, 97, 43);
+		Configuracion.add(btnGuardarInfo);
+		
+		btnEliminarUser = new JButton("Eliminar");
+		btnEliminarUser.setBackground(new Color(255, 128, 128));
+		btnEliminarUser.setFont(new Font("SansSerif", Font.BOLD, 15));
+		btnEliminarUser.setBounds(369, 375, 97, 43);
+		Configuracion.add(btnEliminarUser);
+		
+		lbtextoEditSueldo = new JLabel("Sueldo*");
+		lbtextoEditSueldo.setForeground(Color.WHITE);
+		lbtextoEditSueldo.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
+		lbtextoEditSueldo.setBounds(53, 321, 109, 25);
+		Configuracion.add(lbtextoEditSueldo);
+		
+		lbtextoEditContraseña = new JLabel("Contraseña*");
+		lbtextoEditContraseña.setForeground(new Color(255, 255, 255));
+		lbtextoEditContraseña.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
+		lbtextoEditContraseña.setBounds(53, 281, 120, 25);
+		Configuracion.add(lbtextoEditContraseña);
+		
+		lbtextoEditJornadaInicio = new JLabel("Jornada Inicio*");
+		lbtextoEditJornadaInicio.setForeground(new Color(255, 255, 255));
+		lbtextoEditJornadaInicio.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
+		lbtextoEditJornadaInicio.setBounds(53, 397, 120, 25);
+		Configuracion.add(lbtextoEditJornadaInicio);
+		
+		lbtextoEditJornadaFin = new JLabel("Jornada Fin*");
+		lbtextoEditJornadaFin.setForeground(new Color(255, 255, 255));
+		lbtextoEditJornadaFin.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
+		lbtextoEditJornadaFin.setBounds(53, 358, 120, 25);
+		Configuracion.add(lbtextoEditJornadaFin);
+		
+		lbcerrarSesionConfiguracion = new JLabel("");
+		lbcerrarSesionConfiguracion.setForeground(Color.WHITE);
+		lbcerrarSesionConfiguracion.setBounds(432, 44, 31, 30);
+		Configuracion.add(lbcerrarSesionConfiguracion);
+		fotoEscalarLabel(lbcerrarSesionConfiguracion, "assets/finSesion.png");
+		
+		lbmostrarHoraConfiguracion = new JLabel("16 : 42");
+		lbmostrarHoraConfiguracion.setForeground(Color.WHITE);
+		lbmostrarHoraConfiguracion.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
+		lbmostrarHoraConfiguracion.setBounds(80, 44, 86, 23);
+		Configuracion.add(lbmostrarHoraConfiguracion);
+		
+		lbtituloConfiguracion = new JLabel("Coffekie");
+		lbtituloConfiguracion.setForeground(Color.WHITE);
+		lbtituloConfiguracion.setFont(new Font("Segoe Script", Font.BOLD, 24));
+		lbtituloConfiguracion.setBackground(Color.WHITE);
+		lbtituloConfiguracion.setBounds(221, 38, 119, 42);
+		Configuracion.add(lbtituloConfiguracion);
+		
+		separator_2 = new JSeparator();
+		separator_2.setForeground(Color.WHITE);
+		separator_2.setBackground(Color.WHITE);
+		separator_2.setBounds(30, 90, 472, 14);
+		Configuracion.add(separator_2);
+		
+		lbfondoBack = new JLabel("");
+		lbfondoBack.setBounds(0, 0, 548, 502);
+		Configuracion.add(lbfondoBack);
+		fotoEscalarLabel(lbfondoBack, "assets/fondo2.jpg");
 		
 		Productos = new JPanel();
 		Productos.setBounds(0, 0, 548, 502);
@@ -539,198 +1811,6 @@ public class Interfaz extends JFrame {
 		fotoEscalarLabel(lbfondoProductos, "assets/fondo2.jpg");
 		Productos.add(lbfondoProductos);
 		
-		Configuracion = new JPanel();
-		Configuracion.setBounds(0, 0, 548, 502);
-		contentPane.add(Configuracion);
-		Configuracion.setLayout(null);
-		Configuracion.setVisible(false);
-		
-		lbtextoEdicion = new JLabel("EDITAR DATOS");
-		lbtextoEdicion.setForeground(Color.WHITE);
-		lbtextoEdicion.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtextoEdicion.setBounds(213, 241, 154, 20);
-		Configuracion.add(lbtextoEdicion);
-		
-		lbtextoContraseña = new JLabel("Contraseña");
-		lbtextoContraseña.setForeground(Color.WHITE);
-		lbtextoContraseña.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
-		lbtextoContraseña.setBounds(53, 159, 109, 25);
-		Configuracion.add(lbtextoContraseña);
-		
-		lbtextoJornadaI = new JLabel("Jornada Inicio");
-		lbtextoJornadaI.setForeground(Color.WHITE);
-		lbtextoJornadaI.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
-		lbtextoJornadaI.setBounds(278, 143, 120, 25);
-		Configuracion.add(lbtextoJornadaI);
-		
-		lbtextoSueldo = new JLabel("Sueldo");
-		lbtextoSueldo.setForeground(Color.WHITE);
-		lbtextoSueldo.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
-		lbtextoSueldo.setBounds(53, 195, 80, 25);
-		Configuracion.add(lbtextoSueldo);
-		
-		lbtextoUsuario = new JLabel("Usuario");
-		lbtextoUsuario.setForeground(Color.WHITE);
-		lbtextoUsuario.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
-		lbtextoUsuario.setBounds(53, 123, 97, 25);
-		Configuracion.add(lbtextoUsuario);
-		
-		lbJornadaF = new JLabel("Jornada Fin");
-		lbJornadaF.setForeground(Color.WHITE);
-		lbJornadaF.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
-		lbJornadaF.setBounds(278, 179, 120, 25);
-		Configuracion.add(lbJornadaF);
-		
-		textFieldDatoFin = new JTextField();
-		textFieldDatoFin.setEditable(false);
-		textFieldDatoFin.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldDatoFin.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		textFieldDatoFin.setColumns(10);
-		textFieldDatoFin.setBounds(393, 184, 120, 20);
-		Configuracion.add(textFieldDatoFin);
-		
-		textFieldDatoInicio = new JTextField();
-		textFieldDatoInicio.setEditable(false);
-		textFieldDatoInicio.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldDatoInicio.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		textFieldDatoInicio.setColumns(10);
-		textFieldDatoInicio.setBounds(393, 148, 120, 20);
-		Configuracion.add(textFieldDatoInicio);
-		
-		textFieldDatoSueldo = new JTextField();
-		textFieldDatoSueldo.setEditable(false);
-		textFieldDatoSueldo.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldDatoSueldo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		textFieldDatoSueldo.setColumns(10);
-		textFieldDatoSueldo.setBounds(148, 196, 120, 20);
-		Configuracion.add(textFieldDatoSueldo);
-		
-		textFieldDatoPass = new JTextField();
-		textFieldDatoPass.setEditable(false);
-		textFieldDatoPass.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldDatoPass.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		textFieldDatoPass.setColumns(10);
-		textFieldDatoPass.setBounds(148, 164, 120, 20);
-		Configuracion.add(textFieldDatoPass);
-		
-		textFieldDatoUser = new JTextField();
-		textFieldDatoUser.setEditable(false);
-		textFieldDatoUser.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldDatoUser.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		textFieldDatoUser.setColumns(10);
-		textFieldDatoUser.setBounds(148, 128, 120, 20);
-		Configuracion.add(textFieldDatoUser);
-		
-		separator_7 = new JSeparator();
-		separator_7.setForeground(Color.WHITE);
-		separator_7.setBackground(Color.WHITE);
-		separator_7.setBounds(41, 236, 472, 14);
-		Configuracion.add(separator_7);
-		
-		lbtextoDatosPersonales = new JLabel("DATOS PERSONALES");
-		lbtextoDatosPersonales.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtextoDatosPersonales.setForeground(new Color(255, 255, 255));
-		lbtextoDatosPersonales.setBounds(196, 97, 202, 20);
-		Configuracion.add(lbtextoDatosPersonales);
-		
-		mensajeInformativoConfiguracion = new JLabel("");
-		mensajeInformativoConfiguracion.setForeground(new Color(255, 0, 0));
-		mensajeInformativoConfiguracion.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		mensajeInformativoConfiguracion.setBackground(new Color(255, 0, 0));
-		mensajeInformativoConfiguracion.setHorizontalAlignment(SwingConstants.CENTER);
-		mensajeInformativoConfiguracion.setBounds(64, 444, 413, 14);
-		Configuracion.add(mensajeInformativoConfiguracion);
-		
-		textJIConf = new JTextField();
-		textJIConf.setHorizontalAlignment(SwingConstants.CENTER);
-		textJIConf.setColumns(10);
-		textJIConf.setBounds(172, 398, 120, 20);
-		Configuracion.add(textJIConf);
-		
-		textPassConf = new JTextField();
-		textPassConf.setHorizontalAlignment(SwingConstants.CENTER);
-		textPassConf.setColumns(10);
-		textPassConf.setBounds(172, 283, 120, 20);
-		Configuracion.add(textPassConf);
-		
-		textJFConf = new JTextField();
-		textJFConf.setHorizontalAlignment(SwingConstants.CENTER);
-		textJFConf.setColumns(10);
-		textJFConf.setBounds(172, 359, 120, 20);
-		Configuracion.add(textJFConf);
-		
-		textSueldoConf = new JTextField();
-		textSueldoConf.setHorizontalAlignment(SwingConstants.CENTER);
-		textSueldoConf.setColumns(10);
-		textSueldoConf.setBounds(172, 322, 120, 20);
-		Configuracion.add(textSueldoConf);
-		
-		btnGuardarInfo = new JButton("Guardar");
-		btnGuardarInfo.setFont(new Font("SansSerif", Font.BOLD, 15));
-		btnGuardarInfo.setBackground(new Color(255, 255, 255));
-		btnGuardarInfo.setBounds(369, 299, 97, 43);
-		Configuracion.add(btnGuardarInfo);
-		
-		btnEliminarUser = new JButton("Eliminar");
-		btnEliminarUser.setBackground(new Color(255, 128, 128));
-		btnEliminarUser.setFont(new Font("SansSerif", Font.BOLD, 15));
-		btnEliminarUser.setBounds(369, 375, 97, 43);
-		Configuracion.add(btnEliminarUser);
-		
-		lbtextoEditSueldo = new JLabel("Sueldo*");
-		lbtextoEditSueldo.setForeground(Color.WHITE);
-		lbtextoEditSueldo.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
-		lbtextoEditSueldo.setBounds(53, 321, 109, 25);
-		Configuracion.add(lbtextoEditSueldo);
-		
-		lbtextoEditContraseña = new JLabel("Contraseña*");
-		lbtextoEditContraseña.setForeground(new Color(255, 255, 255));
-		lbtextoEditContraseña.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
-		lbtextoEditContraseña.setBounds(53, 281, 120, 25);
-		Configuracion.add(lbtextoEditContraseña);
-		
-		lbtextoEditJornadaInicio = new JLabel("Jornada Inicio*");
-		lbtextoEditJornadaInicio.setForeground(new Color(255, 255, 255));
-		lbtextoEditJornadaInicio.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
-		lbtextoEditJornadaInicio.setBounds(53, 397, 120, 25);
-		Configuracion.add(lbtextoEditJornadaInicio);
-		
-		lbtextoEditJornadaFin = new JLabel("Jornada Fin*");
-		lbtextoEditJornadaFin.setForeground(new Color(255, 255, 255));
-		lbtextoEditJornadaFin.setFont(new Font("Yu Gothic UI", Font.BOLD, 17));
-		lbtextoEditJornadaFin.setBounds(53, 358, 120, 25);
-		Configuracion.add(lbtextoEditJornadaFin);
-		
-		lbcerrarSesionConfiguracion = new JLabel("");
-		lbcerrarSesionConfiguracion.setForeground(Color.WHITE);
-		lbcerrarSesionConfiguracion.setBounds(432, 44, 31, 30);
-		Configuracion.add(lbcerrarSesionConfiguracion);
-		fotoEscalarLabel(lbcerrarSesionConfiguracion, "assets/finSesion.png");
-		
-		lbmostrarHoraConfiguracion = new JLabel("16 : 42");
-		lbmostrarHoraConfiguracion.setForeground(Color.WHITE);
-		lbmostrarHoraConfiguracion.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
-		lbmostrarHoraConfiguracion.setBounds(80, 44, 86, 23);
-		Configuracion.add(lbmostrarHoraConfiguracion);
-		
-		lbtituloConfiguracion = new JLabel("Coffekie");
-		lbtituloConfiguracion.setForeground(Color.WHITE);
-		lbtituloConfiguracion.setFont(new Font("Segoe Script", Font.BOLD, 24));
-		lbtituloConfiguracion.setBackground(Color.WHITE);
-		lbtituloConfiguracion.setBounds(225, 38, 119, 42);
-		Configuracion.add(lbtituloConfiguracion);
-		
-		separator_2 = new JSeparator();
-		separator_2.setForeground(Color.WHITE);
-		separator_2.setBackground(Color.WHITE);
-		separator_2.setBounds(30, 90, 472, 14);
-		Configuracion.add(separator_2);
-		
-		lbfondoBack = new JLabel("");
-		lbfondoBack.setBounds(0, 0, 548, 502);
-		Configuracion.add(lbfondoBack);
-		fotoEscalarLabel(lbfondoBack, "assets/fondo2.jpg");
-		
 		Documentacion_1 = new JPanel();
 		Documentacion_1.setBounds(0, 0, 548, 502);
 		contentPane.add(Documentacion_1);
@@ -826,186 +1906,6 @@ public class Interfaz extends JFrame {
 		lbfondoDocumentacion.setBounds(0, 0, 548, 502);
 		Documentacion_1.add(lbfondoDocumentacion);
 		fotoEscalarLabel(lbfondoDocumentacion, "assets/fondo2.jpg");
-		
-		Principal = new JPanel();
-		Principal.setBounds(0, 0, 548, 502);
-		contentPane.add(Principal);
-		Principal.setLayout(null);
-		Principal.setVisible(false);
-		
-		lbensajeInformativoMenu = new JLabel("Coofekie@2024LNCB");
-		lbensajeInformativoMenu.setForeground(new Color(255, 255, 255));
-		lbensajeInformativoMenu.setFont(new Font("Yu Gothic UI Light", Font.BOLD | Font.ITALIC, 20));
-		lbensajeInformativoMenu.setBounds(173, 440, 204, 27);
-		Principal.add(lbensajeInformativoMenu);
-		
-		separator_6 = new JSeparator();
-		separator_6.setForeground(Color.WHITE);
-		separator_6.setBackground(Color.WHITE);
-		separator_6.setBounds(30, 429, 488, 25);
-		Principal.add(separator_6);
-		
-		lbCajaRegistradora = new JLabel("");
-		lbCajaRegistradora.setBounds(40, 161, 63, 47);
-		Principal.add(lbCajaRegistradora);
-		fotoEscalarLabel(lbCajaRegistradora, "assets/cajaRegistradora.png");
-		
-		lbDinero = new JLabel("");
-		lbDinero.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 18));
-		lbDinero.setBounds(126, 171, 88, 38);
-		Principal.add(lbDinero);
-		
-		lbHorario = new JLabel("");
-		lbHorario.setFont(new Font("Yu Gothic UI Light", Font.BOLD | Font.ITALIC, 24));
-		lbHorario.setBounds(113, 110, 101, 38);
-		Principal.add(lbHorario);
-		
-		lbCartel = new JLabel("");
-		lbCartel.setBounds(40, 101, 63, 47);
-		fotoEscalarLabel(lbCartel, "assets/cartelCafeteria4.png");
-		Principal.add(lbCartel);
-		
-		lbNumeroMesa_6 = new JLabel("6");
-		lbNumeroMesa_6.setForeground(Color.WHITE);
-		lbNumeroMesa_6.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		lbNumeroMesa_6.setBounds(397, 370, 20, 30);
-		Principal.add(lbNumeroMesa_6);
-		
-		lbNumeroMesa_5 = new JLabel("5");
-		lbNumeroMesa_5.setForeground(Color.WHITE);
-		lbNumeroMesa_5.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		lbNumeroMesa_5.setBounds(224, 370, 20, 30);
-		Principal.add(lbNumeroMesa_5);
-		
-		lbNumeroMesa_4 = new JLabel("4");
-		lbNumeroMesa_4.setForeground(Color.WHITE);
-		lbNumeroMesa_4.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		lbNumeroMesa_4.setBounds(40, 370, 20, 30);
-		Principal.add(lbNumeroMesa_4);
-		
-		lbNumeroMesa_3 = new JLabel("3");
-		lbNumeroMesa_3.setForeground(Color.WHITE);
-		lbNumeroMesa_3.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		lbNumeroMesa_3.setBounds(397, 264, 20, 30);
-		Principal.add(lbNumeroMesa_3);
-		
-		lbNumeroMesa_2 = new JLabel("2");
-		lbNumeroMesa_2.setForeground(Color.WHITE);
-		lbNumeroMesa_2.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		lbNumeroMesa_2.setBounds(224, 264, 20, 30);
-		Principal.add(lbNumeroMesa_2);
-		
-		lbNumeroMesa = new JLabel("1");
-		lbNumeroMesa.setForeground(new Color(255, 255, 255));
-		lbNumeroMesa.setBounds(40, 264, 20, 30);
-		Principal.add(lbNumeroMesa);
-		lbNumeroMesa.setFont(new Font("Yu Gothic Light", Font.BOLD | Font.ITALIC, 22));
-		
-		mesa6 = new JLabel("");
-		mesa6.setBounds(417, 342, 79, 71);
-		Principal.add(mesa6);
-		fotoEscalarLabel(mesa6, "assets/mesas.png");
-		
-		mesa5 = new JLabel("");
-		mesa5.setBounds(243, 345, 79, 68);
-		Principal.add(mesa5);
-		fotoEscalarLabel(mesa5, "assets/mesas.png");
-		
-		mesa4 = new JLabel("");
-		mesa4.setBounds(62, 345, 79, 71);
-		Principal.add(mesa4);
-		fotoEscalarLabel(mesa4, "assets/mesas.png");
-		
-		mesa3 = new JLabel("");
-		mesa3.setBounds(417, 240, 79, 71);
-		Principal.add(mesa3);
-		fotoEscalarLabel(mesa3, "assets/mesas.png");
-		
-		mesa2 = new JLabel("");
-		mesa2.setBounds(243, 240, 79, 71);
-		Principal.add(mesa2);
-		fotoEscalarLabel(mesa2, "assets/mesas.png");
-		
-		mesa1 = new JLabel("");
-		mesa1.setBounds(62, 240, 79, 71);
-		Principal.add(mesa1);
-		fotoEscalarLabel(mesa1, "assets/mesas.png");
-		
-		lbfotoContabilidad = new JLabel("");
-		lbfotoContabilidad.setBounds(477, 161, 46, 40);
-		Principal.add(lbfotoContabilidad);
-		fotoEscalarLabel(lbfotoContabilidad, "assets/contabilidad.png");
-		
-		lbfotoInventario = new JLabel("");
-		lbfotoInventario.setBounds(472, 110, 46, 38);
-		fotoEscalarLabel(lbfotoInventario, "assets/stock.png");
-		Principal.add(lbfotoInventario);
-		
-		separator_4 = new JSeparator();
-		separator_4.setOrientation(SwingConstants.VERTICAL);
-		separator_4.setForeground(Color.WHITE);
-		separator_4.setBackground(Color.WHITE);
-		separator_4.setBounds(335, 91, 31, 126);
-		Principal.add(separator_4);
-		
-		separator_3 = new JSeparator();
-		separator_3.setForeground(Color.WHITE);
-		separator_3.setBackground(Color.WHITE);
-		separator_3.setBounds(30, 214, 488, 25);
-		Principal.add(separator_3);
-		
-		btnContabilidad = new JButton("Contabilidad");
-		btnContabilidad.setBackground(new Color(255, 255, 255));
-		btnContabilidad.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
-		btnContabilidad.setBounds(348, 161, 114, 42);
-		Principal.add(btnContabilidad);
-		
-		btnProductos = new JButton("Productos");
-		btnProductos.setBackground(new Color(255, 255, 255));
-		btnProductos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
-		btnProductos.setBounds(348, 110, 114, 42);
-		Principal.add(btnProductos);
-		
-		separator = new JSeparator();
-		separator.setForeground(new Color(255, 255, 255));
-		separator.setBackground(new Color(255, 255, 255));
-		separator.setBounds(30, 90, 488, 25);
-		Principal.add(separator);
-		
-		lbfotoSesion = new JLabel("");
-		lbfotoSesion.setBounds(410, 26, 53, 42);
-		Principal.add(lbfotoSesion);
-		
-		lbnombreEmpleado = new JLabel("");
-		lbnombreEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
-		lbnombreEmpleado.setBounds(393, 68, 88, 18);
-		Principal.add(lbnombreEmpleado);
-		lbnombreEmpleado.setForeground(Color.WHITE);
-		lbnombreEmpleado.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
-		
-		lbcerrarSesion = new JLabel("");
-		lbcerrarSesion.setForeground(Color.WHITE);
-		lbcerrarSesion.setBounds(487, 49, 31, 30);
-		Principal.add(lbcerrarSesion);
-		fotoEscalarLabel(lbcerrarSesion, "assets/finSesion.png");
-		
-		lbmostrarHoraPrincipal = new JLabel("16 : 42");
-		lbmostrarHoraPrincipal.setForeground(Color.WHITE);
-		lbmostrarHoraPrincipal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
-		lbmostrarHoraPrincipal.setBounds(80, 44, 79, 23);
-		Principal.add(lbmostrarHoraPrincipal);
-		
-		lbtituloPrincipal = new JLabel("Coffekie");
-		lbtituloPrincipal.setForeground(Color.WHITE);
-		lbtituloPrincipal.setFont(new Font("Segoe Script", Font.BOLD, 24));
-		lbtituloPrincipal.setBackground(Color.WHITE);
-		lbtituloPrincipal.setBounds(221, 38, 119, 42);
-		Principal.add(lbtituloPrincipal);
-		
-			JLabel lbPrincipalFondo = new JLabel("");
-			lbPrincipalFondo.setBounds(0, 0, 548, 502);
-			Principal.add(lbPrincipalFondo);
-			fotoEscalarLabel(lbPrincipalFondo, "assets/fondo2.jpg");
 		
 		inicioSesion = new JPanel();
 		inicioSesion.setBackground(new Color(255, 255, 255));
@@ -1106,887 +2006,6 @@ public class Interfaz extends JFrame {
 		lbfondo.setBounds(0, 0, 548, 502);
 		inicioSesion.add(lbfondo);
 		fotoEscalarLabel(lbfondo, "assets/fondo2.jpg");
-		
-		Pagos = new JPanel();
-		Pagos.setBounds(0, 0, 548, 502);
-		contentPane.add(Pagos);
-		Pagos.setLayout(null);
-		Pagos.setVisible(false);
-		
-		lbmensajeDenegar = new JLabel("");
-		lbmensajeDenegar.setHorizontalAlignment(SwingConstants.CENTER);
-		lbmensajeDenegar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbmensajeDenegar.setForeground(new Color(255, 0, 0));
-		lbmensajeDenegar.setBounds(111, 339, 329, 27);
-		lbmensajeDenegar.setVisible(false);
-		
-		btnguardarPago = new JButton("$");
-		btnguardarPago.setBackground(new Color(128, 255, 128));
-		btnguardarPago.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		btnguardarPago.setBounds(300, 288, 42, 30);
-		Pagos.add(btnguardarPago);
-		Pagos.add(lbmensajeDenegar);
-		
-		btnDarCambio = new JButton("");
-		btnDarCambio.setBounds(247, 418, 53, 42);
-		btnDarCambio.setVisible(false);
-		Pagos.add(btnDarCambio);
-		
-		textFieldDineroDeber = new JTextField();
-		textFieldDineroDeber.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldDineroDeber.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		textFieldDineroDeber.setForeground(new Color(0, 0, 0));
-		textFieldDineroDeber.setEditable(false);
-		textFieldDineroDeber.setBounds(231, 192, 86, 30);
-		Pagos.add(textFieldDineroDeber);
-		textFieldDineroDeber.setColumns(10);
-		
-		lbmensajeAbonarCliente = new JLabel("");
-		lbmensajeAbonarCliente.setHorizontalAlignment(SwingConstants.CENTER);
-		lbmensajeAbonarCliente.setForeground(Color.WHITE);
-		lbmensajeAbonarCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbmensajeAbonarCliente.setBounds(34, 233, 478, 36);
-		Pagos.add(lbmensajeAbonarCliente);
-		
-		textFieldAbonoCliente = new JTextField();
-		textFieldAbonoCliente.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldAbonoCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		textFieldAbonoCliente.setColumns(10);
-		textFieldAbonoCliente.setBounds(208, 289, 86, 30);
-		Pagos.add(textFieldAbonoCliente);
-		
-		lbmensajeCambioCliente = new JLabel("");
-		lbmensajeCambioCliente.setHorizontalAlignment(SwingConstants.CENTER);
-		lbmensajeCambioCliente.setForeground(Color.WHITE);
-		lbmensajeCambioCliente.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbmensajeCambioCliente.setVisible(false);
-		lbmensajeCambioCliente.setBounds(34, 330, 478, 36);
-		Pagos.add(lbmensajeCambioCliente);
-		
-		textFieldcambioTotal = new JTextField();
-		textFieldcambioTotal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		textFieldcambioTotal.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldcambioTotal.setEditable(false);
-		textFieldcambioTotal.setColumns(10);
-		textFieldcambioTotal.setVisible(false);
-		textFieldcambioTotal.setBounds(231, 377, 86, 30);
-		Pagos.add(textFieldcambioTotal);
-		
-		lbmensajeDeber = new JLabel("");
-		lbmensajeDeber.setHorizontalAlignment(SwingConstants.CENTER);
-		lbmensajeDeber.setForeground(new Color(255, 255, 255));
-		lbmensajeDeber.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbmensajeDeber.setBounds(34, 137, 478, 36);
-		Pagos.add(lbmensajeDeber);
-		
-		lbcerrarSesionPago = new JLabel("");
-		lbcerrarSesionPago.setForeground(Color.WHITE);
-		lbcerrarSesionPago.setBounds(426, 41, 31, 30);
-		fotoEscalarLabel(lbcerrarSesionPago, "assets/finSesion.png");
-		Pagos.add(lbcerrarSesionPago);
-		
-		lbmostrarHoraPago = new JLabel("16 : 42");
-		lbmostrarHoraPago.setForeground(Color.WHITE);
-		lbmostrarHoraPago.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
-		lbmostrarHoraPago.setBounds(82, 48, 83, 23);
-		Pagos.add(lbmostrarHoraPago);
-		
-		lbtituloPago = new JLabel("Coffekie");
-		lbtituloPago.setForeground(Color.WHITE);
-		lbtituloPago.setFont(new Font("Segoe Script", Font.BOLD, 24));
-		lbtituloPago.setBackground(Color.WHITE);
-		lbtituloPago.setBounds(231, 37, 114, 42);
-		Pagos.add(lbtituloPago);
-		
-		separator_22 = new JSeparator();
-		separator_22.setForeground(Color.WHITE);
-		separator_22.setBackground(Color.WHITE);
-		separator_22.setBounds(30, 90, 488, 25);
-		Pagos.add(separator_22);
-		
-		lbfondoPagos = new JLabel("");
-		lbfondoPagos.setBounds(0, 0, 548, 502);
-		fotoEscalarLabel(lbfondoPagos, "assets/fondo2.jpg");
-		Pagos.add(lbfondoPagos);
-		
-		Contabilidad = new JPanel();
-		Contabilidad.setBounds(0, 0, 548, 502);
-		contentPane.add(Contabilidad);
-		Contabilidad.setVisible(false);
-		Contabilidad.setLayout(null);
-		
-		panelAuxiliarBanco = new JPanel();
-		panelAuxiliarBanco.setBorder(new LineBorder(new Color(255, 255, 255), 2, true));
-		panelAuxiliarBanco.setBackground(new Color(192, 192, 192));
-		panelAuxiliarBanco.setBounds(43, 185, 458, 271);
-		panelAuxiliarBanco.setVisible(false);
-		
-		panelAuxiliarInventario = new JPanel();
-		panelAuxiliarInventario.setBorder(new LineBorder(new Color(255, 255, 255), 2, true));
-		panelAuxiliarInventario.setBackground(new Color(192, 192, 192));
-		panelAuxiliarInventario.setBounds(43, 185, 458, 271);
-		panelAuxiliarInventario.setVisible(false);
-		
-		panelAuxiliarHistorial = new JPanel();
-		panelAuxiliarHistorial.setLayout(null);
-		panelAuxiliarHistorial.setVisible(false);
-		panelAuxiliarHistorial.setBorder(new LineBorder(new Color(255, 255, 255), 2));
-		panelAuxiliarHistorial.setBackground(Color.LIGHT_GRAY);
-		panelAuxiliarHistorial.setBounds(43, 185, 458, 271);
-		Contabilidad.add(panelAuxiliarHistorial);
-		
-		panelAuxiliarEstadisticas = new JPanel();
-		panelAuxiliarEstadisticas.setBorder(new LineBorder(new Color(255, 255, 255), 2));
-		panelAuxiliarEstadisticas.setBackground(new Color(192, 192, 192));
-		panelAuxiliarEstadisticas.setBounds(26, 55, 406, 213);
-		panelAuxiliarHistorial.add(panelAuxiliarEstadisticas);
-		panelAuxiliarEstadisticas.setVisible(false);
-		panelAuxiliarEstadisticas.setLayout(null);
-		
-		lblNewLabel = new JLabel("Estadisticas");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lblNewLabel.setBounds(156, 11, 109, 21);
-		panelAuxiliarEstadisticas.add(lblNewLabel);
-		
-		lbcerrarSesionEstadisticas = new JLabel("");
-		lbcerrarSesionEstadisticas.setForeground(Color.WHITE);
-		lbcerrarSesionEstadisticas.setBounds(365, 6, 31, 30);
-		fotoEscalarLabel(lbcerrarSesionEstadisticas, "assets/finSesion.png");
-		panelAuxiliarEstadisticas.add(lbcerrarSesionEstadisticas);
-		
-		lbproductos = new JLabel("Mesas");
-		lbproductos.setForeground(Color.WHITE);
-		lbproductos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbproductos.setBounds(301, 43, 65, 21);
-		panelAuxiliarEstadisticas.add(lbproductos);
-		
-		separator_16 = new JSeparator();
-		separator_16.setForeground(new Color(255, 255, 255));
-		separator_16.setBounds(10, 40, 386, 2);
-		separator_16.setVisible(false);
-		panelAuxiliarEstadisticas.add(separator_16);
-		
-		lbestadisticaMesa1 = new JLabel("Mesa 1");
-		lbestadisticaMesa1.setForeground(Color.WHITE);
-		lbestadisticaMesa1.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbestadisticaMesa1.setBounds(10, 68, 73, 21);
-		panelAuxiliarEstadisticas.add(lbestadisticaMesa1);
-		
-		lbestadisticaMesa2 = new JLabel("Mesa 2");
-		lbestadisticaMesa2.setForeground(Color.WHITE);
-		lbestadisticaMesa2.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbestadisticaMesa2.setBounds(10, 91, 73, 21);
-		panelAuxiliarEstadisticas.add(lbestadisticaMesa2);
-		
-		lbestadisticaMesa3 = new JLabel("Mesa 3");
-		lbestadisticaMesa3.setForeground(Color.WHITE);
-		lbestadisticaMesa3.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbestadisticaMesa3.setBounds(10, 113, 73, 21);
-		panelAuxiliarEstadisticas.add(lbestadisticaMesa3);
-		
-		lbestadisticaMesa4 = new JLabel("Mesa 4");
-		lbestadisticaMesa4.setForeground(Color.WHITE);
-		lbestadisticaMesa4.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbestadisticaMesa4.setBounds(10, 135, 73, 21);
-		panelAuxiliarEstadisticas.add(lbestadisticaMesa4);
-		
-		lbestadisticaMesa5 = new JLabel("Mesa 5");
-		lbestadisticaMesa5.setForeground(Color.WHITE);
-		lbestadisticaMesa5.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbestadisticaMesa5.setBounds(10, 158, 73, 21);
-		panelAuxiliarEstadisticas.add(lbestadisticaMesa5);
-		
-		lbestadisticaMesa6 = new JLabel("Mesa 6");
-		lbestadisticaMesa6.setForeground(Color.WHITE);
-		lbestadisticaMesa6.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbestadisticaMesa6.setBounds(10, 180, 73, 21);
-		panelAuxiliarEstadisticas.add(lbestadisticaMesa6);
-		
-		progressBarEstadisticaMesa1 = new JProgressBar();
-		progressBarEstadisticaMesa1.setBounds(80, 73, 146, 14);
-		progressBarEstadisticaMesa1.setStringPainted(true);
-		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa1);
-		progressBarEstadisticaMesa1.setForeground(Color.BLUE);
-		progressBarEstadisticaMesa1.setMaximum(10);
-		
-		progressBarEstadisticaMesa2 = new JProgressBar();
-		progressBarEstadisticaMesa2.setBounds(80, 96, 146, 14);
-		progressBarEstadisticaMesa2.setForeground(Color.RED);
-		progressBarEstadisticaMesa2.setStringPainted(true);
-		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa2);
-		progressBarEstadisticaMesa2.setMaximum(10);
-		
-		progressBarEstadisticaMesa3 = new JProgressBar();
-		progressBarEstadisticaMesa3.setBounds(80, 118, 146, 14);
-		progressBarEstadisticaMesa3.setForeground(Color.MAGENTA);
-		progressBarEstadisticaMesa3.setStringPainted(true);
-		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa3);
-		progressBarEstadisticaMesa3.setMaximum(10);
-		
-		progressBarEstadisticaMesa4 = new JProgressBar();
-		progressBarEstadisticaMesa4.setBounds(80, 140, 146, 14);
-		progressBarEstadisticaMesa4.setForeground(Color.YELLOW);
-		progressBarEstadisticaMesa4.setStringPainted(true);
-		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa4);
-		progressBarEstadisticaMesa4.setMaximum(10);
-		
-		progressBarEstadisticaMesa5 = new JProgressBar();
-		progressBarEstadisticaMesa5.setBounds(80, 163, 146, 14);
-		progressBarEstadisticaMesa5.setForeground(Color.GREEN);
-		progressBarEstadisticaMesa5.setStringPainted(true);
-		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa5);
-		progressBarEstadisticaMesa5.setMaximum(10);
-		
-		progressBarEstadisticaMesa6 = new JProgressBar();
-		progressBarEstadisticaMesa6.setBounds(80, 185, 146, 14);
-		progressBarEstadisticaMesa6.setForeground(Color.ORANGE);
-		progressBarEstadisticaMesa6.setStringPainted(true);
-		panelAuxiliarEstadisticas.add(progressBarEstadisticaMesa6);
-		progressBarEstadisticaMesa6.setMaximum(10);
-		
-		listEstadisticasMesa = new JList();
-		listEstadisticasMesa.setBounds(276, 70, 109, 118);
-		panelAuxiliarEstadisticas.add(listEstadisticasMesa);
-		
-		separator_17 = new JSeparator();
-		separator_17.setForeground(new Color(255, 255, 255));
-		separator_17.setOrientation(SwingConstants.VERTICAL);
-		separator_17.setBounds(258, 43, 16, 170);
-		panelAuxiliarEstadisticas.add(separator_17);
-		
-		lbtotalComandas = new JLabel("Total:");
-		lbtotalComandas.setForeground(Color.WHITE);
-		lbtotalComandas.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbtotalComandas.setBounds(10, 43, 47, 21);
-		panelAuxiliarEstadisticas.add(lbtotalComandas);
-		
-		lbnumComandasTotales = new JLabel("");
-		lbnumComandasTotales.setForeground(Color.WHITE);
-		lbnumComandasTotales.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbnumComandasTotales.setBounds(58, 43, 47, 21);
-		panelAuxiliarEstadisticas.add(lbnumComandasTotales);
-		
-		lbtituloHistorial = new JLabel("Historial Comandas");
-		lbtituloHistorial.setForeground(Color.WHITE);
-		lbtituloHistorial.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtituloHistorial.setBounds(149, 11, 175, 20);
-		panelAuxiliarHistorial.add(lbtituloHistorial);
-		
-		btnLimpiar = new JButton("Limpiar");
-		btnLimpiar.setBackground(new Color(220, 20, 60));
-		btnLimpiar.setForeground(new Color(255, 255, 255));
-		btnLimpiar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		btnLimpiar.setBounds(270, 213, 117, 42);
-		panelAuxiliarHistorial.add(btnLimpiar);
-		
-		btnEstadisticas = new JButton("Estadisticas");
-		btnEstadisticas.setBackground(new Color(0, 0, 0));
-		btnEstadisticas.setForeground(new Color(255, 255, 255));
-		btnEstadisticas.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		btnEstadisticas.setBounds(65, 213, 117, 42);
-		panelAuxiliarHistorial.add(btnEstadisticas);
-		
-		separator_34 = new JSeparator();
-		separator_34.setForeground(new Color(255, 255, 255));
-		separator_34.setBounds(10, 42, 438, 2);
-		separator_34.setVisible(false);
-		panelAuxiliarHistorial.add(separator_34);
-		
-		scrollPaneHistorial = new JScrollPane();
-		scrollPaneHistorial.setBounds(38, 58, 384, 146);
-		panelAuxiliarHistorial.add(scrollPaneHistorial);
-		
-		tableHistorial = new JTable();
-		tableHistorial.getTableHeader().setBackground(Color.RED);
-		tableHistorial.getTableHeader().setForeground(Color.WHITE);
-		
-		tableHistorial.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 255, 255), null, null, null));
-		scrollPaneHistorial.setViewportView(tableHistorial);
-		Contabilidad.add(panelAuxiliarInventario);
-		panelAuxiliarInventario.setLayout(null);
-		
-		lbmaximo = new JLabel("MAX:100");
-		lbmaximo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 11));
-		lbmaximo.setBounds(66, 200, 46, 20);
-		panelAuxiliarInventario.add(lbmaximo);
-		
-		lbmensajeInventario = new JLabel("");
-		lbmensajeInventario.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbmensajeInventario.setBounds(127, 177, 141, 20);
-		panelAuxiliarInventario.add(lbmensajeInventario);
-		
-		listInventario = new JList();
-		listInventario.setBounds(307, 44, 133, 183);
-		panelAuxiliarInventario.add(listInventario);
-		
-		btnGuardarEdicion = new JButton("Guardar cambios");
-		btnGuardarEdicion.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
-		btnGuardarEdicion.setBounds(307, 228, 133, 23);
-		btnGuardarEdicion.setVisible(false);
-		panelAuxiliarInventario.add(btnGuardarEdicion);
-		
-		lbmostrarProductos = new JLabel("Productos");
-		lbmostrarProductos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
-		lbmostrarProductos.setBounds(334, 11, 80, 23);
-		panelAuxiliarInventario.add(lbmostrarProductos);
-		
-		separator_25 = new JSeparator();
-		separator_25.setOrientation(SwingConstants.VERTICAL);
-		separator_25.setBounds(288, 0, 18, 271);
-		panelAuxiliarInventario.add(separator_25);
-		
-		separator_26 = new JSeparator();
-		separator_26.setBounds(8, 28, 277, 23);
-		panelAuxiliarInventario.add(separator_26);
-		
-		textNombreProductoMostrado = new JTextField("");
-		textNombreProductoMostrado.setEditable(false);
-		textNombreProductoMostrado.setHorizontalAlignment(SwingConstants.CENTER);
-		textNombreProductoMostrado.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		textNombreProductoMostrado.setBounds(8, 5, 141, 22);
-		panelAuxiliarInventario.add(textNombreProductoMostrado);
-		
-		lbIdProductoMostrado = new JLabel("");
-		lbIdProductoMostrado.setHorizontalAlignment(SwingConstants.CENTER);
-		lbIdProductoMostrado.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbIdProductoMostrado.setBounds(165, 6, 72, 22);
-		panelAuxiliarInventario.add(lbIdProductoMostrado);
-		
-		btnEditar = new JButton("Editar");
-		btnEditar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
-		btnEditar.setBounds(0, 248, 288, 23);
-		btnEditar.setVisible(false);
-		panelAuxiliarInventario.add(btnEditar);
-		
-		lbInventarioTipo = new JLabel();
-		lbInventarioTipo.setText("Tipo");
-		lbInventarioTipo.setHorizontalAlignment(SwingConstants.LEFT);
-		lbInventarioTipo.setForeground(new Color(0, 0, 0));
-		lbInventarioTipo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
-		lbInventarioTipo.setBackground(Color.WHITE);
-		lbInventarioTipo.setBounds(18, 39, 72, 20);
-		panelAuxiliarInventario.add(lbInventarioTipo);
-		
-		lbInventarioPrecio = new JLabel();
-		lbInventarioPrecio.setText("Precio");
-		lbInventarioPrecio.setHorizontalAlignment(SwingConstants.LEFT);
-		lbInventarioPrecio.setForeground(new Color(0, 0, 0));
-		lbInventarioPrecio.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
-		lbInventarioPrecio.setBackground(Color.WHITE);
-		lbInventarioPrecio.setBounds(18, 86, 72, 20);
-		panelAuxiliarInventario.add(lbInventarioPrecio);
-		
-		lbInventarioProveedor = new JLabel();
-		lbInventarioProveedor.setText("Proveedor");
-		lbInventarioProveedor.setHorizontalAlignment(SwingConstants.LEFT);
-		lbInventarioProveedor.setForeground(new Color(0, 0, 0));
-		lbInventarioProveedor.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
-		lbInventarioProveedor.setBackground(Color.WHITE);
-		lbInventarioProveedor.setBounds(18, 130, 94, 20);
-		panelAuxiliarInventario.add(lbInventarioProveedor);
-		
-		lbInventarioStock = new JLabel();
-		lbInventarioStock.setText("Stock");
-		lbInventarioStock.setHorizontalAlignment(SwingConstants.LEFT);
-		lbInventarioStock.setForeground(new Color(0, 0, 0));
-		lbInventarioStock.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
-		lbInventarioStock.setBackground(Color.WHITE);
-		lbInventarioStock.setBounds(18, 177, 72, 20);
-		panelAuxiliarInventario.add(lbInventarioStock);
-		
-		textInventarioTipo = new JTextField();
-		textInventarioTipo.setEditable(false);
-		textInventarioTipo.setBounds(18, 62, 86, 20);
-		panelAuxiliarInventario.add(textInventarioTipo);
-		textInventarioTipo.setColumns(10);
-		
-		textInventarioPrecio = new JTextField();
-		textInventarioPrecio.setEditable(false);
-		textInventarioPrecio.setColumns(10);
-		textInventarioPrecio.setBounds(18, 108, 86, 20);
-		panelAuxiliarInventario.add(textInventarioPrecio);
-		
-		textInventarioProveedor = new JTextField();
-		textInventarioProveedor.setEditable(false);
-		textInventarioProveedor.setColumns(10);
-		textInventarioProveedor.setBounds(18, 154, 86, 20);
-		panelAuxiliarInventario.add(textInventarioProveedor);
-		
-		textInventarioStock = new JTextField();
-		textInventarioStock.setEditable(false);
-		textInventarioStock.setColumns(10);
-		textInventarioStock.setBounds(18, 200, 40, 20);
-		panelAuxiliarInventario.add(textInventarioStock);
-		
-		progressBarInventario = new JProgressBar();
-		progressBarInventario.setBounds(18, 228, 146, 14);
-		panelAuxiliarInventario.add(progressBarInventario);
-		
-		lbInventarioImagen = new JLabel();
-		lbInventarioImagen.setText("Imagen");
-		lbInventarioImagen.setHorizontalAlignment(SwingConstants.LEFT);
-		lbInventarioImagen.setForeground(Color.BLACK);
-		lbInventarioImagen.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 17));
-		lbInventarioImagen.setBackground(Color.WHITE);
-		lbInventarioImagen.setBounds(175, 39, 72, 20);
-		panelAuxiliarInventario.add(lbInventarioImagen);
-		
-		lbmostrarImagenInventario = new JLabel("");
-		lbmostrarImagenInventario.setBounds(153, 73, 103, 77);
-		panelAuxiliarInventario.add(lbmostrarImagenInventario);
-		
-		btnComprobarProductoInventario = new JButton("");
-		btnComprobarProductoInventario.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
-		btnComprobarProductoInventario.setBounds(250, 2, 40, 27);
-		panelAuxiliarInventario.add(btnComprobarProductoInventario);
-		Contabilidad.add(panelAuxiliarBanco);
-		panelAuxiliarBanco.setLayout(null);
-		
-		scrollPaneBanco = new JScrollPane();
-		scrollPaneBanco.setBounds(30, 194, 398, 66);
-		panelAuxiliarBanco.add(scrollPaneBanco);
-		
-		tableTransacciones = new JTable();
-		tableTransacciones.getTableHeader().setBackground(Color.BLACK);
-		tableTransacciones.getTableHeader().setForeground(Color.WHITE);
-		scrollPaneBanco.setViewportView(tableTransacciones);
-		tableTransacciones.setVisible(false);
-		
-		lbnombreCuenta = new JLabel("");
-		lbnombreCuenta.setForeground(new Color(0, 0, 0));
-		lbnombreCuenta.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbnombreCuenta.setBounds(121, 155, 93, 14);
-		
-		panelAuxiliarBanco.add(lbnombreCuenta);
-		
-		comboBoxBanco = new JComboBox();
-		comboBoxBanco.setBounds(10, 29, 96, 22);
-		panelAuxiliarBanco.add(comboBoxBanco);
-		
-		lbCuentas = new JLabel("Cuentas");
-		lbCuentas.setForeground(new Color(255, 255, 255));
-		lbCuentas.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbCuentas.setBounds(33, 11, 60, 14);
-		panelAuxiliarBanco.add(lbCuentas);
-		
-		lblSaldos = new JLabel("Saldo");
-		lblSaldos.setForeground(new Color(255, 255, 255));
-		lblSaldos.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lblSaldos.setBounds(163, 11, 41, 14);
-		panelAuxiliarBanco.add(lblSaldos);
-		
-		lbMostrarSaldo = new JLabel();
-		lbMostrarSaldo.setHorizontalAlignment(SwingConstants.CENTER);
-		lbMostrarSaldo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbMostrarSaldo.setBounds(203, 7, 100, 20);
-		lbMostrarSaldo.setVisible(false);
-		panelAuxiliarBanco.add(lbMostrarSaldo);
-		
-		lbfechaContabilidad = new JLabel("");
-		lbfechaContabilidad.setForeground(Color.WHITE);
-		lbfechaContabilidad.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbfechaContabilidad.setBounds(352, 5, 96, 14);
-		panelAuxiliarBanco.add(lbfechaContabilidad);
-		
-		separator_27 = new JSeparator();
-		separator_27.setForeground(new Color(255, 255, 255));
-		separator_27.setBounds(10, 143, 438, 14);
-		panelAuxiliarBanco.add(separator_27);
-		
-		separator_28 = new JSeparator();
-		separator_28.setOrientation(SwingConstants.VERTICAL);
-		separator_28.setForeground(Color.WHITE);
-		separator_28.setBounds(111, 3, 13, 141);
-		panelAuxiliarBanco.add(separator_28);
-		
-		separator_29 = new JSeparator();
-		separator_29.setOrientation(SwingConstants.VERTICAL);
-		separator_29.setForeground(Color.WHITE);
-		separator_29.setBounds(337, 3, 13, 28);
-		panelAuxiliarBanco.add(separator_29);
-		
-		separator_30 = new JSeparator();
-		separator_30.setForeground(Color.WHITE);
-		separator_30.setBounds(111, 29, 347, 22);
-		panelAuxiliarBanco.add(separator_30);
-		
-		btnIngresar = new JButton("");
-		btnIngresar.setBackground(new Color(255, 255, 255));
-		btnIngresar.setBounds(151, 79, 97, 53);
-		panelAuxiliarBanco.add(btnIngresar);
-		
-		btnGastos = new JButton("");
-		btnGastos.setBackground(new Color(255, 255, 255));
-		btnGastos.setBounds(313, 80, 96, 52);
-		panelAuxiliarBanco.add(btnGastos);
-		
-		lbModificar = new JLabel("Modificar");
-		lbModificar.setForeground(Color.WHITE);
-		lbModificar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbModificar.setBounds(250, 37, 70, 14);
-		panelAuxiliarBanco.add(lbModificar);
-		
-		separator_31 = new JSeparator();
-		separator_31.setForeground(Color.WHITE);
-		separator_31.setBounds(111, 58, 347, 22);
-		panelAuxiliarBanco.add(separator_31);
-		
-		lbcontraseñaBanco = new JLabel("Contraseña*");
-		lbcontraseñaBanco.setForeground(Color.WHITE);
-		lbcontraseñaBanco.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbcontraseñaBanco.setVisible(false);
-		lbcontraseñaBanco.setBounds(128, 87, 86, 14);
-		panelAuxiliarBanco.add(lbcontraseñaBanco);
-		
-		lbMostrarContraseñaBanco = new JLabel();
-		lbMostrarContraseñaBanco.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbMostrarContraseñaBanco.setHorizontalAlignment(SwingConstants.CENTER);
-		lbMostrarContraseñaBanco.setBounds(217, 84, 86, 20);
-		panelAuxiliarBanco.add(lbMostrarContraseñaBanco);
-		
-		lbcantidadImpuesta = new JLabel("Cantidad*");
-		lbcantidadImpuesta.setForeground(Color.WHITE);
-		lbcantidadImpuesta.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbcantidadImpuesta.setVisible(false);
-		lbcantidadImpuesta.setBounds(128, 118, 76, 14);
-		panelAuxiliarBanco.add(lbcantidadImpuesta);
-		
-		textFieldCantidadBanco = new JTextField();
-		textFieldCantidadBanco.setColumns(10);
-		textFieldCantidadBanco.setBounds(217, 114, 86, 20);
-		textFieldCantidadBanco.setVisible(false);
-		panelAuxiliarBanco.add(textFieldCantidadBanco);
-		
-		rdbtnConcepto = new JRadioButton("Comandas");
-		rdbtnConcepto.setBounds(327, 80, 109, 23);
-		rdbtnConcepto.setVisible(false);
-		panelAuxiliarBanco.add(rdbtnConcepto);
-		
-		lbconcepto = new JLabel("Concepto*");
-		lbconcepto.setForeground(Color.WHITE);
-		lbconcepto.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbconcepto.setVisible(false);
-		lbconcepto.setBounds(352, 62, 76, 14);
-		panelAuxiliarBanco.add(lbconcepto);
-		
-		rdbtnConcepto2 = new JRadioButton("Otros Ingresos");
-		rdbtnConcepto2.setBounds(327, 110, 109, 23);
-		rdbtnConcepto2.setVisible(false);
-		panelAuxiliarBanco.add(rdbtnConcepto2);
-		//ASIGNAR LOS BOTONES AL BUTTON GRUOUP
-		grupoBotones.add(rdbtnConcepto);
-		grupoBotones.add(rdbtnConcepto2);
-		
-		lbRetroceder = new JLabel("");
-		lbRetroceder.setForeground(Color.WHITE);
-		lbRetroceder.setBounds(421, 34, 27, 22);
-		panelAuxiliarBanco.add(lbRetroceder);
-		fotoEscalarLabel(lbRetroceder, "assets/finSesion.png");
-		
-		btnGuardarCambios = new JButton("Guardar");
-		btnGuardarCambios.setBounds(116, 33, 89, 23);
-		btnGuardarCambios.setVisible(false);
-		panelAuxiliarBanco.add(btnGuardarCambios);
-		
-		lbmensajeInformativo = new JLabel("");
-		lbmensajeInformativo.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbmensajeInformativo.setForeground(new Color(255, 255, 255));
-		lbmensajeInformativo.setBounds(227, 153, 221, 22);
-		panelAuxiliarBanco.add(lbmensajeInformativo);
-		
-		lbtextoMostrar = new JLabel("Transacciones");
-		lbtextoMostrar.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbtextoMostrar.setForeground(new Color(255, 255, 255));
-		lbtextoMostrar.setBounds(10, 155, 104, 14);
-		panelAuxiliarBanco.add(lbtextoMostrar);
-		
-		separator_32 = new JSeparator();
-		separator_32.setForeground(Color.WHITE);
-		separator_32.setBounds(10, 179, 438, 14);
-		panelAuxiliarBanco.add(separator_32);
-		
-		separator_33 = new JSeparator();
-		separator_33.setOrientation(SwingConstants.VERTICAL);
-		separator_33.setForeground(Color.WHITE);
-		separator_33.setBounds(180, 143, 13, 37);
-		panelAuxiliarBanco.add(separator_33);
-		lbRetroceder.setVisible(false);
-		
-		lbContextoMenu = new JLabel("Seleccione la opcion que desee gestionar de las posibles");
-		lbContextoMenu.setForeground(new Color(255, 255, 255));
-		lbContextoMenu.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 13));
-		lbContextoMenu.setBounds(164, 93, 359, 22);
-		Contabilidad.add(lbContextoMenu);
-		
-		menuBar = new JMenuBar();
-		menuBar.setBounds(29, 93, 125, 22);
-		Contabilidad.add(menuBar);
-		
-		Menu = new JMenu("Contabilidad");
-		Menu.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		Menu.setForeground(new Color(0, 0, 0));
-		menuBar.add(Menu);
-		
-		menuHistorial = new JMenuItem("Historial");
-		menuHistorial.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		Menu.add(menuHistorial);
-		
-		menuInventario = new JMenuItem("Inventario");
-		menuInventario.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		Menu.add(menuInventario);
-		
-		menuBanco = new JMenuItem("Banco");
-		menuBanco.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		Menu.add(menuBanco);
-		
-		separator_23 = new JSeparator();
-		separator_23.setForeground(Color.WHITE);
-		separator_23.setBackground(Color.WHITE);
-		separator_23.setBounds(30, 90, 488, 25);
-		Contabilidad.add(separator_23);
-		
-		lbtituloContabilidad = new JLabel("Coffekie");
-		lbtituloContabilidad.setForeground(Color.WHITE);
-		lbtituloContabilidad.setFont(new Font("Segoe Script", Font.BOLD, 24));
-		lbtituloContabilidad.setBackground(Color.WHITE);
-		lbtituloContabilidad.setBounds(221, 38, 114, 42);
-		Contabilidad.add(lbtituloContabilidad);
-		
-		lbmostrarHoraContabilidad = new JLabel("16 : 42");
-		lbmostrarHoraContabilidad.setForeground(Color.WHITE);
-		lbmostrarHoraContabilidad.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
-		lbmostrarHoraContabilidad.setBounds(80, 44, 83, 23);
-		Contabilidad.add(lbmostrarHoraContabilidad);
-		
-		lbcerrarSesionContabilidad = new JLabel("");
-		lbcerrarSesionContabilidad.setForeground(Color.WHITE);
-		lbcerrarSesionContabilidad.setBounds(418, 49, 31, 30);
-		fotoEscalarLabel(lbcerrarSesionContabilidad, "assets/finSesion.png");
-		Contabilidad.add(lbcerrarSesionContabilidad);
-		
-		lbtituloSeleccionado = new JLabel("");
-		lbtituloSeleccionado.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 20));
-		lbtituloSeleccionado.setForeground(new Color(255, 255, 255));
-		lbtituloSeleccionado.setBounds(354, 126, 95, 22);
-		Contabilidad.add(lbtituloSeleccionado);
-		
-		separator_24 = new JSeparator();
-		separator_24.setForeground(Color.WHITE);
-		separator_24.setBackground(Color.WHITE);
-		separator_24.setVisible(false);
-		separator_24.setBounds(270, 159, 231, 25);
-		Contabilidad.add(separator_24);
-		
-		lbfondoContabilidad = new JLabel("");
-		lbfondoContabilidad.setBounds(0, 0, 548, 502);
-		fotoEscalarLabel(lbfondoContabilidad, "assets/fondo2.jpg");
-		Contabilidad.add(lbfondoContabilidad);
-		
-		Comanda = new JPanel();
-		Comanda.setBounds(0, 0, 548, 502);
-		contentPane.add(Comanda);
-		Comanda.setLayout(null);
-		
-		lbfondoComanda = new JLabel("");
-		lbfondoComanda.setBounds(0, 0, 548, 502);
-		Comanda.setVisible(false);
-		
-		btnrestarComida = new JButton("-");
-		btnrestarComida.setForeground(Color.BLACK);
-		btnrestarComida.setFont(new Font("Tempus Sans ITC", Font.BOLD, 23));
-		btnrestarComida.setBackground(new Color(255, 0, 51));
-		btnrestarComida.setBounds(100, 343, 47, 28);
-		btnrestarComida.setVisible(false);
-		
-		lbPagar = new JLabel("");
-		lbPagar.setBounds(342, 436, 89, 42);
-		Comanda.add(lbPagar);
-		fotoEscalarLabel(lbPagar, "assets/pagar.png");
-		Comanda.add(btnrestarComida);
-		
-		lbmensajePedido = new JLabel("");
-		lbmensajePedido.setHorizontalAlignment(SwingConstants.CENTER);
-		lbmensajePedido.setForeground(new Color(255, 255, 255));
-		lbmensajePedido.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbmensajePedido.setBounds(58, 441, 253, 27);
-		lbmensajePedido.setVisible(false);
-		Comanda.add(lbmensajePedido);
-		
-		separator_15 = new JSeparator();
-		separator_15.setOrientation(SwingConstants.VERTICAL);
-		separator_15.setForeground(Color.WHITE);
-		separator_15.setBackground(Color.WHITE);
-		separator_15.setBounds(243, 373, 11, 58);
-		Comanda.add(separator_15);
-		
-		textFieldTotal = new JTextField();
-		textFieldTotal.setEditable(false);
-		textFieldTotal.setColumns(10);
-		textFieldTotal.setBounds(112, 399, 89, 20);
-		Comanda.add(textFieldTotal);
-		
-		textFieldFecha = new JTextField();
-		textFieldFecha.setFont(new Font("Tahoma", Font.BOLD, 12));
-		textFieldFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldFecha.setEditable(false);
-		textFieldFecha.setColumns(10);
-		textFieldFecha.setBounds(304, 396, 81, 20);
-		Comanda.add(textFieldFecha);
-		
-		textFieldHora = new JTextField();
-		textFieldHora.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldHora.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldHora.setEditable(false);
-		textFieldHora.setColumns(10);
-		textFieldHora.setBounds(444, 396, 64, 20);
-		Comanda.add(textFieldHora);
-		
-		
-		lbHoraComanda = new JLabel("HORA");
-		lbHoraComanda.setForeground(Color.WHITE);
-		lbHoraComanda.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbHoraComanda.setBounds(395, 395, 52, 23);
-		Comanda.add(lbHoraComanda);
-		
-		lbFechaComanda = new JLabel("FECHA");
-		lbFechaComanda.setForeground(Color.WHITE);
-		lbFechaComanda.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbFechaComanda.setBounds(253, 395, 58, 23);
-		Comanda.add(lbFechaComanda);
-		
-		separator_14 = new JSeparator();
-		separator_14.setForeground(Color.WHITE);
-		separator_14.setBackground(Color.WHITE);
-		separator_14.setBounds(30, 429, 488, 14);
-		Comanda.add(separator_14);
-		
-		lblTotal = new JLabel("TOTAL");
-		lblTotal.setForeground(Color.WHITE);
-		lblTotal.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lblTotal.setBounds(58, 395, 52, 23);
-		Comanda.add(lblTotal);
-		
-		separator_13 = new JSeparator();
-		separator_13.setForeground(Color.WHITE);
-		separator_13.setBackground(Color.WHITE);
-		separator_13.setBounds(30, 376, 488, 25);
-		Comanda.add(separator_13);
-		
-		separator_12 = new JSeparator();
-		separator_12.setOrientation(SwingConstants.VERTICAL);
-		separator_12.setForeground(Color.WHITE);
-		separator_12.setBackground(Color.WHITE);
-		separator_12.setBounds(243, 120, 37, 256);
-		Comanda.add(separator_12);
-		
-		btnProducto9 = new JButton("");
-		btnProducto9.setBounds(449, 290, 69, 65);
-		Comanda.add(btnProducto9);
-		
-		btnProducto8 = new JButton("");
-		btnProducto8.setBounds(354, 290, 69, 65);
-		Comanda.add(btnProducto8);
-		
-		btnProducto7 = new JButton("");
-		btnProducto7.setBounds(258, 290, 69, 65);
-		Comanda.add(btnProducto7);
-		
-		btnProducto5 = new JButton("");
-		btnProducto5.setBounds(354, 212, 69, 65);
-		Comanda.add(btnProducto5);
-		
-		btnProducto6 = new JButton("");
-		btnProducto6.setBounds(449, 212, 69, 65);
-		Comanda.add(btnProducto6);
-		
-		btnProducto4 = new JButton("");
-		btnProducto4.setBounds(258, 212, 69, 65);
-		Comanda.add(btnProducto4);
-		
-		btnProducto3 = new JButton("");
-		btnProducto3.setBounds(449, 132, 69, 65);
-		Comanda.add(btnProducto3);
-		
-		btnProducto2 = new JButton("");
-		btnProducto2.setBounds(354, 132, 69, 65);
-		Comanda.add(btnProducto2);
-		
-		btnProducto1 = new JButton("");
-		btnProducto1.setBounds(258, 132, 69, 65);
-		Comanda.add(btnProducto1);
-		
-		listPedido = new JList();
-		listPedido.setBounds(30, 156, 196, 180);
-		Comanda.add(listPedido);	
-		
-		lblPedido = new JLabel("PEDIDO");
-		lblPedido.setForeground(Color.WHITE);
-		lblPedido.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lblPedido.setBounds(100, 134, 64, 23);
-		Comanda.add(lblPedido);
-		
-		separator_11 = new JSeparator();
-		separator_11.setForeground(Color.WHITE);
-		separator_11.setBackground(Color.WHITE);
-		separator_11.setBounds(30, 120, 488, 25);
-		Comanda.add(separator_11);
-		
-		textFieldNumComanda = new JTextField();
-		textFieldNumComanda.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldNumComanda.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldNumComanda.setEditable(false);
-		textFieldNumComanda.setColumns(10);
-		textFieldNumComanda.setBounds(415, 96, 52, 20);
-		Comanda.add(textFieldNumComanda);
-		
-		textFieldNumMesa = new JTextField();
-		textFieldNumMesa.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textFieldNumMesa.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldNumMesa.setEditable(false);
-		textFieldNumMesa.setBounds(164, 97, 52, 20);
-		Comanda.add(textFieldNumMesa);
-		textFieldNumMesa.setColumns(10);
-		
-		lblNumComanda = new JLabel("COMANDA");
-		lblNumComanda.setForeground(new Color(255, 255, 255));
-		lblNumComanda.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lblNumComanda.setBackground(new Color(255, 255, 255));
-		lblNumComanda.setBounds(322, 100, 83, 14);
-		Comanda.add(lblNumComanda);
-		
-		lbtextoMesaComanda = new JLabel("MESA");
-		lbtextoMesaComanda.setForeground(new Color(255, 255, 255));
-		lbtextoMesaComanda.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbtextoMesaComanda.setBounds(108, 95, 46, 23);
-		Comanda.add(lbtextoMesaComanda);
-		
-		lbcerrarSesionComanda = new JLabel("");
-		lbcerrarSesionComanda.setForeground(Color.WHITE);
-		lbcerrarSesionComanda.setBounds(432, 37, 31, 30);
-		Comanda.add(lbcerrarSesionComanda);
-		fotoEscalarLabel(lbcerrarSesionComanda, "assets/finSesion.png");
-		
-		lbmostrarHoraComanda = new JLabel("16 : 42");
-		lbmostrarHoraComanda.setForeground(Color.WHITE);
-		lbmostrarHoraComanda.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 24));
-		lbmostrarHoraComanda.setBounds(81, 44, 83, 23);
-		Comanda.add(lbmostrarHoraComanda);
-		
-		lbtituloPComanda = new JLabel("Coffekie");
-		lbtituloPComanda.setForeground(Color.WHITE);
-		lbtituloPComanda.setFont(new Font("Segoe Script", Font.BOLD, 24));
-		lbtituloPComanda.setBackground(Color.WHITE);
-		lbtituloPComanda.setBounds(231, 37, 114, 42);
-		Comanda.add(lbtituloPComanda);
-		
-		separator_10 = new JSeparator();
-		separator_10.setForeground(Color.WHITE);
-		separator_10.setBackground(Color.WHITE);
-		separator_10.setBounds(30, 90, 488, 25);
-		Comanda.add(separator_10);
-		Comanda.add(lbfondoComanda);
-		fotoEscalarLabel(lbfondoComanda, "assets/fondo2.jpg");
 	}//Interfaz
 	
 	private void fotoEscalarLabel(JLabel label, String url) {

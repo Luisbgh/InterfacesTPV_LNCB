@@ -173,7 +173,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		escalarFotoBoton("assets/lupa.png", puntero.btnVisualizarDatosProducto);
 		escalarFotoBoton("assets/bebidas.png", puntero.btnverBebida);
 		escalarFotoBoton("assets/comidas.png", puntero.btnverComida);
-		escalarFotoBoton("assets/cambioCliente.png", puntero.btnDarCambio);
+		escalarFotoBoton("assets/cambio.png", puntero.btnDarCambio);
 		escalarFotoBoton("assets/lupa.png", puntero.btnComprobarProductoInventario);
 		escalarFotoBoton("assets/ingresarDinero.png", puntero.btnIngresar);
 		escalarFotoBoton("assets/pasarDinero.png", puntero.btnGastos);
@@ -354,7 +354,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		}//if
 		if(e.getSource()==puntero.lbfotoSesion) {
 			if(e.getClickCount()==1) {
-				//MENSAJE INFORMATIVO INVISIBLE
 				puntero.mensajeInformativoConfiguracion.setVisible(false);
 				//DATOS USUARIO
 				mostrarDatosUser();
@@ -504,7 +503,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		if(!puntero.textUsuario.getText().isEmpty() && !puntero.textContraseña.getText().isEmpty()) {
 			nombre=puntero.textUsuario.getText();
 			contraseña=puntero.textContraseña.getText();
-			//CREACION EMPLEADO Y INSERCCION EN LA LISTA
+			//CREACION EMPLEADO Y ANIDACIÓN EN LA LISTA
 			empleado=new Empleado(nombre, contraseña, "16:00", "22:00", 1200, "assets/perfil3.png");
 			for(int i=0; i<empleados.size(); i++) {
 				if(empleados.get(i).getNombre().equalsIgnoreCase(nombre) && empleados.get(i).getContraseña().equals(contraseña)) {
@@ -594,7 +593,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			puntero.inicioSesion.setVisible(false);
 			puntero.Documentacion_1.setVisible(false);
 			puntero.Principal.setVisible(true);
-			//SEATAMOS CAMPOS Y MENSAJES DEL INICIO DE SESION PARA AL VOLVER A INICAR QUE ESTEN VACIOS
+			//SEATAMOS CAMPOS Y MENSAJES DEL INICIO DE SESION PARA QUE AL VOLVER A INICAR QUE ESTEN VACIOS
 			puntero.textContraseña.setText("");
 			puntero.textUsuario.setText("");
 			puntero.mensajeInformativo.setText("");
@@ -857,7 +856,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					comandas.get(i).getMesas().get(j).getItems().putAll(aux);
 					comandas.get(i).getMesas().get(j).setTotal(controlarTotalMesa(comandas.get(i).getMesas().get(j).getItems()));
 					comandas.get(i).getMesas().get(j).setTotal(Math.round(comandas.get(i).getMesas().get(j).getTotal() *100.00)/100.00);
-					puntero.textFieldTotal.setText(String.valueOf(comandas.get(i).getMesas().get(j).getTotal()));
+					puntero.textFieldTotal.setText(String.valueOf(Math.round(comandas.get(i).getMesas().get(j).getTotal()*100.0)/100.0));
 					actualizarJlist(comandas.get(i).getMesas().get(j).getItems(), modeloItems);
 					puntero.listPedido.setModel(modeloItems);
 					puntero.btnrestarComida.setVisible(true);
@@ -908,7 +907,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					puntero.textFieldNumComanda.setText(String.valueOf(comandas.get(i).getMesas().get(j).getComandaNum()));
 					puntero.textFieldFecha.setText(String.valueOf(comandas.get(i).getMesas().get(j).getFecha()));
 					puntero.textFieldHora.setText(String.valueOf(comandas.get(i).getMesas().get(j).getHora()));
-					puntero.textFieldTotal.setText(String.valueOf(comandas.get(i).getMesas().get(j).getTotal()));
+					puntero.textFieldTotal.setText(String.valueOf(Math.round(comandas.get(i).getMesas().get(j).getTotal()*100.0)/100.0));
 					actualizarJlist(comandas.get(i).getMesas().get(j).getItems(), modeloItems);
 					puntero.listPedido.setModel(modeloItems);
 					pagar=false;
@@ -956,6 +955,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			for(Entry<String, Integer> entrada: lista.entrySet()){
 				if(listaProductos.get(i).getNombre().equalsIgnoreCase(entrada.getKey())) {
 					totalPedido=totalPedido + entrada.getValue()* listaProductos.get(i).getPrecio();
+					totalPedido=Math.round(totalPedido*100.0)/100.0;
 				}//if
 			}//for
 		}//for
@@ -1015,6 +1015,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		centrarDatosTablas(centrar);
 		diferencia=Double.parseDouble(puntero.textFieldAbonoCliente.getText()) - Double.parseDouble(puntero.textFieldcambioTotal.getText());
 		dineroCaja=dineroCaja + diferencia;
+		dineroCaja=Math.round(dineroCaja * 100.0)/100.0;
 		seteosCambioGenerado();
 		pagar=true;
 		if(pagar) {
@@ -1080,6 +1081,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 	public void reduccionElemento(String ejemplo, HashMap<String, Integer>lista) {
 
 		puntero.lbmensajePedido.setText("");
+		boolean borrar=false;
 		for(Entry<String, Integer> entrada: lista.entrySet()){
 			if(ejemplo.equalsIgnoreCase(entrada.getKey())) {
 				if(entrada.getValue()>0) {
@@ -1090,12 +1092,19 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				}//if
 			}//if
 			if(entrada.getValue()<1) {
-				comandas.get(0).getMesas().get(numMesa - 1).getItems().remove(entrada.getKey());
+				borrar=true;
+				puntero.lbmensajePedido.setForeground(Color.RED);
+				puntero.lbmensajePedido.setText("ELIMINASTE 1 " + ejemplo );
 			}//if				
 			actualizarJlist(comandas.get(0).getMesas().get(numMesa -1).getItems(), modeloItems);
 			comandas.get(0).getMesas().get(numMesa - 1).setTotal(controlarTotalMesa(comandas.get(0).getMesas().get(numMesa-1).getItems()));
-			puntero.textFieldTotal.setText(String.valueOf(comandas.get(0).getMesas().get(numMesa - 1).getTotal()));		
+			puntero.textFieldTotal.setText(String.valueOf(comandas.get(0).getMesas().get(numMesa - 1).getTotal()));
+			puntero.textFieldcambioTotal.setText(String.valueOf(Math.round(Double.parseDouble(puntero.textFieldTotal.getText()) * 100.0)/100.0));
 			}//for1
+			if(borrar) {
+				comandas.get(0).getMesas().get(numMesa - 1).getItems().remove(ejemplo);
+				actualizarJlist(comandas.get(0).getMesas().get(numMesa -1).getItems(), modeloItems);
+			}//if
 		
 	}//reduccionElemento
 	
@@ -1121,6 +1130,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			if(listaProductos.get(i).getNombre().equalsIgnoreCase(productoInventario)) {
 				puntero.lbmaximo.setForeground(Color.BLACK);
 				puntero.lbmensajeInventario.setText("");
+				puntero.lbmensajeInventario2.setText("");
 				puntero.btnEditar.setVisible(true);
 				puntero.lbIdProductoMostrado.setText(listaProductos.get(i).getId());
 				puntero.textNombreProductoMostrado.setText(listaProductos.get(i).getNombre());
@@ -1154,28 +1164,36 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		puntero.listInventario.setEnabled(true);
 		puntero.btnEditar.setVisible(false);
 		puntero.btnGuardarEdicion.setVisible(false);
+		puntero.btnComprobarProductoInventario.setVisible(true);
 	}//seteosDeEdicion
 	
 	public void seteoProductos() {
 		
 		double precio=0;
-		boolean edicion=true;
+		boolean edicion=false;
 		for(int i=0; i<listaProductos.size(); i++) {
 			if(listaProductos.get(i).getNombre().equalsIgnoreCase(productoInventario) && (!puntero.textNombreProductoMostrado.getText().equalsIgnoreCase(listaProductos.get(i).getNombre())
 				|| !puntero.textInventarioTipo.getText().equalsIgnoreCase(listaProductos.get(i).getTipo())  || !puntero.textInventarioPrecio.getText().equalsIgnoreCase(String.valueOf(listaProductos.get(i).getPrecio())) ||
 				!puntero.textInventarioProveedor.getText().equalsIgnoreCase(listaProductos.get(i).getProveedor()) || !puntero.textInventarioStock.getText().equalsIgnoreCase(listaProductos.get(i).getStock()))) {
 				edicion=true;
 				puntero.lbmensajeInventario.setText("");
+				puntero.lbmensajeInventario2.setText("");
 				precio=listaProductos.get(i).getPrecio();
 				listaProductos.get(i).setNombre(puntero.textNombreProductoMostrado.getText());
 				listaProductos.get(i).setTipo(puntero.textInventarioTipo.getText());
 				listaProductos.get(i).setPrecio(Double.parseDouble(puntero.textInventarioPrecio.getText()));
 				listaProductos.get(i).setProveedor(puntero.textInventarioProveedor.getText());
-				listaProductos.get(i).setStock(puntero.textInventarioStock.getText());
 				if(Integer.parseInt(puntero.textInventarioStock.getText())>100) {
 					puntero.lbmaximo.setForeground(Color.RED);
-				}//if
-				//
+					puntero.lbmensajeInventario2.setForeground(Color.RED);
+					puntero.lbmensajeInventario2.setText("No se puede alterar la capacidad");
+				}else if(Integer.parseInt(puntero.textInventarioStock.getText())<=0) {
+					puntero.lbmaximo.setForeground(Color.RED);
+					puntero.lbmensajeInventario2.setForeground(Color.RED);
+					puntero.lbmensajeInventario2.setText("Alteración de capacidad");
+				}else {
+					listaProductos.get(i).setStock(puntero.textInventarioStock.getText());
+				}//else
 				conexionCambiosInventarioComanda(precio, listaProductos.get(i).getNombre());
 			}//if
 		}//for
@@ -1254,11 +1272,12 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				for(int j=0; j<cuentas.get(i).getTransacciones().size(); j++) {
 					id=cuentas.get(i).getTransacciones().get(j).getId();
 					concepto=cuentas.get(i).getTransacciones().get(j).getConcepto();
-					cantidad=cuentas.get(i).getTransacciones().get(j).getCantidad();
+					cantidad=Math.round(cuentas.get(i).getTransacciones().get(j).getCantidad()*100.0)/100.0;
 					tipo=cuentas.get(i).getTransacciones().get(j).getTipo();
 					modeloTablaTransacciones.addRow(new String[] {String.valueOf(id), concepto, String.valueOf(cantidad), tipo});
 				}//for
 				nuevaCantidad=modificarSaldo(cantidad, tipo);
+				nuevaCantidad=Math.round(nuevaCantidad*100.0)/100.0;
 				cuentas.get(i).setSaldo(nuevaCantidad);
 			}//if
 		}//for
@@ -1289,7 +1308,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					if(cuentas.get(i).getTransacciones().size()>0 && i==combo) {
 						int id=cuentas.get(i).getTransacciones().get(j).getId();
 						String concepto=cuentas.get(i).getTransacciones().get(j).getConcepto();
-						double cantidad=cuentas.get(i).getTransacciones().get(j).getCantidad();
+						double cantidad=Math.round(cuentas.get(i).getTransacciones().get(j).getCantidad()*100.0)/100.0;
 						String tipo=cuentas.get(i).getTransacciones().get(j).getTipo();
 						modeloTablaTransacciones.addRow(new String[] {String.valueOf(id), concepto, String.valueOf(cantidad), tipo});
 					}//if
@@ -1337,7 +1356,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		double nuevoPrecio=0;
 		double precioDescontar=0;
 		String producto;
-		//
 		for(int i=0; i<listaProductos.size(); i++) {
 			if(listaProductos.get(i).getNombre().equalsIgnoreCase(productoSeteo)) {
 				nuevoPrecio=listaProductos.get(i).getPrecio();
@@ -1369,7 +1387,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		puntero.tableHistorial.getColumnModel().getColumn(1).setCellRenderer(centrar);
 		puntero.tableHistorial.getColumnModel().getColumn(3).setCellRenderer(centrar);
 		puntero.tableHistorial.getColumnModel().getColumn(4).setCellRenderer(centrar);
-		//
 		puntero.tableTransacciones.getColumnModel().getColumn(0).setCellRenderer(centrar);
 		puntero.tableTransacciones.getColumnModel().getColumn(1).setCellRenderer(centrar);
 		puntero.tableTransacciones.getColumnModel().getColumn(2).setCellRenderer(centrar);
@@ -1414,7 +1431,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				break;
 			}//switch
 		}//for
-		//
 		listaEstadisticas();
 		
 	}//mostrarEstadisticasMesa
@@ -1476,6 +1492,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		puntero.btnEditar.setVisible(false);
 		puntero.btnGuardarEdicion.setVisible(true);
 		puntero.listInventario.setEnabled(false);
+		puntero.btnComprobarProductoInventario.setVisible(false);
 	}//seteosEditar
 	
 	public void seteosMenuBanco() {
@@ -1579,7 +1596,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		this.puntero.Pagos.setVisible(false);
 		this.puntero.Contabilidad.setVisible(false);
 		this.puntero.inicioSesion.setVisible(true);
-		//SETEAMOS VALORES DE LA PANTALLA PRINCIPAL
 		this.puntero.lbnombreEmpleado.setText("");
 		this.puntero.labelFotoRegistro.setText("");
 		this.puntero.lbcerrarSesion.setText("");
@@ -1595,11 +1611,9 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		this.puntero.Pagos.setVisible(false);
 		this.puntero.Contabilidad.setVisible(false);
 		this.puntero.Documentacion_1.setVisible(true);
-		//SETEAMOS VALORES DE LA PANTALLA PRINCIPAL
 		this.puntero.lbnombreEmpleado.setText("");
 		this.puntero.labelFotoRegistro.setText("");
 		this.puntero.lbcerrarSesion.setText("");
-		//AÑADIMOS INFORMACION AL LABEL Y LLAMAMOS AL METODO
 		this.puntero.textAreaInformacionGeneral.setText(texto);
 		this.puntero.textAreaInformacionGeneral.setLineWrap(true);
 		this.puntero.textAreaInformacionGeneral.setWrapStyleWord(true);
@@ -1767,6 +1781,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		this.puntero.Principal.setVisible(true);
 		 seteosDeEdicion();
 		 puntero.lbmensajeInventario.setText("");
+		 puntero.lbmensajeInventario2.setText("");
 	}//cerrarSesionContabilidad
 	
 	public void cerrarSesionEstadisticas() {
