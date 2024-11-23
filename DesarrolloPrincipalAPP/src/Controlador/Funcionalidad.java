@@ -41,8 +41,9 @@ import Modelo.Transaccion;
 
 public class Funcionalidad implements ActionListener, MouseListener{
 
+	//INTERFAZ
 	Interfaz puntero=new Interfaz();
-	//VARIABLES
+	//VARIABLES Y ESTRUCTURAS
 	ArrayList<Empleado>empleados=new ArrayList<Empleado>();
 	ArrayList<Mesa>mesas=new ArrayList<Mesa>();
 	ArrayList<Producto>listaProductos=new ArrayList<Producto>();
@@ -67,7 +68,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 	DefaultTableCellRenderer centrar=new DefaultTableCellRenderer();
 	int hora, minutos, dineroTotal, horaMesa, minutoMesa, fechaMesa, mesa, mesaAux, cantidad=1,  cambioStock, numMesa=0, numComanda=0, contadorTransaccion=0;
 	double precioTotal=0, precioProductos=0, precioPagar=0, dineroCaja=50;
-	boolean cambios=false, pagar=false, edicion=false, deshabilitar=false;;
+	boolean cambios=false, pagar=false, edicion=false, deshabilitar=false;
 	ImageIcon imagenBoton;
 	Icon icono;
 	JLabel label1, label2;
@@ -88,7 +89,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		puntero.btnVisualizarDatosProducto.addActionListener(this);
 		puntero.btnverBebida.addActionListener(this);
 		puntero.btnverComida.addActionListener(this);
-		//puntero.btnSetearStock.addActionListener(this);
 		puntero.btnProducto1.addActionListener(this);
 		puntero.btnProducto2.addActionListener(this);
 		puntero.btnProducto3.addActionListener(this);
@@ -156,7 +156,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		//TABLAS
 		fabricarTablaTransacciones();
 		fabricarTablaHistorial();
-		fabricarTablaHistorialTotal();
 		//MESAS
 		mesas.add(new Mesa(1, String.valueOf(puntero.lbmostrarFecha.getText()), String.valueOf(puntero.lbmostrarHoraPrincipal.getText())));
 		mesas.add(new Mesa(2, String.valueOf(puntero.lbmostrarFecha.getText()), String.valueOf(puntero.lbmostrarHoraPrincipal.getText())));
@@ -170,11 +169,10 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		cambiarHorario();
 		//ESTABLECER DINEROCAJA
 		double dineroCaja=50;
-		//BOTON ICONO VISUALIZAR DATOS INVENTARIO
+		//BOTON ICONO
 		escalarFotoBoton("assets/lupa.png", puntero.btnVisualizarDatosProducto);
 		escalarFotoBoton("assets/bebidas.png", puntero.btnverBebida);
 		escalarFotoBoton("assets/comidas.png", puntero.btnverComida);
-		//escalarFotoBoton("assets/editarStock.png", puntero.btnSetearStock);
 		escalarFotoBoton("assets/cambioCliente.png", puntero.btnDarCambio);
 		escalarFotoBoton("assets/lupa.png", puntero.btnComprobarProductoInventario);
 		escalarFotoBoton("assets/ingresarDinero.png", puntero.btnIngresar);
@@ -197,20 +195,21 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			opcionCombo();
 		}//if
 		if(e.getSource()==puntero.btnGuardarInfo) {
+			puntero.mensajeInformativoConfiguracion.setText("");
 			modificarUsuario();	
 		}//if
 		if(e.getSource()==puntero.btnEliminarUser) {
 			eliminarUsuario();
 		}//if
 		if(e.getSource()==puntero.btnProductos) {
-			gestionInventario();
+			dirigirProductos();
 		}//if
 		if(e.getSource()==puntero.btnVisualizarDatosProducto) {
 			visualizarDatosMenu();
 		}//if
 		if(e.getSource()==puntero.btnverBebida) {
-			seteosLabelInventario();
-			//puntero.textFieldEditarStock.setText("");
+			seteosLabelProductos();
+			puntero.lbtextoComida.setText("BEBIDAS");
 			fotoEscalarLabel(puntero.lbImagenInventario, "assets/productoDefecto.png");
 			puntero.progressBarStock.setValue(0);
 			modeloBebida.removeAllElements();
@@ -218,15 +217,14 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			visualizarProducto(tipoComida, modeloBebida);
 		}//if
 		if(e.getSource()==puntero.btnverComida) {
-			seteosLabelInventario();
-			//puntero.textFieldEditarStock.setText("");
+			seteosLabelProductos();
+			puntero.lbtextoComida.setText("COMIDAS");
 			fotoEscalarLabel(puntero.lbImagenInventario, "assets/productoDefecto.png");
 			puntero.progressBarStock.setValue(0);
 			modeloComida.removeAllElements();
 			tipoComida="Comida";
 			visualizarProducto(tipoComida, modeloComida);
 		}//if
-		
 		if(e.getSource()==puntero.btnProducto1) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(0).getNombre();
@@ -241,32 +239,32 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(2).getNombre();
 			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
-		}
+		}//if
 		if(e.getSource()==puntero.btnProducto4) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(3).getNombre();
 			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
-		}
+		}//if
 		if(e.getSource()==puntero.btnProducto5) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(4).getNombre();
 			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
-		}
+		}//if
 		if(e.getSource()==puntero.btnProducto6) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(5).getNombre();
 			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
-		}
+		}//if
 		if(e.getSource()==puntero.btnProducto7) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(6).getNombre();
 			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
-		}
+		}//if
 		if(e.getSource()==puntero.btnProducto8) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(7).getNombre();
 			pedido(mesaAux, solicitud, precioTotal, puntero.lbNumeroMesa);
-		}
+		}//if
 		if(e.getSource()==puntero.btnProducto9) {
 			mesaAux=Integer.parseInt(puntero.textFieldNumMesa.getText());
 			solicitud=listaProductos.get(8).getNombre();
@@ -280,157 +278,55 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		}//if
 		if(e.getSource()==puntero.btnDarCambio) {
 			generarCambio();
-			puntero.textFieldAbonoCliente.setText("");
-			puntero.textFieldAbonoCliente.setEditable(true);
-			puntero.lbmensajeCambioCliente.setVisible(false);
-			puntero.lbmensajeCambioCliente.setVisible(false);
-			puntero.textFieldcambioTotal.setVisible(false);
-			puntero.btnDarCambio.setVisible(false);
-			
+			seteosDarCambio();
 		}//if
 		if(e.getSource()==puntero.btnContabilidad) {
-			//CAMBIAMOS DE PANEL
-			this.puntero.Principal.setVisible(false);
-			this.puntero.Productos.setVisible(false);
-			this.puntero.Configuracion.setVisible(false);
-			this.puntero.Documentacion_1.setVisible(false);
-			this.puntero.Comanda.setVisible(false);
-			this.puntero.Pagos.setVisible(false);
-			this.puntero.inicioSesion.setVisible(false);
-			this.puntero.Contabilidad.setVisible(true);
+			seteoPanelesExcepcionContabilidad();
 		}//if
 		if(e.getSource()==puntero.menuInventario) {
-			this.puntero.lbtituloSeleccionado.setText("Inventario");
-			this.puntero.panelAuxiliarBanco.setVisible(false);
-			this.puntero.panelAuxiliarEstadisticas.setVisible(false);
-			this.puntero.panelAuxiliarHistorial.setVisible(false);
-			this.puntero.panelAuxiliarInventario.setVisible(true);
-			this.puntero.separator_24.setVisible(true);
-			//
+			seteosMenuInventario();
 			actualizarJlistArrayList(listaProductos);
-			//
 		}//if
 		
 		if(e.getSource()==puntero.btnComprobarProductoInventario) {
 			mostrarProductosInventario();
 		}//if
 		if(e.getSource()==puntero.btnEditar) {
-			puntero.textNombreProductoMostrado.setEditable(true);
-			puntero.textInventarioProveedor.setEditable(true);
-			puntero.textInventarioPrecio.setEditable(true);
-			puntero.textInventarioTipo.setEditable(true);
-			puntero.textInventarioStock.setEditable(true);
-			puntero.btnEditar.setVisible(false);
-			puntero.btnGuardarEdicion.setVisible(true);
-			puntero.listInventario.setEnabled(false);
+			seteosEditar();
 		}//if
-		if(e.getSource()==puntero.btnGuardarEdicion) {
-			
+		if(e.getSource()==puntero.btnGuardarEdicion) {		
 			seteoProductos();
 			seteosDeEdicion();
-			actualizarJlistArrayList(listaProductos);
-				
+			actualizarJlistArrayList(listaProductos);				
 		}//if
 		if(e.getSource()==puntero.menuBanco) {
-			this.puntero.lbtituloSeleccionado.setText("Banco");
-			this.puntero.panelAuxiliarBanco.setVisible(true);
-			this.puntero.panelAuxiliarHistorial.setVisible(false);
-			this.puntero.panelAuxiliarInventario.setVisible(false);
-			this.puntero.panelAuxiliarEstadisticas.setVisible(false);
-			this.puntero.separator_24.setVisible(true);
-			//
-			puntero.comboBoxBanco.setEnabled(true);
-			seteosCamposBanco();
-			 
+			seteosMenuBanco();
+			seteosCamposBanco();		 
 		}//if
 		if(e.getSource()==puntero.btnIngresar) {
-			tipoTransaccion="Ingreso";
-			puntero.btnIngresar.setVisible(false);
-			puntero.btnGastos.setVisible(false);
-			//
-			puntero.lbRetroceder.setVisible(true);
-			puntero.rdbtnConcepto.setVisible(true);
-			puntero.rdbtnConcepto.setText("Comandas");
-			puntero.lbModificar.setText("Ingreso");
-			//
+			seteosIngresar();
 		}//if
 		if(e.getSource()==puntero.btnGastos) {
-			tipoTransaccion="Gasto";
-			puntero.btnIngresar.setVisible(false);
-			puntero.btnGastos.setVisible(false);
-			puntero.lbRetroceder.setVisible(true);
-			//
-			puntero.rdbtnConcepto.setVisible(true);
-			puntero.rdbtnConcepto.setText("Inventario");
-			puntero.rdbtnConcepto2.setVisible(true);
-			puntero.rdbtnConcepto2.setText("Otros gastos");
-			puntero.lbModificar.setText("Gasto");
+			seteosGastos();
 		}//if
 		if(e.getSource()==puntero.btnIngresar || e.getSource()==puntero.btnGastos) {
-			puntero.lbcantidadImpuesta.setVisible(true);
-			puntero.lbcontraseñaBanco.setVisible(true);
-			puntero.lbconcepto.setVisible(true);
-			puntero.btnGuardarCambios.setVisible(true);
-			//
-			puntero.lbMostrarContraseñaBanco.setVisible(true);
-			puntero.textFieldCantidadBanco.setVisible(true);
-			puntero.scrollPaneBanco.setVisible(true);
-			puntero.tableTransacciones.setVisible(true);
-			puntero.lbSaldo.setVisible(true);
-			//
+			seteosIngresar_Gastos();
 			DatosBanco();
 			estadoSaldo();
 			puntero.comboBoxBanco.setEnabled(false);
 		}//if
 		if(e.getSource()==puntero.btnGuardarCambios) {
-			puntero.lbmensajeInformativo.setForeground(Color.RED);
-			puntero.lbmensajeInformativo.setVisible(true);
-			if(!puntero.textFieldCantidadBanco.getText().isBlank() && (puntero.rdbtnConcepto.isSelected() || puntero.rdbtnConcepto2.isSelected())) {
-				if((Double.parseDouble(puntero.textFieldCantidadBanco.getText())) <= 0 || (Double.parseDouble(puntero.textFieldCantidadBanco.getText())) > 100000000){
-					puntero.scrollPaneBanco.setVisible(false);
-					puntero.tableTransacciones.setVisible(false);
-					puntero.lbmensajeInformativo.setText("CANTIDAD NO PERMITIDA");
-				}else {
-					puntero.scrollPaneBanco.setVisible(true);
-					puntero.tableTransacciones.setVisible(true);
-					contadorTransaccion++;
-					puntero.lbmensajeInformativo.setForeground(Color.WHITE);
-					puntero.lbmensajeInformativo.setText("TRANSACCION COMPLETADA");
-					transaccion=nuevaTransacciones(transaccion);
-					insertarTransaccion(transaccion);
-				}//else
-			}else {
-				puntero.scrollPaneBanco.setVisible(false);
-				puntero.tableTransacciones.setVisible(false);
-				puntero.lbmensajeInformativo.setText("TRANSACCION INCOMPLETA");
-			}//else
+			guardarCambios();
 		}//if
 		if(e.getSource()==puntero.menuHistorial) {
-			this.puntero.lbtituloSeleccionado.setText("Historial");
-			this.puntero.panelAuxiliarBanco.setVisible(false);
-			this.puntero.panelAuxiliarInventario.setVisible(false);
-			this.puntero.panelAuxiliarHistorial.setVisible(true);
-			this.puntero.panelAuxiliarEstadisticas.setVisible(false);
-			this.puntero.separator_24.setVisible(true);
-			this.puntero.btnEstadisticas.setVisible(true);
-			this.puntero.btnLimpiar.setVisible(true);
-			//
+			seteosMenuHistorial();
 		}//if
 		if(e.getSource()==puntero.btnLimpiar) {
 			eliminarDatosTabla(modeloTablaHistorial, puntero.tableHistorial);
 			puntero.tableHistorial.setModel(modeloTablaHistorial);
 		}//if
 		if(e.getSource()==puntero.btnEstadisticas) {
-			this.puntero.panelAuxiliarEstadisticas.setVisible(true);
-			this.puntero.panelAuxiliarBanco.setVisible(false);
-			this.puntero.panelAuxiliarInventario.setVisible(false);
-			this.puntero.panelAuxiliarHistorial.setVisible(true);
-			this.puntero.lbcerrarSesionEstadisticas.setVisible(true);
-			this.puntero.separator_34.setVisible(false);
-			this.puntero.btnEstadisticas.setVisible(false);
-			this.puntero.btnLimpiar.setVisible(false);
-			this.puntero.separator_16.setVisible(true);
-			//
+			seteosEstadisticas();
 			mostrarEstadisticasMesas();
 		}//if
 
@@ -441,56 +337,19 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		
 		if(e.getSource()==puntero.lbcerrarSesion) {
 			if(e.getClickCount()==2) {
-				//CAMBIAMOS DE PANEL
-				this.puntero.Principal.setVisible(false);
-				this.puntero.Productos.setVisible(false);
-				this.puntero.Configuracion.setVisible(false);
-				this.puntero.Documentacion_1.setVisible(false);
-				this.puntero.Comanda.setVisible(false);
-				this.puntero.Pagos.setVisible(false);
-				this.puntero.Contabilidad.setVisible(false);
-				this.puntero.inicioSesion.setVisible(true);
-				//SETEAMOS VALORES DE LA PANTALLA PRINCIPAL
-				this.puntero.lbnombreEmpleado.setText("");
-				this.puntero.labelFotoRegistro.setText("");
-				this.puntero.lbcerrarSesion.setText("");
+				cerrarSesionPrincipal();
 			}//if
 		}//if
 		if(e.getSource()==puntero.lbPaginaInformativa) {
 			if(e.getClickCount()==2) {
-				//CAMBIAMOS DE PANEL
-				this.puntero.Principal.setVisible(false);
-				this.puntero.inicioSesion.setVisible(false);
-				this.puntero.Productos.setVisible(false);
-				this.puntero.Configuracion.setVisible(false);
-				this.puntero.Comanda.setVisible(false);
-				this.puntero.Pagos.setVisible(false);
-				this.puntero.Contabilidad.setVisible(false);
-				this.puntero.Documentacion_1.setVisible(true);
-				//SETEAMOS VALORES DE LA PANTALLA PRINCIPAL
-				this.puntero.lbnombreEmpleado.setText("");
-				this.puntero.labelFotoRegistro.setText("");
-				this.puntero.lbcerrarSesion.setText("");
-				//AÑADIMOS INFORMACION AL LABEL Y LLAMAMOS AL METODO
-				this.puntero.textAreaInformacionGeneral.setText(texto);
-				this.puntero.textAreaInformacionGeneral.setLineWrap(true);
-				this.puntero.textAreaInformacionGeneral.setWrapStyleWord(true);
+				dirigirPaginaInformativa(); 
 				//OPCIONES COMBO BOX
 				opcionCombo();
-				//
 			}//if	
 		}//if
 		if(e.getSource()==puntero.lbcerrarSesionDOC) {
 			if(e.getClickCount()==2) {
-				//CAMBIAMOS DE PANEL
-				this.puntero.Documentacion_1.setVisible(false);
-				this.puntero.Principal.setVisible(false);
-				this.puntero.Configuracion.setVisible(false);
-				this.puntero.Productos.setVisible(false);
-				this.puntero.Comanda.setVisible(false);
-				this.puntero.Pagos.setVisible(false);
-				this.puntero.Contabilidad.setVisible(false);
-				this.puntero.inicioSesion.setVisible(true);
+				cerrarSesionPaginaInformativa();
 			}//if
 		}//if
 		if(e.getSource()==puntero.lbfotoSesion) {
@@ -499,44 +358,12 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				puntero.mensajeInformativoConfiguracion.setVisible(false);
 				//DATOS USUARIO
 				mostrarDatosUser();
-				//CAMBIAMOS DE PANEL
-				this.puntero.Documentacion_1.setVisible(false);
-				this.puntero.Principal.setVisible(false);
-				this.puntero.inicioSesion.setVisible(false);
-				this.puntero.Productos.setVisible(false);
-				this.puntero.Comanda.setVisible(false);
-				this.puntero.Pagos.setVisible(false);
-				this.puntero.Contabilidad.setVisible(false);
-				this.puntero.Configuracion.setVisible(true);
+				dirigirConfiguracion();
 			}//if
 		}//if
 		if(e.getSource()==puntero.lbcerrarSesionConfiguracion) {
 			if(e.getClickCount()==2) {
-				//CAMBIAMOS DE PANEL
-				if(cambios) {
-					this.puntero.Documentacion_1.setVisible(false);
-					this.puntero.Configuracion.setVisible(false);
-					this.puntero.Principal.setVisible(false);
-					this.puntero.Productos.setVisible(false);
-					this.puntero.Comanda.setVisible(false);
-					this.puntero.Pagos.setVisible(false);
-					this.puntero.Contabilidad.setVisible(false);
-					this.puntero.inicioSesion.setVisible(true);
-				}else {
-					this.puntero.Documentacion_1.setVisible(false);
-					this.puntero.Configuracion.setVisible(false);
-					this.puntero.Productos.setVisible(false);
-					this.puntero.Comanda.setVisible(false);
-					this.puntero.inicioSesion.setVisible(false);
-					this.puntero.Pagos.setVisible(false);
-					this.puntero.Contabilidad.setVisible(false);
-					this.puntero.Principal.setVisible(true);
-				}//else
-				//
-				puntero.textPassConf.setText("");
-				puntero.textJIConf.setText("");
-				puntero.textJFConf.setText("");
-				puntero.textSueldoConf.setText("");
+				cerrarSesionConfiguracion();
 			}//if
 		}//if
 		if(e.getSource()==puntero.lbVerContraseña) {
@@ -544,80 +371,31 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				fotoEscalarLabel(puntero.lbVerContraseña, "assets/ver.png");
 				fotoContraseña="ver";
 				puntero.textContraseña.setEchoChar('*');
-			}//
-		}//
+			}//if
+		}//if
 		if(e.getSource()==puntero.lbVerContraseña) {
 			if(e.getClickCount()==2) {
 				fotoEscalarLabel(puntero.lbVerContraseña, "assets/no_ver.png");
 				fotoContraseña="ver";
 				caracteresContraseña(fotoContraseña);
-			}//
-		}//
+			}//if
+		}//if
 		if(e.getSource()==puntero.lbcerrarSesionProductos) {
 			if(e.getClickCount()==2) {
-				//CAMBIAMOS DE PANEL
-				this.puntero.Documentacion_1.setVisible(false);
-				this.puntero.Configuracion.setVisible(false);
-				this.puntero.Productos.setVisible(false);
-				this.puntero.inicioSesion.setVisible(false);
-				this.puntero.Comanda.setVisible(false);
-				this.puntero.Pagos.setVisible(false);
-				this.puntero.Contabilidad.setVisible(false);
-				this.puntero.Principal.setVisible(true);
-				//
-				puntero.lbtextoComida.setText("PRODUCTOS");
-				puntero.lbFieldID.setText("");
-				puntero.lbFieldNombre.setText("");
-				puntero.lbFieldProveedor.setText("");
-				puntero.lbFieldPrecio.setText("");
-				fotoEscalarLabel(puntero.lbImagenInventario, "assets/productoDefecto.png");
-				puntero.lbImagenInventario.setText("");
-				
-				//puntero.textFieldEditarStock.setText("");
-				puntero.progressBarStock.setValue(0);
-				modeloComida.removeAllElements();
-				puntero.lbFieldNumStock.setText("");
-				puntero.lbFieldTipo.setText("");
-				puntero.lbmensajeStock.setVisible(false);
-				//puntero.btnSetearStock.setEnabled(false);
-				puntero.btnVisualizarDatosProducto.setEnabled(false);
-				//
-				modeloComida.clear();
-				modeloBebida.clear();
+				cerrarSesionProductos();
 			}//if
 		}//if
 		if(e.getSource()==puntero.lbcerrarSesionComanda) {
 			if(e.getClickCount()==2) {
-				//CAMBIAMOS DE PANEL
-				this.puntero.Productos.setVisible(false);
-				this.puntero.Configuracion.setVisible(false);
-				this.puntero.Documentacion_1.setVisible(false);
-				this.puntero.Comanda.setVisible(false);
-				this.puntero.inicioSesion.setVisible(false);
-				this.puntero.Pagos.setVisible(false);
-				this.puntero.Contabilidad.setVisible(false);
-				this.puntero.Principal.setVisible(true);
-				//
-				precioTotal=Double.parseDouble(puntero.textFieldTotal.getText());
-				mesaOcupada();
+				cerrarSesionComanda();
 			}//if
 		}//if
 		if(e.getSource()==puntero.mesa1 || e.getSource()==puntero.mesa2 || e.getSource()==puntero.mesa3 || e.getSource()==puntero.mesa4 || e.getSource()==puntero.mesa5 || e.getSource()==puntero.mesa6) {
 			if(e.getClickCount()==2) {
-				//CAMBIAMOS DE PANEL
-				this.puntero.Productos.setVisible(false);
-				this.puntero.Configuracion.setVisible(false);
-				this.puntero.Documentacion_1.setVisible(false);
-				this.puntero.inicioSesion.setVisible(false);
-				this.puntero.Principal.setVisible(false);
-				this.puntero.Pagos.setVisible(false);
-				this.puntero.Contabilidad.setVisible(false);
-				this.puntero.Comanda.setVisible(true);
-				puntero.lbmensajePedido.setVisible(false);
-				//
+				dirigirComanda();
 				if(pagar) {
 					modeloItems.removeAllElements();
-				}
+				}//if
 			}//if
 		}//if
 		if(e.getSource()==puntero.mesa1) {
@@ -656,74 +434,20 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				establecerImagenesBotonMenu();
 			}//if
 		}//if
-		
 		if(e.getSource()==puntero.lbPagar) {
 			puntero.lbmensajePedido.setVisible(false);
 			if(e.getClickCount()==2) {
-				if(Double.parseDouble(puntero.textFieldTotal.getText())>0.0) {
-					//
-					numMesa=Integer.parseInt(puntero.textFieldNumMesa.getText());
-					comandas.get(0).getMesas().get(numMesa - 1).setPagado(true);
-					this.puntero.Productos.setVisible(false);
-					this.puntero.Configuracion.setVisible(false);
-					this.puntero.Documentacion_1.setVisible(false);
-					this.puntero.Comanda.setVisible(false);
-					this.puntero.inicioSesion.setVisible(false);
-					this.puntero.Principal.setVisible(false);
-					this.puntero.Contabilidad.setVisible(false);
-					this.puntero.Pagos.setVisible(true);
-					//
-					precioPagar=controlarDatosPago(Double.parseDouble(puntero.textFieldTotal.getText()));
-				}else {
-					puntero.lbmensajePedido.setVisible(true);
-					puntero.lbmensajePedido.setText("AÑADE ALGUN PRODUCTO");
-				}//else
+				pagarComanda();
 			}//if
 		}//if
 		if(e.getSource()==puntero.lbcerrarSesionPago) {
 			if(e.getClickCount()==2) {
-				//CAMBIAMOS DE PANEL
-				//
-				this.puntero.Productos.setVisible(false);
-				this.puntero.Configuracion.setVisible(false);
-				this.puntero.Documentacion_1.setVisible(false);
-				this.puntero.Comanda.setVisible(false);
-				this.puntero.inicioSesion.setVisible(false);
-				this.puntero.Pagos.setVisible(false);
-				this.puntero.Contabilidad.setVisible(false);
-				this.puntero.Principal.setVisible(true);
-				mesaOcupada();
-				//
-				puntero.lbmensajeDenegar.setVisible(false);
-				puntero.lbmensajeCambioCliente.setVisible(false);
-				puntero.textFieldcambioTotal.setVisible(false);
-				puntero.btnDarCambio.setVisible(false);
-				puntero.textFieldAbonoCliente.setText("");
-				puntero.textFieldAbonoCliente.setEditable(true);
+				cerrarSesionPago();
 			}//if
 		}//if
 		if(e.getSource()==puntero.lbcerrarSesionContabilidad) {
 			if(e.getClickCount()==2) {
-				//CAMBIAMOS DE PANEL
-				this.puntero.Productos.setVisible(false);
-				this.puntero.Configuracion.setVisible(false);
-				this.puntero.Documentacion_1.setVisible(false);
-				this.puntero.Comanda.setVisible(false);
-				this.puntero.inicioSesion.setVisible(false);
-				this.puntero.Pagos.setVisible(false);
-				this.puntero.Contabilidad.setVisible(false);
-				this.puntero.panelAuxiliarInventario.setVisible(false);
-				this.puntero.panelAuxiliarBanco.setVisible(false);
-				this.puntero.panelAuxiliarHistorial.setVisible(false);
-				this.puntero.panelAuxiliarEstadisticas.setVisible(false);
-				this.puntero.separator_16.setVisible(false);
-				//
-				this.puntero.lbtituloSeleccionado.setText("");
-				this.puntero.separator_24.setVisible(false);
-				this.puntero.Principal.setVisible(true);
-				//
-				 seteosDeEdicion();
-				 puntero.lbmensajeInventario.setText("");
+				cerrarSesionContabilidad();
 			}//if
 		}//if
 		if(e.getSource()==puntero.lbRetroceder) {
@@ -733,34 +457,19 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		}//if
 		if(e.getSource()==puntero.lbcerrarSesionEstadisticas) {
 			if(e.getClickCount()==2) {
-				this.puntero.panelAuxiliarEstadisticas.setVisible(false);
-				this.puntero.panelAuxiliarBanco.setVisible(false);
-				this.puntero.panelAuxiliarInventario.setVisible(false);
-				this.puntero.panelAuxiliarHistorial.setVisible(true);
-				this.puntero.lbcerrarSesionEstadisticas.setVisible(false);
-				this.puntero.separator_34.setVisible(false);
-				this.puntero.btnEstadisticas.setVisible(true);
-				this.puntero.btnLimpiar.setVisible(true);
-				this.puntero.separator_16.setVisible(false);
+				cerrarSesionEstadisticas();
 			}//if
 		}//if
-		
 		
 	}//mouseClicked
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
-		
-		
 	}//mousePressed
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
-		
-		
-	}
+	}//mouseReleased
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -771,17 +480,15 @@ public class Funcionalidad implements ActionListener, MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
 		if(e.getSource()==puntero.lbfotoSesion){
 			String foto=cambioFoto();
 			fotoEscalarLabel(puntero.lbfotoSesion, foto);
 		}//if
-		
-	}
+	}//mouseExited
 	
 	public void caracteresContraseña(String foto) {
 		puntero.textContraseña.setEchoChar((char)0);
-	}//if
+	}//caracteresContraseña
 	
 	private void fotoEscalarLabel(JLabel label, String url) {
 		ImageIcon imagen=new ImageIcon(url);
@@ -814,7 +521,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				puntero.mensajeInformativo.setForeground(Color.WHITE);
 				puntero.mensajeInformativo.setText("USUARIO CREADO CORRECTAMENTE");
 			}//else
-			//puntero.textUsuario.
 		}else {
 			puntero.mensajeInformativo.setVisible(true);
 			if(puntero.textUsuario.getText().isEmpty()) {
@@ -861,19 +567,19 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		String causa;
 		puntero.mensajeInformativo.setVisible(false);
 		for(int i=0; i<empleados.size(); i++) {
-			if(empleados.get(i).getNombre().equalsIgnoreCase(nombre) && empleados.get(i).getContraseña().equals(contraseña)) {
+			if(empleados.get(i).getNombre().equals(nombre) && empleados.get(i).getContraseña().equals(contraseña)) {
 				encontrar=true;
 			}else{
-				if(empleados.get(i).getNombre().equalsIgnoreCase(nombre) && !empleados.get(i).getContraseña().equals(contraseña)) {
+				if(empleados.get(i).getNombre().equals(nombre) && !empleados.get(i).getContraseña().equals(contraseña)) {
 					puntero.mensajeInformativo.setVisible(true);
 					puntero.mensajeInformativo.setForeground(Color.RED);
 					puntero.mensajeInformativo.setText("!CONTRASEÑA INCORRECTO");
 				}//if
-				if(!empleados.get(i).getNombre().equalsIgnoreCase(nombre) && empleados.get(i).getContraseña().equals(contraseña)){
+				if(!empleados.get(i).getNombre().equals(nombre) && empleados.get(i).getContraseña().equals(contraseña)){
 					puntero.mensajeInformativo.setVisible(true);
 					puntero.mensajeInformativo.setForeground(Color.RED);
 					puntero.mensajeInformativo.setText("!USUARIO INCORRECTO");
-				}else if(!empleados.get(i).getNombre().equalsIgnoreCase(nombre) && !empleados.get(i).getContraseña().equals(contraseña)) {
+				}else if(!empleados.get(i).getNombre().equals(nombre) && !empleados.get(i).getContraseña().equals(contraseña)) {
 					puntero.mensajeInformativo.setVisible(true);
 					puntero.mensajeInformativo.setForeground(Color.RED);
 					puntero.mensajeInformativo.setText("!USUARIO NO ENCONTRADO");
@@ -895,7 +601,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			puntero.mensajeInformativo.setVisible(false);
 			//FOTO Y NOMBRE EMPLEADO
 			puntero.lbnombreEmpleado.setText(nombre);
-			//
 			for(int i=0; i<empleados.size(); i++) {
 				if(empleados.get(i).getNombre().equalsIgnoreCase(nombre) && empleados.get(i).getContraseña().equals(contraseña)) {
 					foto=empleados.get(i).getFoto();
@@ -956,62 +661,42 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		this.puntero.scrollPaneDoc.setVisible(true);
 		//
 		if(this.puntero.comboBoxOpciones.getSelectedIndex()==0) {
-			this.puntero.textAreaComboBox.setText("Coofekie es una cafeteria que ha llegado para quedarse, nuestros servicios se basan en desayunos y meriendas, nuestro lema es servir siempre con una sonrisa y nuestro precios son asequibles");
-		}//
+			this.puntero.textAreaComboBox.setText("Coofekie es una cafeteria que ha llegado para quedarse, nuestros servicios se basan en desayunos y meriendas, nuestro lema es servir siempre con una sonrisa y nuestro precios son asequibles.");
+		}//if
 		if(this.puntero.comboBoxOpciones.getSelectedIndex()==1) {
-			this.puntero.textAreaComboBox.setText("Nuestra empresa se basa en principios de 2024, empezamos siendo un pequeño negocio en la C/Cartel Nº 14, donde seguimos instalado actualmente, fuimos creciendo con el tiempo. Gracias a nuestro buen trabajo hemos conseguido estar donde llegamos y poder incluso pedir un TPV personalizado a un programador");
-		}//
+			this.puntero.textAreaComboBox.setText("Nuestra empresa se basa en principios de 2024, empezamos siendo un pequeño negocio en la C/Cartel Nº 14, donde seguimos instalados actualmente, fuimos creciendo con el tiempo y ganando experiencia en el sector. Gracias a nuestro buen trabajo hemos conseguido cumplir un sueño e incluso pedir un TPV personalizado a un programador para seguir mejorando.");
+		}//if
 		if(this.puntero.comboBoxOpciones.getSelectedIndex()==2) {
-			this.puntero.textAreaComboBox.setText("La confidencialidad y la seguridad son valores primordiales de Coofekie y, en consecuencia, asumimos el compromiso de garantizar la privacidad del Usuario en todo momento y de no recabar información innecesaria. A continuación, le proporcionamos toda la información necesaria sobre nuestra Política de Privacidad en relación con los datos personales que recabamos, el cumplimiento de todas las politicas mostradas es completamente obligatorio al aceptar los acuerdos por defecto de los acuerdos previos");
-		}//
+			this.puntero.textAreaComboBox.setText("La confidencialidad y la seguridad son valores primordiales de Coofekie y, en consecuencia, asumimos el compromiso de garantizar la privacidad del empleado en todo momento y de no recabar información innecesaria. A continuación, le proporcionamos toda la información sobre nuestra Política de Privacidad en relación con los datos personales que recabamos, el cumplimiento de todas las politicas mostradas es completamente obligatorio.");
+		}//if
 		
 	}//opcionCombo
 	
 	public void modificarUsuario() {
 		
 		puntero.mensajeInformativoConfiguracion.setVisible(true);
-		int contador=0;
-		if(!puntero.textPassConf.getText().isEmpty() && !puntero.textSueldoConf.getText().isEmpty() && !puntero.textJIConf.getText().isEmpty() && !puntero.textJFConf.getText().isEmpty() && !puntero.textFieldDatoUser.getText().isEmpty()) {
+		puntero.mensajeInformativoConfiguracion.setForeground(Color.RED);
+		boolean encontrado=false;
+		if(!puntero.textPassConf.getText().isEmpty() && Integer.parseInt(puntero.textSueldoConf.getText())>=0 && !puntero.textJIConf.getText().isEmpty() && !puntero.textJFConf.getText().isEmpty() && !puntero.textFieldDatoUser.getText().isEmpty()) {
 			for(int i=0; i<empleados.size(); i++) {
 				if(puntero.textPassConf.getText().equalsIgnoreCase(empleados.get(i).getContraseña())) {
-					puntero.mensajeInformativoConfiguracion.setText("!Contraseña ya existente");
-					contador++;
+					encontrado=true;
 				}//if
 			}//for
-		if(contador==0) {
-			for(int i=0; i<empleados.size(); i++) {
-				if(!empleados.get(i).getContraseña().equalsIgnoreCase(puntero.textFieldDatoPass.getText())) {
-					empleados.get(i).setContraseña(puntero.textPassConf.getText());
-					empleados.get(i).setJornadaFinal(puntero.textJFConf.getText());
-					empleados.get(i).setJornadaInicio(puntero.textJIConf.getText());
-					empleados.get(i).setSueldo(Integer.parseInt(puntero.textSueldoConf.getText()));
-					//
-					puntero.textPassConf.setText(empleados.get(i).getContraseña());
-					puntero.textJIConf.setText(empleados.get(i).getJornadaInicio());
-					puntero.textJFConf.setText(empleados.get(i).getJornadaFinal());
-					puntero.textSueldoConf.setText(String.valueOf(empleados.get(i).getSueldo()));
-					//
-					puntero.mensajeInformativoConfiguracion.setForeground(Color.WHITE);
-					puntero.mensajeInformativoConfiguracion.setText("!USUARIO MODIFICADO");
-					//
-					puntero.textFieldDatoPass.setText(puntero.textPassConf.getText());
-					puntero.textFieldDatoInicio.setText(puntero.textJIConf.getText());
-					puntero.textFieldDatoFin.setText(puntero.textJFConf.getText());
-					puntero.textFieldDatoSueldo.setText(String.valueOf(puntero.textSueldoConf));
-					//
-					empleado=puntero.textFieldDatoUser.getText();
-					//	
-				}//if
-			}//for
+		if(encontrado) {
+			puntero.mensajeInformativoConfiguracion.setText("!CONTRASEÑA YA EXISTENTE");
+		}//if
+		if(!encontrado) {
+			seteosModificacionesUsuario();
+			cambios=true;
 		}//if
 		puntero.textSueldoConf.setText("");
 		puntero.textJFConf.setText("");
 		puntero.textJIConf.setText("");
 		puntero.textPassConf.setText("");
 		}else {
-			puntero.mensajeInformativoConfiguracion.setText("!Debe rellenar todos los campos");			
+			puntero.mensajeInformativoConfiguracion.setText("!DEBE RELLENAR TODOS LOS CAMPOS");			
 		}//else
-		cambios=true;
 	}//modificarUsuario
 	
 	public void eliminarUsuario() {
@@ -1022,29 +707,14 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				puntero.mensajeInformativoConfiguracion.setForeground(Color.WHITE);
 				puntero.mensajeInformativoConfiguracion.setVisible(true);
 				puntero.mensajeInformativoConfiguracion.setText("!USUARIO " + empleado + " ELIMINADO");
-				this.puntero.Documentacion_1.setVisible(false);
-				this.puntero.Configuracion.setVisible(false);
-				this.puntero.Principal.setVisible(false);
-				this.puntero.Productos.setVisible(false);
-				this.puntero.Comanda.setVisible(false);
-				this.puntero.Contabilidad.setVisible(false);
-				this.puntero.inicioSesion.setVisible(true);
+				seteosEliminarUsuario();
 			}//if
 		}//for
 		
 	}//eliminarUsuario
 	
-	public void gestionInventario() {
-		
-		//CAMBIAMOS DE PANEL
-		this.puntero.Principal.setVisible(false);
-		this.puntero.inicioSesion.setVisible(false);
-		this.puntero.Documentacion_1.setVisible(false);
-		this.puntero.Configuracion.setVisible(false);
-		this.puntero.Comanda.setVisible(false);
-		this.puntero.Contabilidad.setVisible(false);
-		this.puntero.Productos.setVisible(true);
-		
+	public void dirigirProductos() {
+		seteosProductos();
 	}//gestionInventario
 	
 	public void cambiarHorario() {
@@ -1062,7 +732,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 	public double mostrarDineroCaja(double dinero) {
 		
 		double dineroAux=dinero;
-		
 		if(dineroAux>=0) {
 			puntero.lbDinero.setForeground(Color.WHITE);
 		}else {
@@ -1070,6 +739,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		}//else
 		puntero.lbDinero.setText(String.valueOf(dineroAux) + " €");
 		return dinero;
+		
 	}//mostrarDineroCaja
 	
 	public void mostrarDatosUser() {
@@ -1093,7 +763,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					modelo.addElement(listaProductos.get(i).getNombre());
 				}//if
 			}//for
-			//
 			puntero.listProductos.setModel(modelo);
 			puntero.btnVisualizarDatosProducto.setEnabled(true);
 		
@@ -1113,10 +782,10 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				puntero.progressBarStock.setValue(Integer.parseInt(listaProductos.get(i).getStock()));
 				puntero.lbFieldNumStock.setText(String.valueOf(puntero.progressBarStock.getValue()));
 				puntero.lbmensajeStock.setVisible(true);
-				puntero.lbmensajeStock.setText("PRODUCTO - " + listaProductos.get(i).getNombre());
+				puntero.lbmensajeStock.setText("PRODUCTO - " + listaProductos.get(i).getNombre().toUpperCase());
 			}//if
 		}//for
-		controlStock(puntero.progressBarStock);
+		controlStock(0);
 	
 	}//visualizarDatosMenu
 	
@@ -1125,31 +794,31 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		for(int i=0; i<listaProductos.size(); i++) {
 			if(i==0) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto1);
-			}
+			}//if
 			if(i==1) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto2);
-			}
+			}//if
 			if(i==2) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto3);
-			}
+			}//if
 			if(i==3) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto4);
-			}
+			}//if
 			if(i==4) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto5);
-			}
+			}//if
 			if(i==5) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto6);
-			}
+			}//if
 			if(i==6) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto7);
-			}
+			}//if
 			if(i==7) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto8);
-			}
+			}//if
 			if(i==8) {
 				escalarFotoBoton(listaProductos.get(i).getFoto(), puntero.btnProducto9);
-			}
+			}//if
 		}//for
 		
 	}//visualizarDatosMenu
@@ -1160,12 +829,20 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		boton.setIcon(icono);
 	}//escalarFotoBoton
 	
-	public void controlStock(JProgressBar progressbarInventario) {
+	public void controlStock(int numProgressBar) {
 		
-		if(puntero.progressBarInventario.getValue()<=25) {
-			puntero.progressBarInventario.setForeground(Color.RED);
+		if(numProgressBar==0) {
+			if(puntero.progressBarStock.getValue()<=25) {
+				puntero.progressBarStock.setForeground(Color.RED);
+			}else {
+				puntero.progressBarStock.setForeground(Color.GREEN);
+			}//else
 		}else {
-			puntero.progressBarInventario.setForeground(Color.GREEN);
+			if(puntero.progressBarInventario.getValue()<=25) {
+				puntero.progressBarInventario.setForeground(Color.RED);
+			}else {
+				puntero.progressBarInventario.setForeground(Color.GREEN);
+			}//else
 		}//else
 		
 	}//controlStock
@@ -1183,7 +860,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					puntero.textFieldTotal.setText(String.valueOf(comandas.get(i).getMesas().get(j).getTotal()));
 					actualizarJlist(comandas.get(i).getMesas().get(j).getItems(), modeloItems);
 					puntero.listPedido.setModel(modeloItems);
-					System.out.println(label.getText());
 					puntero.btnrestarComida.setVisible(true);
 				}//if1
 			}//for2
@@ -1212,7 +888,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					}//for
 				}else {
 					lista.put(solicitud, 1);
-					//
 					puntero.lbmensajePedido.setText("AÑADISTE 1 " + solicitud );
 					listaProductos.get(i).setStock(String.valueOf(Integer.parseInt(listaProductos.get(i).getStock()) - 1));
 				}//else
@@ -1248,14 +923,12 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		item=String.valueOf(puntero.listPedido.getSelectedValue());
 		String producto="";
 		divisionEntrada=item.split("\\W+");
-		//
 		producto=divisionEntrada[0];
 		for(int i=1; i<=divisionEntrada.length-2; i++) {
 			producto = producto + " " + divisionEntrada[i];
 		}//for
 		numMesa=Integer.parseInt(puntero.textFieldNumMesa.getText());
 		numComanda=Integer.parseInt(puntero.textFieldNumComanda.getText());
-		//
 		reduccionElemento(producto, comandas.get(0).getMesas().get(numMesa - 1).getItems());
 		
 	}//restarElementosMenu
@@ -1342,16 +1015,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		centrarDatosTablas(centrar);
 		diferencia=Double.parseDouble(puntero.textFieldAbonoCliente.getText()) - Double.parseDouble(puntero.textFieldcambioTotal.getText());
 		dineroCaja=dineroCaja + diferencia;
-		//
-		this.puntero.Productos.setVisible(false);
-		this.puntero.Configuracion.setVisible(false);
-		this.puntero.Documentacion_1.setVisible(false);
-		this.puntero.Comanda.setVisible(false);
-		this.puntero.inicioSesion.setVisible(false);
-		this.puntero.Pagos.setVisible(false);
-		this.puntero.Contabilidad.setVisible(false);
-		this.puntero.Principal.setVisible(true);
-		//
+		seteosCambioGenerado();
 		pagar=true;
 		if(pagar) {
 			comandas.get(0).getMesas().get((Integer.parseInt(puntero.textFieldNumMesa.getText()) - 1)).setComandaNum(comandas.get(0).getMesas().get((Integer.parseInt(puntero.textFieldNumMesa.getText()) - 1)).getComandaNum() + 1);
@@ -1360,14 +1024,13 @@ public class Funcionalidad implements ActionListener, MouseListener{
 			comandas.get(0).getMesas().get((Integer.parseInt(puntero.textFieldNumMesa.getText())-1)).setTotal(0.0);
 			actualizarJlist(comandas.get(0).getMesas().get((Integer.parseInt(puntero.textFieldNumMesa.getText())-1)).getItems(), modeloItems);
 			modeloItems.clear();
-			calcularEstadisticas();
-		}//IF
+		}//if
 		mesaOcupada();
 		mostrarDineroCaja(dineroCaja);
-		//
+		
 	}//generarCambio
 	
-public void mesaOcupada() {
+	public void mesaOcupada() {
 		
 		for(int i=0; i<comandas.size(); i++) {
 			for(int j=0; j<comandas.get(i).getMesas().size(); j++) {
@@ -1442,14 +1105,14 @@ public void mesaOcupada() {
 		}//for
 	}//opcionesComboBanco
 	
-	public void seteosLabelInventario() {
-		puntero.lbtextoComida.setText("BEBIDAS");
+	public void seteosLabelProductos() {
 		puntero.lbFieldID.setText("");
 		puntero.lbFieldNombre.setText("");
 		puntero.lbFieldProveedor.setText("");
 		puntero.lbFieldPrecio.setText("");
 		puntero.lbFieldTipo.setText("");
 		puntero.lbFieldNumStock.setText("");
+		puntero.lbmensajeStock.setText("");
 	}//seteosLabelInventario
 	
 	public void mostrarProductosInventario() {
@@ -1467,7 +1130,7 @@ public void mesaOcupada() {
 				fotoEscalarLabel(puntero.lbmostrarImagenInventario, listaProductos.get(i).getFoto());
 				puntero.progressBarInventario.setValue(Integer.parseInt(listaProductos.get(i).getStock()));
 				puntero.textInventarioStock.setText(String.valueOf(puntero.progressBarInventario.getValue()));
-				controlStock(puntero.progressBarInventario);
+				controlStock(1);
 			}//if
 		}//for
 	}//mostrarProductosInventario
@@ -1513,14 +1176,15 @@ public void mesaOcupada() {
 					puntero.lbmaximo.setForeground(Color.RED);
 				}//if
 				//
-				redundanciaInformacionSeteo(precio, listaProductos.get(i).getNombre());
+				conexionCambiosInventarioComanda(precio, listaProductos.get(i).getNombre());
 			}//if
 		}//for
 		if(edicion) {
 			this.puntero.lbmensajeInventario.setText("Cambios guardados");
 		}else {
 			this.puntero.lbmensajeInventario.setText("Cambios inexistentes");
-		}
+		}//else
+		
 	}//seteoProductos
 
 	public void DatosBanco() {
@@ -1528,7 +1192,7 @@ public void mesaOcupada() {
 			 if(i==puntero.comboBoxBanco.getSelectedIndex()) {
 				 puntero.lbnombreCuenta.setText(cuentas.get(i).getNombre());
 				 puntero.lbMostrarContraseñaBanco.setText(cuentas.get(i).getContraseña());
-				 puntero.lbSaldo.setText(String.valueOf(cuentas.get(i).getSaldo()));
+				 puntero.lbMostrarSaldo.setText(String.valueOf(cuentas.get(i).getSaldo()));
 				 //CARGAR DATOS DE SU TABLA
 				 cargarTransacciones(puntero.comboBoxBanco.getSelectedIndex());
 			 }//if
@@ -1557,13 +1221,12 @@ public void mesaOcupada() {
 		puntero.comboBoxBanco.setEnabled(true);
 		puntero.scrollPaneBanco.setVisible(false);
 		puntero.tableTransacciones.setVisible(false);
-		puntero.lbSaldo.setText("");
+		puntero.lbMostrarSaldo.setText("");
 	}//seteosCamposBanco
 	
 	public void fabricarTablaTransacciones() {
 		String columnas [] = {"ID", "Concepto", "Cantidad", "Tipo"};
 		modeloTablaTransacciones.setColumnIdentifiers(columnas);
-		//
 		puntero.tableTransacciones.setModel(modeloTablaTransacciones);
 	}//fabricarTabla
 	
@@ -1602,21 +1265,23 @@ public void mesaOcupada() {
 	}//insertarTransacciones
 	
 	public void estadoSaldo() {
-		if(Double.parseDouble(puntero.lbSaldo.getText()) > 0.0) {
-			puntero.lbSaldo.setForeground(Color.DARK_GRAY);
+		if(Double.parseDouble(puntero.lbMostrarSaldo.getText()) > 0.0) {
+			puntero.lbMostrarSaldo.setForeground(Color.DARK_GRAY);
 		}else {
-			puntero.lbSaldo.setForeground(Color.RED);
+			puntero.lbMostrarSaldo.setForeground(Color.RED);
 		}//else
 	}//estadoSaldo
 		
 	public void eliminarDatosTabla(DefaultTableModel modeloTabla, JTable tabla) {
+		
 		while(tabla.getRowCount()>0) {
 			modeloTabla.removeRow(0);
-		}//
+		}//while
 				
 	}//eliminarDatosTabla
 	
 	public void cargarTransacciones(int combo) {
+		
 		eliminarDatosTabla(modeloTablaTransacciones, puntero.tableTransacciones);
 		puntero.tableTransacciones.setModel(modeloTablaTransacciones);
 		for(int i=0; i<cuentas.size(); i++) {
@@ -1631,58 +1296,42 @@ public void mesaOcupada() {
 				}//for
 		}//for
 		centrarDatosTablas(centrar);
+		
 	}//cargarTransacciones
 	
 	public double modificarSaldo(Double cantidad, String tipo) {
+		
 		double nuevaCantidad;
 		if(tipo.equalsIgnoreCase("Ingreso")) {
-			puntero.lbSaldo.setText(String.valueOf(Double.parseDouble(puntero.lbSaldo.getText()) + cantidad));
+			puntero.lbMostrarSaldo.setText(String.valueOf(Double.parseDouble(puntero.lbMostrarSaldo.getText()) + cantidad));
 		}else if(tipo.equalsIgnoreCase("Gasto")) {
-			puntero.lbSaldo.setText(String.valueOf(Double.parseDouble(puntero.lbSaldo.getText()) - cantidad));
+			puntero.lbMostrarSaldo.setText(String.valueOf(Double.parseDouble(puntero.lbMostrarSaldo.getText()) - cantidad));
 		}//else if
-		return nuevaCantidad=Double.parseDouble(puntero.lbSaldo.getText());
+		return nuevaCantidad=Double.parseDouble(puntero.lbMostrarSaldo.getText());
 		
 	}//modificarSaldo
 	
 	public void fabricarTablaHistorial() {
+		
 		String columnas [] = {"MESA", "COMANDA", "FECHA", "HORA", "TOTAL"};
 		modeloTablaHistorial.setColumnIdentifiers(columnas);
 		//
 		puntero.tableHistorial.setModel(modeloTablaHistorial);
+		
 	}//fabricarTabla
-	
-	public void fabricarTablaHistorialTotal() {
-		String columnas [] = {"MESA", "COMANDA", "FECHA", "HORA", "TOTAL"};
-		modeloTablaHistorial.setColumnIdentifiers(columnas);
-		//
-	}//fabricarTabla
-	
+
 	public void añadirComandaHistorial() {
+		
 		String id=puntero.textFieldNumMesa.getText();
 		String fecha=puntero.textFieldFecha.getText();
 		String hora=puntero.textFieldHora.getText();
 		int nComanda=Integer.parseInt(puntero.textFieldNumComanda.getText());
 		double total=Double.parseDouble(puntero.textFieldTotal.getText());
-		//
-		
 		modeloTablaHistorial.addRow(new Object[] {id, nComanda, fecha, hora, total});
 		
 	}//añadirComandaHistorial
 	
-	public void calcularEstadisticas(){
-		
-		int superior=0;
-		int contador=0;
-		String nombre=null;
-		
-			for(Entry<String, Integer> entrada3: listaProductosEstadisticas.entrySet()){
-				System.out.println(entrada3.getKey() + entrada3.getValue());
-			}//for
-			
-				
-	}//calcularEstadisticas
-	
-	public void redundanciaInformacionSeteo(Double precioAnterior, String productoSeteo) {
+	public void conexionCambiosInventarioComanda(Double precioAnterior, String productoSeteo) {
 		
 		int valor=0;
 		double nuevoPrecio=0;
@@ -1694,8 +1343,6 @@ public void mesaOcupada() {
 				nuevoPrecio=listaProductos.get(i).getPrecio();
 			}//if
 		}//for
-		//
-		System.out.println(productoInventario);
 		for(int j=0; j<comandas.get(0).getMesas().size(); j++) {
 			if(comandas.get(0).getMesas().get(j).getItems().containsKey(productoInventario)) {
 				if(!comandas.get(0).getMesas().get(j).getItems().isEmpty()) {
@@ -1713,7 +1360,7 @@ public void mesaOcupada() {
 			}//if
 		}//for
 		
-	}//redundanciaInformacionSeteo
+	}//conexionCambiosInventarioComanda
 	
 	public void centrarDatosTablas(DefaultTableCellRenderer centrar) {
 		
@@ -1790,5 +1437,400 @@ public void mesaOcupada() {
 		puntero.lbnumComandasTotales.setText(String.valueOf(totalComandas));
 		
 	}//listaEstadisticas
+	
+	public void seteoPanelesExcepcionContabilidad() {
+		this.puntero.Principal.setVisible(false);
+		this.puntero.Productos.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.inicioSesion.setVisible(false);
+		this.puntero.Contabilidad.setVisible(true);
+	}//seteoPanelesExcepcionContabilidad
+	
+	public void seteosMenuInventario() {
+		this.puntero.lbtituloSeleccionado.setText("Inventario");
+		this.puntero.panelAuxiliarBanco.setVisible(false);
+		this.puntero.panelAuxiliarEstadisticas.setVisible(false);
+		this.puntero.panelAuxiliarHistorial.setVisible(false);
+		this.puntero.panelAuxiliarInventario.setVisible(true);
+		this.puntero.separator_24.setVisible(true);
+	}//seteosMenuInventario
+	
+	public void seteosDarCambio() {
+		puntero.textFieldAbonoCliente.setText("");
+		puntero.textFieldAbonoCliente.setEditable(true);
+		puntero.lbmensajeCambioCliente.setVisible(false);
+		puntero.lbmensajeCambioCliente.setVisible(false);
+		puntero.textFieldcambioTotal.setVisible(false);
+		puntero.btnDarCambio.setVisible(false);
+	}//seteosDarCambio
+	
+	public void seteosEditar() {
+		puntero.textNombreProductoMostrado.setEditable(true);
+		puntero.textInventarioProveedor.setEditable(true);
+		puntero.textInventarioPrecio.setEditable(true);
+		puntero.textInventarioTipo.setEditable(true);
+		puntero.textInventarioStock.setEditable(true);
+		puntero.btnEditar.setVisible(false);
+		puntero.btnGuardarEdicion.setVisible(true);
+		puntero.listInventario.setEnabled(false);
+	}//seteosEditar
+	
+	public void seteosMenuBanco() {
+		this.puntero.lbtituloSeleccionado.setText("Banco");
+		this.puntero.panelAuxiliarBanco.setVisible(true);
+		this.puntero.panelAuxiliarHistorial.setVisible(false);
+		this.puntero.panelAuxiliarInventario.setVisible(false);
+		this.puntero.panelAuxiliarEstadisticas.setVisible(false);
+		this.puntero.separator_24.setVisible(true);
+		puntero.comboBoxBanco.setEnabled(true);
+	}//seteosMenuBanco
+	
+	public void seteosIngresar() {
+		tipoTransaccion="Ingreso";
+		puntero.btnIngresar.setVisible(false);
+		puntero.btnGastos.setVisible(false);
+		puntero.lbRetroceder.setVisible(true);
+		puntero.rdbtnConcepto.setVisible(true);
+		puntero.rdbtnConcepto.setText("Comandas");
+		puntero.lbModificar.setText("Ingreso");
+	}//seteosIngresar
+	
+	public void seteosGastos() {
+		tipoTransaccion="Gasto";
+		puntero.btnIngresar.setVisible(false);
+		puntero.btnGastos.setVisible(false);
+		puntero.lbRetroceder.setVisible(true);
+		puntero.rdbtnConcepto.setVisible(true);
+		puntero.rdbtnConcepto.setText("Inventario");
+		puntero.rdbtnConcepto2.setVisible(true);
+		puntero.rdbtnConcepto2.setText("Otros gastos");
+		puntero.lbModificar.setText("Gasto");
+	}//seteosGastos
+	
+	public void seteosIngresar_Gastos(){
+		puntero.lbcantidadImpuesta.setVisible(true);
+		puntero.lbcontraseñaBanco.setVisible(true);
+		puntero.lbconcepto.setVisible(true);
+		puntero.btnGuardarCambios.setVisible(true);
+		puntero.lbMostrarContraseñaBanco.setVisible(true);
+		puntero.textFieldCantidadBanco.setVisible(true);
+		puntero.scrollPaneBanco.setVisible(true);
+		puntero.tableTransacciones.setVisible(true);
+		puntero.lbMostrarSaldo.setVisible(true);
+	}//seteosIngresar_Gastos
+	
+	public void guardarCambios() {
+		puntero.lbmensajeInformativo.setForeground(Color.RED);
+		puntero.lbmensajeInformativo.setVisible(true);
+		if(!puntero.textFieldCantidadBanco.getText().isBlank() && (puntero.rdbtnConcepto.isSelected() || puntero.rdbtnConcepto2.isSelected())) {
+			if((Double.parseDouble(puntero.textFieldCantidadBanco.getText())) <= 0 || (Double.parseDouble(puntero.textFieldCantidadBanco.getText())) > 100000000){
+				puntero.scrollPaneBanco.setVisible(false);
+				puntero.tableTransacciones.setVisible(false);
+				puntero.lbmensajeInformativo.setText("CANTIDAD NO PERMITIDA");
+			}else {
+				puntero.scrollPaneBanco.setVisible(true);
+				puntero.tableTransacciones.setVisible(true);
+				contadorTransaccion++;
+				puntero.lbmensajeInformativo.setForeground(Color.WHITE);
+				puntero.lbmensajeInformativo.setText("TRANSACCION COMPLETADA");
+				transaccion=nuevaTransacciones(transaccion);
+				insertarTransaccion(transaccion);
+			}//else
+		}else {
+			puntero.scrollPaneBanco.setVisible(false);
+			puntero.tableTransacciones.setVisible(false);
+			puntero.lbmensajeInformativo.setText("TRANSACCION INCOMPLETA");
+		}//else
+	}//guardarCambios
+	
+	public void seteosMenuHistorial() {
+		this.puntero.lbtituloSeleccionado.setText("Historial");
+		this.puntero.panelAuxiliarBanco.setVisible(false);
+		this.puntero.panelAuxiliarInventario.setVisible(false);
+		this.puntero.panelAuxiliarHistorial.setVisible(true);
+		this.puntero.panelAuxiliarEstadisticas.setVisible(false);
+		this.puntero.separator_24.setVisible(true);
+		this.puntero.btnEstadisticas.setVisible(true);
+		this.puntero.btnLimpiar.setVisible(true);
+	}//seteosMenuHistorial
+	
+	public void seteosEstadisticas() {
+		this.puntero.panelAuxiliarEstadisticas.setVisible(true);
+		this.puntero.panelAuxiliarBanco.setVisible(false);
+		this.puntero.panelAuxiliarInventario.setVisible(false);
+		this.puntero.panelAuxiliarHistorial.setVisible(true);
+		this.puntero.lbcerrarSesionEstadisticas.setVisible(true);
+		this.puntero.separator_34.setVisible(false);
+		this.puntero.btnEstadisticas.setVisible(false);
+		this.puntero.btnLimpiar.setVisible(false);
+		this.puntero.separator_16.setVisible(true);
+	}//seteosEstadisticas
+	
+	public void cerrarSesionPrincipal() {
+		//CAMBIAMOS DE PANEL
+		this.puntero.Principal.setVisible(false);
+		this.puntero.Productos.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.inicioSesion.setVisible(true);
+		//SETEAMOS VALORES DE LA PANTALLA PRINCIPAL
+		this.puntero.lbnombreEmpleado.setText("");
+		this.puntero.labelFotoRegistro.setText("");
+		this.puntero.lbcerrarSesion.setText("");
+	}//cerrarSesionPrincipal
+	
+	public void dirigirPaginaInformativa() {
+		//CAMBIAMOS DE PANEL
+		this.puntero.Principal.setVisible(false);
+		this.puntero.inicioSesion.setVisible(false);
+		this.puntero.Productos.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.Documentacion_1.setVisible(true);
+		//SETEAMOS VALORES DE LA PANTALLA PRINCIPAL
+		this.puntero.lbnombreEmpleado.setText("");
+		this.puntero.labelFotoRegistro.setText("");
+		this.puntero.lbcerrarSesion.setText("");
+		//AÑADIMOS INFORMACION AL LABEL Y LLAMAMOS AL METODO
+		this.puntero.textAreaInformacionGeneral.setText(texto);
+		this.puntero.textAreaInformacionGeneral.setLineWrap(true);
+		this.puntero.textAreaInformacionGeneral.setWrapStyleWord(true);
+	}//dirigirPaginaInformativa
+	
+	public void cerrarSesionPaginaInformativa() {
+		//CAMBIAMOS DE PANEL
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Principal.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Productos.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.inicioSesion.setVisible(true);
+	}//cerrarSesionPaginaInformativa
+	
+	public void dirigirConfiguracion() {
+		//CAMBIAMOS DE PANEL
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Principal.setVisible(false);
+		this.puntero.inicioSesion.setVisible(false);
+		this.puntero.Productos.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.Configuracion.setVisible(true);
+	}//dirigirConfiguracion
+	
+	public void cerrarSesionConfiguracion() {
+		//CAMBIAMOS DE PANEL
+		if(cambios) {
+			this.puntero.Documentacion_1.setVisible(false);
+			this.puntero.Configuracion.setVisible(false);
+			this.puntero.Principal.setVisible(false);
+			this.puntero.Productos.setVisible(false);
+			this.puntero.Comanda.setVisible(false);
+			this.puntero.Pagos.setVisible(false);
+			this.puntero.Contabilidad.setVisible(false);
+			this.puntero.inicioSesion.setVisible(true);
+		}else {
+			this.puntero.Documentacion_1.setVisible(false);
+			this.puntero.Configuracion.setVisible(false);
+			this.puntero.Productos.setVisible(false);
+			this.puntero.Comanda.setVisible(false);
+			this.puntero.inicioSesion.setVisible(false);
+			this.puntero.Pagos.setVisible(false);
+			this.puntero.Contabilidad.setVisible(false);
+			this.puntero.Principal.setVisible(true);
+		}//else
+		puntero.textPassConf.setText("");
+		puntero.textJIConf.setText("");
+		puntero.textJFConf.setText("");
+		puntero.textSueldoConf.setText("");
+	}//cerrarSesionConfiguracion
+	
+	public void cerrarSesionProductos() {
+		//CAMBIAMOS DE PANEL
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Productos.setVisible(false);
+		this.puntero.inicioSesion.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.Principal.setVisible(true);
+		puntero.lbtextoComida.setText("PRODUCTOS");
+		puntero.lbFieldID.setText("");
+		puntero.lbFieldNombre.setText("");
+		puntero.lbFieldProveedor.setText("");
+		puntero.lbFieldPrecio.setText("");
+		fotoEscalarLabel(puntero.lbImagenInventario, "assets/productoDefecto.png");
+		puntero.lbImagenInventario.setText("");
+		puntero.progressBarStock.setValue(0);
+		modeloComida.removeAllElements();
+		puntero.lbFieldNumStock.setText("");
+		puntero.lbFieldTipo.setText("");
+		puntero.lbmensajeStock.setVisible(false);
+		puntero.btnVisualizarDatosProducto.setEnabled(false);
+		modeloComida.clear();
+		modeloBebida.clear();
+	}//cerrarSesionProductos
+	
+	public void cerrarSesionComanda() {
+		//CAMBIAMOS DE PANEL
+		this.puntero.Productos.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.inicioSesion.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.Principal.setVisible(true);
+		precioTotal=Double.parseDouble(puntero.textFieldTotal.getText());
+		mesaOcupada();
+	}//cerrarSesionComanda
+	
+	public void dirigirComanda() {
+		//CAMBIAMOS DE PANEL
+		this.puntero.Productos.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.inicioSesion.setVisible(false);
+		this.puntero.Principal.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.Comanda.setVisible(true);
+		puntero.lbmensajePedido.setVisible(false);
+	}//dirigirComanda
+	
+	public void pagarComanda() {
+		if(Double.parseDouble(puntero.textFieldTotal.getText())>0.0) {
+			numMesa=Integer.parseInt(puntero.textFieldNumMesa.getText());
+			comandas.get(0).getMesas().get(numMesa - 1).setPagado(true);
+			this.puntero.Productos.setVisible(false);
+			this.puntero.Configuracion.setVisible(false);
+			this.puntero.Documentacion_1.setVisible(false);
+			this.puntero.Comanda.setVisible(false);
+			this.puntero.inicioSesion.setVisible(false);
+			this.puntero.Principal.setVisible(false);
+			this.puntero.Contabilidad.setVisible(false);
+			this.puntero.Pagos.setVisible(true);
+			precioPagar=controlarDatosPago(Double.parseDouble(puntero.textFieldTotal.getText()));
+		}else {
+			puntero.lbmensajePedido.setVisible(true);
+			puntero.lbmensajePedido.setText("AÑADE ALGUN PRODUCTO");
+		}//else
+	}//pagarComanda
+	
+	public void cerrarSesionPago() {
+		//CAMBIAMOS DE PANEL
+		this.puntero.Productos.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.inicioSesion.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.Principal.setVisible(true);
+		mesaOcupada();
+		puntero.lbmensajeDenegar.setVisible(false);
+		puntero.lbmensajeCambioCliente.setVisible(false);
+		puntero.textFieldcambioTotal.setVisible(false);
+		puntero.btnDarCambio.setVisible(false);
+		puntero.textFieldAbonoCliente.setText("");
+		puntero.textFieldAbonoCliente.setEditable(true);
+	}//cerrarSesionPago
+	
+	public void cerrarSesionContabilidad() {
+		//CAMBIAMOS DE PANEL
+		this.puntero.Productos.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.inicioSesion.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.panelAuxiliarInventario.setVisible(false);
+		this.puntero.panelAuxiliarBanco.setVisible(false);
+		this.puntero.panelAuxiliarHistorial.setVisible(false);
+		this.puntero.panelAuxiliarEstadisticas.setVisible(false);
+		this.puntero.separator_16.setVisible(false);
+		this.puntero.lbtituloSeleccionado.setText("");
+		this.puntero.separator_24.setVisible(false);
+		this.puntero.Principal.setVisible(true);
+		 seteosDeEdicion();
+		 puntero.lbmensajeInventario.setText("");
+	}//cerrarSesionContabilidad
+	
+	public void cerrarSesionEstadisticas() {
+		this.puntero.panelAuxiliarEstadisticas.setVisible(false);
+		this.puntero.panelAuxiliarBanco.setVisible(false);
+		this.puntero.panelAuxiliarInventario.setVisible(false);
+		this.puntero.panelAuxiliarHistorial.setVisible(true);
+		this.puntero.lbcerrarSesionEstadisticas.setVisible(false);
+		this.puntero.separator_34.setVisible(false);
+		this.puntero.btnEstadisticas.setVisible(true);
+		this.puntero.btnLimpiar.setVisible(true);
+		this.puntero.separator_16.setVisible(false);
+	}//cerrarSesionEstadisticas
+	
+	public void seteosModificacionesUsuario() {
+		for(int i=0; i<empleados.size(); i++) {
+				empleados.get(i).setContraseña(puntero.textPassConf.getText());
+				empleados.get(i).setJornadaFinal(puntero.textJFConf.getText());
+				empleados.get(i).setJornadaInicio(puntero.textJIConf.getText());
+				empleados.get(i).setSueldo(Integer.parseInt(puntero.textSueldoConf.getText()));
+				puntero.textPassConf.setText(empleados.get(i).getContraseña());
+				puntero.textJIConf.setText(empleados.get(i).getJornadaInicio());
+				puntero.textJFConf.setText(empleados.get(i).getJornadaFinal());
+				puntero.textSueldoConf.setText(String.valueOf(empleados.get(i).getSueldo()));
+				puntero.mensajeInformativoConfiguracion.setForeground(Color.WHITE);
+				puntero.mensajeInformativoConfiguracion.setText("!USUARIO MODIFICADO");
+				puntero.textFieldDatoPass.setText(puntero.textPassConf.getText());
+				puntero.textFieldDatoInicio.setText(puntero.textJIConf.getText());
+				puntero.textFieldDatoFin.setText(puntero.textJFConf.getText());
+				puntero.textFieldDatoSueldo.setText(String.valueOf(puntero.textSueldoConf.getText()));
+				empleado=puntero.textFieldDatoUser.getText();
+		}//for
+	}//seteosModificacionesUsuario
+	
+	public void seteosEliminarUsuario() {
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Principal.setVisible(false);
+		this.puntero.Productos.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.inicioSesion.setVisible(true);
+	}//seteosEliminarUsuario
+	
+	public void seteosProductos() {
+		//CAMBIAMOS DE PANEL
+		this.puntero.Principal.setVisible(false);
+		this.puntero.inicioSesion.setVisible(false);
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.Productos.setVisible(true);
+	}//seteosProductos
+	
+	public void seteosCambioGenerado() {
+		this.puntero.Productos.setVisible(false);
+		this.puntero.Configuracion.setVisible(false);
+		this.puntero.Documentacion_1.setVisible(false);
+		this.puntero.Comanda.setVisible(false);
+		this.puntero.inicioSesion.setVisible(false);
+		this.puntero.Pagos.setVisible(false);
+		this.puntero.Contabilidad.setVisible(false);
+		this.puntero.Principal.setVisible(true);
+	}//seteosCambioGeneardo
 	
 }//Funcionalidadad
