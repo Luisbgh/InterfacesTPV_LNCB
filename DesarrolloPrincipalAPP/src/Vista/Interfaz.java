@@ -385,7 +385,7 @@ public class Interfaz extends JFrame {
 		
 		lbmensajeInventario = new JLabel("");
 		lbmensajeInventario.setFont(new Font("Yu Gothic UI Light", Font.BOLD, 15));
-		lbmensajeInventario.setBounds(127, 177, 141, 20);
+		lbmensajeInventario.setBounds(150, 177, 141, 20);
 		panelAuxiliarInventario.add(lbmensajeInventario);
 		
 		listInventario = new JList();

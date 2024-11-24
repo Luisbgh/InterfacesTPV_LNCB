@@ -541,10 +541,8 @@ public class Funcionalidad implements ActionListener, MouseListener{
 	public void iniciarSesion() {
 		
 		String nombre, contraseña;
-		//
 		nombre=puntero.textUsuario.getText();
 		contraseña=puntero.textContraseña.getText();
-		//
 		if(puntero.textUsuario.getText().isEmpty()) {
 			puntero.mensajeInformativo.setVisible(true);
 			puntero.mensajeInformativo.setForeground(Color.RED);
@@ -563,7 +561,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		
 		boolean encontrar=false;
 		String foto=null;
-		String causa;
 		puntero.mensajeInformativo.setVisible(false);
 		for(int i=0; i<empleados.size(); i++) {
 			if(empleados.get(i).getNombre().equals(nombre) && empleados.get(i).getContraseña().equals(contraseña)) {
@@ -658,7 +655,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		this.puntero.textAreaComboBox.setVisible(true);
 		this.puntero.textAreaComboBox.setVisible(true);
 		this.puntero.scrollPaneDoc.setVisible(true);
-		//
 		if(this.puntero.comboBoxOpciones.getSelectedIndex()==0) {
 			this.puntero.textAreaComboBox.setText("Coofekie es una cafeteria que ha llegado para quedarse, nuestros servicios se basan en desayunos y meriendas, nuestro lema es servir siempre con una sonrisa y nuestro precios son asequibles.");
 		}//if
@@ -682,17 +678,17 @@ public class Funcionalidad implements ActionListener, MouseListener{
 					encontrado=true;
 				}//if
 			}//for
-		if(encontrado) {
-			puntero.mensajeInformativoConfiguracion.setText("!CONTRASEÑA YA EXISTENTE");
-		}//if
-		if(!encontrado) {
-			seteosModificacionesUsuario();
-			cambios=true;
-		}//if
-		puntero.textSueldoConf.setText("");
-		puntero.textJFConf.setText("");
-		puntero.textJIConf.setText("");
-		puntero.textPassConf.setText("");
+			if(encontrado) {
+				puntero.mensajeInformativoConfiguracion.setText("!CONTRASEÑA YA EXISTENTE");
+			}//if
+			if(!encontrado) {
+				seteosModificacionesUsuario();
+				cambios=true;
+			}//if
+			puntero.textSueldoConf.setText("");
+			puntero.textJFConf.setText("");
+			puntero.textJIConf.setText("");
+			puntero.textPassConf.setText("");
 		}else {
 			puntero.mensajeInformativoConfiguracion.setText("!DEBE RELLENAR TODOS LOS CAMPOS");			
 		}//else
@@ -886,9 +882,14 @@ public class Funcionalidad implements ActionListener, MouseListener{
 						}//if
 					}//for
 				}else {
-					lista.put(solicitud, 1);
-					puntero.lbmensajePedido.setText("AÑADISTE 1 " + solicitud );
-					listaProductos.get(i).setStock(String.valueOf(Integer.parseInt(listaProductos.get(i).getStock()) - 1));
+					if(Integer.parseInt(listaProductos.get(i).getStock())<=0) {
+						puntero.lbmensajePedido.setForeground(Color.RED);
+						puntero.lbmensajePedido.setText(solicitud + " NO TIENE MAS STOCK");
+					}else {
+						lista.put(solicitud, 1);
+						puntero.lbmensajePedido.setText("AÑADISTE 1 " + solicitud );
+						listaProductos.get(i).setStock(String.valueOf(Integer.parseInt(listaProductos.get(i).getStock()) - 1));
+					}//else
 				}//else
 			}//if
 		}//for
@@ -936,8 +937,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		modelo.removeAllElements();
 		for(Entry<String, Integer> entrada: lista.entrySet()){
 			modelo.addElement(entrada.getKey() + " | " + entrada.getValue());
-		}//for
-		
+		}//for		
 	}//actualizarJlist
 	
 	public void actualizarJlistArrayList(ArrayList<Producto>listaProductos) {
@@ -977,7 +977,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		puntero.lbmensajeDeber.setText("El importe a abonar por el cliente es de: ");
 		puntero.textFieldDineroDeber.setText(String.valueOf(deber) + " €");
 		puntero.lbmensajeAbonarCliente.setText("El cliente abona la cantidad de: ");
-		//
 		return deber;
 		
 	}//controlarDatosPago
@@ -1172,6 +1171,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		double precio=0;
 		boolean edicion=false;
 		for(int i=0; i<listaProductos.size(); i++) {
+			puntero.lbmensajeInventario.setVisible(true);
 			if(listaProductos.get(i).getNombre().equalsIgnoreCase(productoInventario) && (!puntero.textNombreProductoMostrado.getText().equalsIgnoreCase(listaProductos.get(i).getNombre())
 				|| !puntero.textInventarioTipo.getText().equalsIgnoreCase(listaProductos.get(i).getTipo())  || !puntero.textInventarioPrecio.getText().equalsIgnoreCase(String.valueOf(listaProductos.get(i).getPrecio())) ||
 				!puntero.textInventarioProveedor.getText().equalsIgnoreCase(listaProductos.get(i).getProveedor()) || !puntero.textInventarioStock.getText().equalsIgnoreCase(listaProductos.get(i).getStock()))) {
@@ -1183,11 +1183,8 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				listaProductos.get(i).setTipo(puntero.textInventarioTipo.getText());
 				listaProductos.get(i).setPrecio(Double.parseDouble(puntero.textInventarioPrecio.getText()));
 				listaProductos.get(i).setProveedor(puntero.textInventarioProveedor.getText());
-				if(Integer.parseInt(puntero.textInventarioStock.getText())>100) {
-					puntero.lbmaximo.setForeground(Color.RED);
-					puntero.lbmensajeInventario2.setForeground(Color.RED);
-					puntero.lbmensajeInventario2.setText("No se puede alterar la capacidad");
-				}else if(Integer.parseInt(puntero.textInventarioStock.getText())<=0) {
+				if(Integer.parseInt(puntero.textInventarioStock.getText())>100 || Integer.parseInt(puntero.textInventarioStock.getText())<=0) {
+					puntero.lbmensajeInventario.setVisible(false);
 					puntero.lbmaximo.setForeground(Color.RED);
 					puntero.lbmensajeInventario2.setForeground(Color.RED);
 					puntero.lbmensajeInventario2.setText("Alteración de capacidad");
@@ -1211,7 +1208,7 @@ public class Funcionalidad implements ActionListener, MouseListener{
 				 puntero.lbnombreCuenta.setText(cuentas.get(i).getNombre());
 				 puntero.lbMostrarContraseñaBanco.setText(cuentas.get(i).getContraseña());
 				 puntero.lbMostrarSaldo.setText(String.valueOf(cuentas.get(i).getSaldo()));
-				 //CARGAR DATOS DE SU TABLA
+				 //CARGAR DATOS TABLA
 				 cargarTransacciones(puntero.comboBoxBanco.getSelectedIndex());
 			 }//if
 		 }//for
@@ -1334,7 +1331,6 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		
 		String columnas [] = {"MESA", "COMANDA", "FECHA", "HORA", "TOTAL"};
 		modeloTablaHistorial.setColumnIdentifiers(columnas);
-		//
 		puntero.tableHistorial.setModel(modeloTablaHistorial);
 		
 	}//fabricarTabla
@@ -1472,6 +1468,8 @@ public class Funcionalidad implements ActionListener, MouseListener{
 		this.puntero.panelAuxiliarHistorial.setVisible(false);
 		this.puntero.panelAuxiliarInventario.setVisible(true);
 		this.puntero.separator_24.setVisible(true);
+		this.puntero.lbmensajeInventario.setText("");
+		this.puntero.lbmensajeInventario2.setText("");
 	}//seteosMenuInventario
 	
 	public void seteosDarCambio() {
